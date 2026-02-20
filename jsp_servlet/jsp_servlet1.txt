@@ -1,0 +1,83 @@
+spring boot + hibernate + core java = backend
+frontend-react
+database-MySQL
+git-GitHub
+
+when we use throw and throws ,try-catch
+throw -we can write customize exception
+throws-used in main method level
+try-catch-used in side the main method
+
+if you dont know which type of exception occur then we can directly write exception .if know then then write exception type
+
+1️⃣ throw
+
+| Feature         | Explanation                                                          |
+| --------------- | -------------------------------------------------------------------- |
+| **Definition**  | Used to **manually throw** an exception.                             |
+| **Where used?** | Inside **method body**.                                              |
+| **Purpose**     | Create your **own custom exception** or throw predefined exceptions. |
+| **How many?**   | Can throw **only one exception** at a time.                          |
+| **Example**     |                                                                      |
+
+
+2️⃣ throws
+
+| Feature         | Explanation                                                                            |
+| --------------- | -------------------------------------------------------------------------------------- |
+| **Definition**  | Used to **declare** exceptions.                                                        |
+| **Where used?** | In **method signature** (after method name).                                           |
+| **Purpose**     | Tells the compiler that this method **may throw an exception**. Caller must handle it. |
+| **How many?**   | Can declare **multiple exceptions**.                                                   |
+| **Example**     |                                                                                        |
+
+
+3️⃣ try–catch
+
+
+| Feature         | Explanation                                   |
+| --------------- | --------------------------------------------- |
+| **Definition**  | Used to **handle** exceptions.                |
+| **Where used?** | Inside method.                                |
+| **Purpose**     | Prevent program crash by catching exceptions. |
+| **How many?**   | Can have **multiple catch blocks**.           |
+| **Example**     |                                               |
+
+
+
+type of application:
+
+console based(output see in console)
+webbased(output see in browser )
+desktop application
+android
+ios
+webbased
+stand alone
+gaming application
+
+type of datatype-primitive(single value store) and non primitive(obj,array-large data)
+
+*we are creating local host project after completing all module we have to learn how to publish www.
+collection is more needed instesd of normal aaray 
+
+..................difference between function and method......................
+
+1) Definition
+
+Function:
+A block of code that performs a specific task. It is independent and does not belong to any object/class.
+
+Method:
+A block of code that is inside a class and is used to perform operations on objects.
+function write ouside the class            method write inside the class
+function is not belong to class and obj    method is belong to class and obj
+Called by using its name directly.         Called using object or class name.
+Example: print(), sum().                   Example: obj.show(), Math.max().
+
+
+in java interview only tell method not function
+in interview ask real life eg of oops concept  your surrounding,give code of all oops concept in one code
+(properties)state-height,width color
+behavior(method)-
+identify-obj1,obj2

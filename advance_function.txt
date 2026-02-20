@@ -1,0 +1,23 @@
+vaiable pass from calling function to function ,this value pass is argument
+
+
+argument                                                       parameter
+
+1. values that are passed in function call                values in function declaration and definition
+
+2.used to sent value                                      used to receive value
+
+3. actual parameter                                       formal parameter
+
+
+
+
+| Feature               | Call by Value              Call by Reference   
+| --------------------- | ------------------------  -------------------
+| What is passed        | Copy of variable           Address of variable 
+| Original value change | ❌ No                       ✅ Yes              
+| Use of pointers       | ❌ Not needed               ✅ Needed            
+| Safety                | ✅ Safer (no side effect)   ❌ Less safe         
+
+
+

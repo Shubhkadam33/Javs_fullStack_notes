@@ -1,0 +1,77 @@
+⚙️ Priority Order (without !important):
+
+Inline CSS
+
+Internal CSS
+
+External CSS
+
+
+✅ What is the use of !important in CSS?
+
+The !important keyword in CSS is used to give highest priority to a CSS property — it overrides all other styles, including inline and external ones.But it should be used carefully because it can make debugging difficult.
+
+
+3) What is the Box Model?
+
+Answer:
+Every HTML element is treated as a box. It has 4 parts:
+
+Content → Padding → Border → Margin
+
+| padding                     | margin                       |
+| --------------------------- | ---------------------------- |
+| Space **inside** the border | Space **outside** the border |
+
+
+
+
+10) What is Media Query?
+
+Answer:
+Used to make website responsive for different screen sizes.
+
+@media (max-width: 600px) {
+  div { font-size: 12px; }
+}
+
+11) What is the difference between Relative and Absolute Position?
+
+
+relative	                                       absolute
+Moves relative to its original position          Moves relative to nearest positioned parent
+
+
+✅ 1️⃣ Content
+
+This is the innermost part of the box — it contains text, images, or other elements.
+
+✅ 2️⃣ Padding
+
+Padding is the space between the content and the border.
+It pushes the border away from the content (inside space).
+
+✅ 3️⃣ Border
+
+The border wraps around the content + padding.
+It defines the outline or edge of the box.
+
+✅ 4️⃣ Margin
+
+Margin is the outermost layer — the space outside the border.
+It creates space between this element and neighboring elements.
+
++-------------------------------+
+|           Margin              |  ← Space outside the box
+|  +-------------------------+  |
+|  |        Border           |  |  ← Outline of the box
+|  |  +-------------------+  |  |
+|  |  |     Padding       |  |  |
+|  |  |  +-------------+  |  |  |
+|  |  |  |  Content    |  |  |  |  ← Text/Image/Other content
+|  |  |  +-------------+  |  |  |
+|  |  +-------------------+  |  |
+|  +-------------------------+  |
++-------------------------------+
+
+

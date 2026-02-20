@@ -1,0 +1,59 @@
+handling Non-click Events
+
+Nonclick event ke under bhot sare events aate hai ,onclick event generally button par dekhte hai
+
+NDN documentation -> Event reference --> you can see click events and non click events(you can try events which you want to)
+
+eg :dbclick event(double click) ,mouseover event
+
+function handleClick(){
+     console.log("Hello");
+}
+
+function handleMouseOver(){
+      console.log("bye");
+}
+
+function handleDbClick(){
+   console.log("you double clicked");
+}
+
+export default function Button(){
+         return(
+           <div>
+              <button onclick={handleClick}>click me!</button>
+
+              <p onClick={handleMouseOver}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+                 Reprehenderit sequi accusamus similique repudiandae esse atque consequuntur unde eligendi asperiores ipsa, 
+                 maxime alias ratione impedit nihil magnam aliquam nobis velit quod!
+              </p>
+                
+               <button onDoubleClick={handleDbclick}>on double click!</button>
+           </div>
+         );
+}
+
+if event name is mouseover =usko event ko handle krne keliye attribute use krege onMouseOver
+                 key press = onKeyPress
+                 key down=onKeyDown
+                 click  =onClick
+
+aisegi "on " add krke hamare attribute(event) ka name likh sakte hai an usa specific event ko hadle krne keliye function pass kr sakte hai
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+<button onDoubleClick={handleDbclick()}>on double click!</button> //kgar function ko exute kiye to yek bar hi run krega bar bar nhi( handleDbclick() means function ko abhi ke bhi run kro)
+                           |
+we know that after calling function execute,if we write "handleDbclick()" then function immediately execte ,but i want to call after ocuur event then "handleDbclick"
+use this 
+
+react interally :
+
+      onDoubleClick=()=>{
+             printHello();
+      };
+
+react itself call the function when the event happen ,react can execute the function only when the event occurs
+
+

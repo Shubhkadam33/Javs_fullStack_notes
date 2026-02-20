@@ -1,0 +1,34 @@
+method overloading and method overriding 
+jdk,jvm,jre
+type of datatype
+parent class of all classes in java-object class-blong to java.lang package
+constructor
+use of constuc-to initialize the object
+how to create object
+referece vaiable,normal var
+it well hold address of obj ,also we can treat as obj,obj name is ref var
+use of new keyword-it will allocate the memory ,store in heap area
+how to handle exeption -trycatch
+any  exception class you know-nullpointer,aritmatic
+checked and uncheked diff
+final
+any class you know in java-predined final class system,string ,collection
+can we create obj of final class -yes  we can create obj,only we ca not inherit his class 
+advanctage of collection  
+list and set
+arralist class ,tell merhod
+list iterato-nothing have hasnext, not hashprev and array iterator diff
+iterator can interate the data only in forword dirction,list iterator having the capability iterate data in forward and backword diection(both dirction),am not sure about it (short eg)
+internal working hash map(as in many interview)
+in map interface can insert multiple null values-yes but only one insert null key,dublicate valueis allowed but not dublicate key value
+in set can inser null- no why use for sorting if you insert the null so how will sort the data ,that problem came here that why insert not alloed null   value,it will thow null pointer exption
+how to achive abstraction -abstract class and interface and any diff bet them
+can i create obj of interface-no  we implement with classthen we create obj of inhrit classthen we achive this interface
+can we create constructor in abtract class-> yes
+can  i make abstact class as final-> no it will prevent from inheritance  and in abtract class inheritance should be threre to implenet the abtract method
+what is absteact method-to achive abstraction 
+can we create var like private,static,final ->yes in interface
+private mainly prevent from inhertace,static var it belong to class only,there is no need to create obj 
+can i create method as protected ->yes
+how to access protected method outside the package -proteted can not access outside the package but we can asees it but need to create child class then we can access proteted(ouside  packge is possible just need to create child class0
+ 

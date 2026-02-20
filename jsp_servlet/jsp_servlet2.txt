@@ -1,0 +1,36 @@
+core java-console bases
+jsp and servlet-dynamic web project
+spring mvc-maven project
+spring boot-spring starter project
+
+
+..........jsp_servlet...........................
+fontend-html ,css,js and backend-java 
+     like that
+frontend-html,css,js and backend-servlet(.java hi file hoti hai but yaha bola jata hai servlet file
+
+In servlet frontend and backend write in different pages
+
+servlet-sepate file of html and java(servlet)
+jsp-same file in html and java(backend)
+
+servlet also known as java servlet page because it is run on brower 
+
+why we switch jsp servlet to spring?
+jsp and servlet make old project and error more occur and less securityeasily hack,,low that why we switch spring
+
+why use spring instread of jsp servlet?
+spring provide mvc(model view controller)structure that also reason spring is secure
+if all frontend,backend all in one place then hacker easily hack
+we have to put diifert part like model(table put in different place),view(logic),controller(data kaha se kha jana hai yeh dekhta hai
+
+if all section diiffernt place then hacker not eaily hack
+
+why we switch spring to spring boot?
+in maven project  lot of error occurs this error not easily findout
+
+jdbc-manully write query
+hibernate-predefined query method ,it is provided by jparepository,hibernate provide shortcut of query
+  
+
+rest api-frontend is in different sotware and backend in diifernt software it is coonected by rest api

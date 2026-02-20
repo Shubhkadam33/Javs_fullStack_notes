@@ -1,0 +1,43 @@
+Attribute:
+It is provide additional information about tag.
+It is change the properties of one state to another state
+
+src-image path,it is used for accessing internal not external
+alt(alternative)-address wrong then display alt
+href(hyper reference)-we can give link of another website
+iframe -nested webpage(website inside website)
+
+element-It is combination of  opening tag,inside content(Inbetween content),closing tag 
+
+Div tag:
+Div is container used for other html element
+Div is a non sematic tag
+Div is a block level element
+Block element always start on a new line and take the full width of webpage
+It is used for large section
+
+
+span tag:
+span tag also container used for other html elements
+span is inline element(tag)
+inline element takes width as per size /only required width
+It is used for styling small portion of text
+It is does not start on a new line and continues on same line
+
+Block level element;
+start on new line
+take the full width of the page
+
+common block element:
+<div>,<p>,<h1> to <h6>,<ol>,<ul>,<li>,<table>,<tr>,<td>,<form>,<hr>
+<footer>,<section>,<article>,<nav>,<aside>,<main>
+
+inline element:
+do not start a new line
+take only the requird width
+
+common inline element:
+<span>,<a>,<img>,<b>,<i>,<u>,<strong>,<em>,<small>,<br>,<input>,<label>,<textarea>,<select>,<option>
+
+
+

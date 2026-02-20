@@ -1,0 +1,189 @@
+
+
+Before Collection Framework (JDK 1.2), we used arrays and legacy classes (vector, stack, dictionary, hashtable, enumeration).
+Arrays are fixed in size, have no built-in methods, and are less flexible.
+
+So to overcome these problems, Collection Framework was introduced to provide:
+
+Dynamic size
+Type safety (using Generics)
+Predefined methods
+Better performance
+Code reusability
+
+>Collection framework introduced in jdk 1.2
+>It is comes from Java.util package 
+>It is provided predefined interface, class ,method
+
+we can easily manipulate the data/obj by using methods
+
+ what is do you mean framework ?
+>It is predefined structure that have some set of rule ,regulation
+
+we can declare collection by using  two way 
+
+1)Generic collection
+2)non  Generic collection
+
+Syntax of collection:
+
+List studentdata=new List() //error
+we can not create obj of interface because interface is a  blue print of class
+
+1)List studentdata=new arraylist();
+2)Arraylist student=new arraylist();
+3) ArrayList<Integer> student=new arraylist();
+
+
+                                                         <<<<<<<<<<<<<<<<<<<<<<<<<<<<<List>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+*insertion order maintain in list
+
+List
+>List interface  have three clasees
+> 1)arraylist 2)linkedlist 3) vector
+ 
+..............Different between array and arraylist.....................
+
+array                                                                    arraylist
+  
+1)array have fixed size                                             arrylist have not fixed size
+2)array support both primitive and object                           arrylist support only object ,not primitives
+3)It is faster than ArrayList due to its static behavior            It is slower as compared to the array due to dynamic behaviour
+4)array only store homogenous data type only                        Arrylist store both homo and heterogeneous datatype
+5)It is type safe                                                   It is not type safe with genetics but safe with generics 
+6)array have less inbuild method                                    arraylist have many build in method
+7)Size is fixed. Cannot grow or shrink once created.                Size is dynamic. It grows/shrinks automatically when elements are added or removed.
+
+
+
+how to print arraylist ?
+> where is obj/data store->reference var so direct ref var name
+
+
+
+               <<<<<<<<<<<<<<prfefined methods >>>>>>>>>>>>>>
+
+add()- add obj at end of list
+
+add(index ,obj) - we we want to store obj in particular index then use,after applying this method particular obj shift right side
+
+addAll()-copying one list to amother list, It used to add all elements of one ArrayList into another ArrayList.
+addfirst()- It is a LinkedList method used to add an element at the beginning of the list.
+getfirst()-It will return first obj of list
+indexof()- is a method used to find the index (position) of a specific element in an ArrayList.If the element is not found,it return -1
+remove(by_index)-remove directly from index
+remove(by_obj)-remove direct from obj
+removeAll()-is a method used to remove all elements from the current list
+reverse()-Java does not have a direct reverse() method inside ArrayList.But we can reverse an ArrayList using: Collections.reverse(list);
+sort-This method sorts an ArrayList in ascending order.
+size-size of arrlist
+set(index,obj)-method is used to update the value at a particular index in an ArrayList.It replaces the old element with a new one
+contains()- method returns true if the element exists in the list, otherwise it returns false.
+offer()-It will add the element at last
+peek()-It will only retrive the head element
+poll:It will retrive and remove the head element
+peakLast()-It will retrive last element
+pollLast()-It will retive and remove element
+isEmpty()- is a method used to check whether an ArrayList has zero elements or not.
+
+
+insertion order maintain in list
+
+arrylist
+>arraylist implement  only array
+>It is fast for searching,sorting and updating existing element beause of random access
+>It is not thread safe beause it not synchronized
+>insertion and deletion is slow because it is required  more shifting 
+
+
+linklist
+>linklist implement double linklist
+>It is fast for insertion/deletion becuse only link are updated
+>It is not thread safe beause it not synchronized
+>searching is slow because it must traverse each node
+
+
+vector
+>vector implement dynamic array /it is similar like arrylist
+>It is legacy class
+>It is thread version of arrylist
+>It is  thread safe because it is synchronization
+>it is used for multithreading
+>vector is slower than  arraylist and linklist
+
+
+
+          ::::::::::::::::Different between Generic and Non-Generic :::::::::::::::::::::::
+
+
+Generic                                  Non-Generic
+It is Store homogenous obj         It is store heterogenous datatype
+It is provide type safe            It is not  type safe
+Introduced before java 5           Introduced in java 5
+
+
+
+:::::::::::::::::Iterator and ListIterator :::::::::::::
+
+
+Iterator                                     ListIterator
+It is travel only forward direction     It is travel both direction (forward and backward)
+can only remove element                 can add,remove and update(set) element
+work on all collection type             work only with list implementation
+
+Iterate using ListIterator (forward & backward)
+
+ListIterator<String> it = ll.listIterator();
+while(it.hasNext()) System.out.println(it.next());
+while(it.hasPrevious()) System.out.println(it.previous());
+
+
+Iterator is interface
+It is parent class of collection
+It is used for iterate one by one obj/element from collection
+Has 3 main methods: hasNext(), next(), remove()
+
+<<<<<<1st eg:>>>>>>>>>>>>
+
+import java.util.*;
+
+public class Demo {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        Iterator<String> itr = list.iterator();
+
+        while(itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+    }
+}
+
+<<<<<<<2nd eg>>>>>>>>
+
+📌 Removing element using Iterator (Important for Interview)
+
+Iterator<String> itr = list.iterator();
+
+while(itr.hasNext()) {
+    String value = itr.next();
+    if(value.equals("B")) {
+        itr.remove();   // Safe removal
+    }
+}
+
+Iterator is a interface
+iterator is method
+
+hasNext()-It will return true if there is next element present in collection
+next()-It will print the next element from collection
+
+Iterator it=new iterator(); //wrong we can not create obj of iterface
+
+
+
+

@@ -1,0 +1,41 @@
+if you want to change,delete insert the data throw java programming then java provide to us jdbc api
+
+precondition for jdbc (prerequisite)
+you should have any RDBMS like postgres,oracles,my sql
+
+1.install RDBMS
+2.username,password,portnumber
+3.mysql connector
+
+why need sql connector 
+rdbms is different software and eclipse is different software so sql connector used to connect rdbms to eclipse
+coonectivity between eclipse and rdbms 
+
+google->MySQL connector for postgres->jdbc driver for mysql(coonector)->download->select operating system->platform independent
+->zip file(not tar file for window)->start my download->MySQL connector->right click->extract all->click on unzip folder->
+->MySQL connector j.9.5.0->mysql-connector-9.5.09(executable jar file)-> copy
+
+....one problem.......
+org.postgresql.driver package not in this jar file so we have download from latesr different site
+
+https://jdbc.postgresql.org/download/  ->postgres jdbc driver (this is official site,binary jar file download for jdbc driver)->Java8-latest ->download ->postgresql-42.8.jar
+
+*Jdbc  driver used for  connect java application and RDBMS
+two way to past
+
+1) your project->right click and paste
+
+eg.  corejava8thsept
+     >JRE system library
+     > src -src open then
+     mysql-connector-j-9.5.0 jar
+
+
+2)project->right click->build path->configuration build path->libraries
+    if jre file in class path or module path->click on ->add external jre->MySQL connector 9.5(unzip folder)->postgresql-42.8.jar->open->apply->apply and close
+
+
+
+2nd why to add jar is better way,after adding jar file in where jre file isclasspath or module path then  reference library created automaticaaly belw you can see->mysql-connector-jar
+
+1st way  to add jar file-  not proper add

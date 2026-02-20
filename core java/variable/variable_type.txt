@@ -1,0 +1,46 @@
+variable -variable is a container where value will be store
+
+>jas datype madhe type aahet tse vaiable mdhe pan type aahet
+
+local variable
+>declare inside method
+>whenever variable is declared inside the method that time scope of var inside the method
+>which is not access outside the method 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+global vaiable:
+> inside the class and outside the method declare -global vaiable
+>declare outside method and inside the class and it is accessible by any method accept only static method
+>if you want to access global var in static method then you should make that var as static
+
+int n=450 //global
+
+static void first(){
+   //not access
+}
+
+void second(){
+   //access
+}
+void third(int i){
+ //aceess
+}
+
+there is same rules and regulation of static method
+>In static method  we cant "access any non static content" ,only we "access static content"
+we try to access global var in static method !
+>we cant access because global variable is  non-static that why we cant not access global var in any static method
+
+but you want to access global var in static method then !
+>use "static int n=40;
+
+that will be access in static ,non-static ,parameter
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q.main method is static or non static ?
+>static
+
+static method only belong to class
+non static method belong to class as well as obj

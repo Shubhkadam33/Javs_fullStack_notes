@@ -1,0 +1,219 @@
+Controller
+
+>acts as middleman between model and view
+>Receive user request(URL,API call)
+>calls the model layer to process login
+>Return view(Jsp/html) with data
+
+where is view in your project?
+>WEB-INF->pages->jsp pages
+
+URL used in @controller
+API call in @RestController
+
+if you dont have Frontend then use Postman,Gira tools
+
+after form submitting data not directly go to controller -> firstly component Scan  com.demo.controllers submit krke request yha tk jata hai
+------------------------------------------------------------------------------------------------------------------------------------------
+
+task-  we want after performing addition operation addition display in welcome page, then how  controller data pass to jsp page because controller have result data
+
+
+welcome.jsp
+
+<html>
+    
+    <h1> welcome page </h1>
+    <p> Request=${result}</p>
+   
+</html>
+
+result value pass to welcome.jsp page from controller
+
+when you want to pass data from controller that time not use "redirect" because redirect go to another method but our login in this method
+
+@modelAttribute  and mvc(m-model) both are differnt
+
+@ModelAttribute is model interface used for data pass from controller to jsp file also yeh page load krega
+m.addAtribute(key,value)
+             ("Result",result)
+                |        |
+ any thing you right    where is store addition operation->result variable 
+
+overall summary:
+
+index.jsp sumit -> action="add" ->go to controller ->controller find where->after match add to @postmapping ("/add") to->studentController
+->after matching data in num1 and num2 then addition perform->store in result s.op (result) console/->or->I want to store in brower in another page->model m->help to pass to page load
+
+drawbag of @Requestparam int num1 ,@Requestparam int num2 ?
+>if there is multiple vaiables then this method not good it is time consuming
+> means after submitting form yek yek var mai data store hone se achha obj mai store krna good
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+model means ->In spring we make bean student int id,name and uske getter setter bnaye the,uko yhapar bean bolte hai as well as bean bhi bolte hai
+
+model is used to after submiiting from assign data in this vaiable
+------------------------------------------------------------------------------------------------------------------------------------------
+model=means table
+
+where is male model ?
+src/main/java ->right click->new->class->package com.demo.models ->name:student->finish
+
+
+model also called bean
+both work same but bean used in spring core
+
+com.demo
+   |
+   |_ controllers(package in multiple controllers)
+   |
+   |_ models(package in multiple models)
+
+package com.demo.models;
+
+public class student{
+    private int id; //auto increment in database
+    private string fullname;
+    private string email;
+    private string password;
+
+//use getter and setter
+   
+
+src/main/java
+   |
+   |_ com.demo.controller
+   |                    |_ student.controller
+   |                    |
+   |_com.demo.models
+   |       |_ student(table)
+           |_ employe (different table)
+           |
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+go to index.jsp page
+
+because hmne to data beja hi nhi 
+
+remember: id skip ,id is auto increment
+
+<html>
+<body>
+   <form action="save" method="post">
+      <input type="text" name="fullname" placeholder="Enterfullname"><br><br>
+      <input type="email" name="email" placeholder="Enter email"><br><br>
+      <input type="password" name="password" placeholder="Enter password"><br><br>
+      <textarea name="address" placeholder="Enter address"></textarea><br><br>
+      <button type="submit">Submit</button>
+   </form>
+</body>
+</html>
+
+
+@PostMapping("/save")
+	public String save(@ModelAttribute Student s)
+	{
+	          
+	} 
+model->Student
+s->obj (data store in s obj)
+
+why we use @ModelAttribute instead of @Requesparam
+>if data is large then  that time use more sitable is @modelAttribute
+>and in this already getter and setter
+>in @Requestparam manually set the value
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+you can verify in s obj data is coming or not
+
+@PostMapping("/save")
+	public String save(@ModelAttribute Student s)
+	{
+	     S.O.P(s.getfullname());
+             S.O.P(s.getemail());
+             S.O.P(s.getpassword());      
+	} 
+
+run from index.jsp
+      
+in Brower
+      enter name:shubham
+      enter email:shubham12@gmail.com
+      enter password:1213
+
+      |submit|
+   error in browser because  hmne return kuch kiya nhi hai
+
+see in console: shubham
+               shubham12@gmail.com
+               password:1213
+
+means data controller tak ja chuka hai
+ 
+i want to store data in database then how?
+> index.jsp->controller->store data in database ?
+
+firstly set configuration in spring-servlet.xml that is (database,port,password)
+
+src->web-INF->pages->spring-servlet.xml             
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	         <property name="driverClassName" value="org.postgresql.Driver" />
+	         <property name="url" value="jdbc:postgresql://localhost:5432/springmaven1" />
+	         <property name="username" value="postgres" />
+	         <property name="password" value="Shubham123" />
+	 </bean>
+	
+	  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	     <property name="dataSource" ref="dataSource" />
+	  </bean>
+
+	   <bean id="dao" class="com.demo.dao.StudentDAO">    
+		 <property name="template" ref="jdbcTemplate"></property>    
+	   </bean>
+
+
+There no nned to write classForname ,prepared statement
+
+obervation:  how to connected bean to bean ?
+           > first bean id match with second ref
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DAO it is use for excute query:
+
+use jdbc template ref using autowring then yo can coonect with database
+every model have different Dao file
+
+src/main/java ->new->class->package name-com.demo.dao name-:studentDao
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

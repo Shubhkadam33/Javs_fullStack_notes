@@ -1,0 +1,146 @@
+import {useState} from "react";
+
+export default function Counter(){
+    let[count,setCount]=useSate(0); //initilation
+    console.log("Component is rendered !");
+    
+    
+    let incCount=()=>{
+        setCount(count +1);
+       
+    };
+    
+    return (
+        <div>
+            <h3>Count={count}</h3>
+            <button onClick={incCount}>Increase Count </button>
+        </div>
+   );
+}
+
+
+                           |
+                           |                 console
+states in react                            component is rendered !  
+count=8                                    ⓼ component is rendered !
+|increase Count |
+ 
+explain output:  
+<h3>Count={count}</h3>  yeha se pta chl rha hai yeh single value nhi horhi upper se niche tak update ho rha hai only igore initialation line
+
+how to work re-render ?
+> jiase hi set function ko call krte hai vaise hi upper se leke niche tak hamara puraka pura pura component re-render hota hai 
+                    yani yeh return vala part sirf execute nhi hota puraka pra method re-render hota hai
+
+             let[count,setCount]=useSate(0); //initilation ye fiest line sirf initialization ke liye use hoti hai ,this line ko already react ko pta hota hai ,dubara re-initlizate nhi krna hota hai
+            matlab yek bar count ki value yek bar 0 set krli par har re-render ke sath 0 set nhi krni hai
+            so initiation line igore kiya jata hai re-render mai baki sara code ka part hai vh re-render hota hai
+
+
+import {useState} from "react";
+
+export default function Counter(){
+    let[count,setCount]=useSate(0); //initilation
+    console.log("Component is rendered !");
+    console.log('count ={count}';
+    
+    let incCount=()=>{
+        setCount(count +1);
+        console.log('inside incCount ,count=${count}');
+    };
+    
+    return (
+        <div>
+            <h3>Count={count}</h3>
+            <button onClick={incCount}>Increase Count </button>
+        </div>
+   );
+}
+
+                           |
+                           |                 console
+states in react                            component is rendered ! |
+count=8                                    count=0                 |  before re-render 
+|increase Count |                                                  |  component 
+                                           
+                                           component is rendered!  |
+                                           count=1                 |
+                                                                   |after re-render this
+                                           component is rendered ! |output display
+                                           count=2                 |
+
+import {useState} from "react";
+
+export default function Counter(){
+    let[count,setCount]=useSate(0); //initilation
+    console.log("Component is rendered !");
+    console.log('count ={count}';
+    
+    let incCount=()=>{
+        setCount(count +1);
+        console.log('inside incCount ,count=${count}');
+    };
+    
+    return (
+        <div>
+            <h3>Count={count}</h3>
+            <button onClick={incCount}>Increase Count </button>
+        </div>
+   );
+}
+
+                           |
+                           |                 console
+states in react                            component is rendered !  | 
+count=2                                    count=0                  |
+|increase Count |                          inside incCount ,count=0 | fist click on button
+                                           Component is rendered !  |
+                                           count=1
+                                           
+                                           inside incCount ,count=0 |
+                                           Component is rendered !  | second click on  
+                                           count=1                  |  button
+
+inside incCount ,count=0 ---> count ki value 0 hi hoti hai jab component re-render hota  hai tbhi tabhi count ki value update hota hai
+                  yani yah  count var ki value sirf function call pr update nhi hoti 
+yeh render stage par update hoti hai ,re-render stage par value update hoti hai
+
+
+
+
+import {useState} from "react";
+
+export default function Counter(){
+    let[count,setCount]=useSate(0); //initilation
+    
+   
+    let incCount=()=>{
+        setCount(count +2);
+        console.log('inside incCount ,count=${count}');
+    };
+    
+    return (
+        <div>
+            <h3>Count={count}</h3>
+            <button onClick={incCount}>Increase Count </button>
+        </div>
+   );
+}
+
+                           |
+                           |                 console
+states in react                           
+count6                       
+|increase Count |                          inside incCount ,count=0 
+                                           inside incCount ,count=2 
+                                           inside incCount ,count=4
+
+hmesha console and ui mai upar niche dikrga kivki  console pe rerender ke bad hi yha updated value asses krna possible hai
+                                           
+                                           
+                                          
+
+
+
+
+

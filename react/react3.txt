@@ -1,0 +1,32 @@
+set up local Environment
+
+Create-React-App  v/s   Vite
+
+> you can use anyone React-App is old tool use for setup local environment
+>but now we use Vite tool (latest)
+
+vite is quicker and faster,better for development purpose with compare "Create-React-App" ,introduced in 2020
+
+google-> search->semaphoreci.com/blog/vite -> 4 reason why you should prefer vite over create-React-App(CRA)
+
+CRA is slightly slower than vite ->reason you can read this blog
+
+vite means in French lang is quick and fast
+
+maximum documentation 2020 ke hai ,vite ke blog nhi dikege so not get confused 
+
+vitejs.dev/guide/
+
+create new folder->open in vs code ->new terminal -> npm create vite@latest ->project name:basic-react-app(kucg bhi nam de sakte hai)->select framework:React ->select variant javascrpt
+->done (now out project is creted)
+
+how to ensure our project is creted ->In our folder basic-react-app is automatically creted in left side-> you can see in left side boiler file is automatically creted where we write our code
+
+node madule is not installed so -> terminal->cd basic-react-app->npm install -.you can see in console installing dependency ->npm run dev //start the server ->see in termial localhost(link)
+>copy and paste in brower
+
+why we install node module->after instaaling node module in babel dependency install ,babel convert jsx into js because dont understand jsx lang ,browser understand js lang 
+
+App.jsx /App.js you can write but you should write app.jsx because padne vale ko bhi samaj aayega yah react ki file hai but app.js error if this setup beuse normal js ka syntax lag hai and jsx mai combine js +html hai that why error but after setup not error in app.js
+
+jaise html ka boiler plate code hota hai usme hi changes krke code krte hai vaise hi yha boiler files and folder create hote hai  ismehi changes krke react app build kr sakte hai

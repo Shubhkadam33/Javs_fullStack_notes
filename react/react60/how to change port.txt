@@ -1,0 +1,14 @@
+how to change port
+
+1.open vite.config.js and Add
+
+    server:{
+       port:400
+    }
+
+Run:npm run dev
+
+firstly terminal stop then chage port number ,on new port run this project
+
+how to stop this project ?
+>ctr+c --->project stop

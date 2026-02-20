@@ -1,0 +1,23 @@
+jsx-javascript extension syntax
+
+>combine js with html
+
+.we can not convert jsx directly in js
+
+jsx is not real js becuse hme js sikha ta uska pura syntax follow nhi krta
+
+jsx internally convert into js code
+jsx ko transfile kiya jata hai, special tool hai jo transfile krta hai(which is called bable)
+babel tool transfile/convert jsx into pure js 
+
+jsx ->babel ->js->display in browser (inspect then you can see js code not jsx )
+        |
+      internal tool(when we install node module that time this babel dependency install)
+
+Q why we not use directly intead of jsx becuse at the end we convert into js file ?
+>beause it is more reaable ,easy to learn ,less code to write
+
+babel work behind the seen ,internally work hoga vo aapko covert krte huve nhi dikhega
+
+if you want to see how to convert jsx code into js then:
+babejs.io ->try it out(see in nav bar) ->copy jsx code and paste -.then it will conver into js code

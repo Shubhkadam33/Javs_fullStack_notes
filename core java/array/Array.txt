@@ -1,0 +1,76 @@
+***************************************************************************Array********************************************************************************************************
+
+>collection of similar datatypes store in single vaiable
+>It is the collection of homogenous data
+>array is the memory container location where you can store data in continuous memory
+
+int n=5,6; //X
+int marks={10,20,30} //X
+
+what is index ?
+>It is a place where your value will be store
+>It is position of element
+>array start with 0 index
+
+
+Advantage                                Disadvantage
+
+1.Random Access                          fixed size
+2.Homogeneous datatype                   can't store different type of data
+3.we can manipulate data(crud)           memory wastage
+4.fast and easy to update and Retrieve   more shifing nees while insertion and deletion
+5. searching and soring is fast          insertion and deletion is fast            
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+there is two way to declare array (syntax of array):
+
+1) datatype Array_name[] ={value1 ,value2}
+                 |
+            user-defined 
+
+int arr[]={10,20,30,40,50};
+       |
+      arr -->what will be the output when I write this
+       |
+    [I@#432gt$56]
+It will give you garbage value because every array of element store in diifernt index position so we can  not access array directly from array name
+
+>we can access array by using index
+
+arr[0]
+arr[1]
+arr[3]
+
+you can see -I want to acees array element again and again ,repetitive task so we use loop
+
+2)
+
+ datatype arrayname[]= new datatype[size]
+    |          |        |            |
+predefined userdefine  keyword     length of array
+
+eg.
+int ar[]= new int[10];
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+int marks={10,20,30} //error because compile marks is normal vaiable not array
+
+int[]marks={40,70,30,21}
+int marks[]={60,40,20,50};
+
+>[]-main [] yachamule kalate aapan array define kel aahe
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+array -length property   eg arr.length
+string-length() method
+
+In c lang there is no any method of length ,we manually calculate length of array/string
+
+If array size is 5 and you want to access index 6 position element that time we will get array "indexoutofBoundException "
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+type of array
+1.one dimension
+2. two dimension
+3.three diamension
+

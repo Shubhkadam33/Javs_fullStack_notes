@@ -1,0 +1,65 @@
+I want to display array in list form,there is two way:
+
+1) I want to sent array of html element,first li means array position index wise print
+
+let option= [<li>"hi-tech"</li> ,<li>"durable"</li> ,<li>"fast"</li>];
+                  |                    |                 |
+                  0                    1                 2
+
+
+
+function App(){ 
+   let options= [<li>"hi-tech"</li> ,<li>"durable"</li> ,<li>"fast"</li>];
+                                                                                     function product({title,price=1,features}){
+   return (                                                                              console.log(features)
+                                                                                     return(
+    <>                                                                                  <div classname="product">
+     <product title="photo" price={30,000}, features={options}/>                             <h3>{title}</h3>  
+     //<product title="laptop" price="40,000"/>                                               <p>{features}</p>
+    // <product title="pen"/>  // if i not pass price                                         <h5>price:{price}</h5>
+   </>                                                                                           
+  )                                                                                              
+                                                                                             
+                               |                                                                
+                               |                                                                
+                                                                                                
+                             phone                                                              
+                         price:30,000                                                        
+                         
+                         . "hi-tech"
+                         .  "durable" 
+                         .  "fast"
+
+2) ist way krneka shortcut tarikha,more effective
+
+const list=features.map((feature) => <li>{feature}</li>
+                           |
+                    har individual feature/element
+
+><li>"hi-tech"</li>  -> ise keke hum chahte hai har yek element krliye repeat krna chahte hai then use map method
+
+
+function App(){ 
+   const list=features.map((feature) => <li>{feature}</li>
+
+                                                                                     function product({title,price=1,features}){
+   return (                                                                              console.log(features)
+                                                                                     return(
+    <>                                                                                  <div classname="product">
+     <product title="photo" price={30,000}, features={list}/>                                 <h3>{title}</h3>  
+     //<product title="laptop" price="40,000"/>                                               <p>{features}</p>
+    // <product title="pen"/>  // if i not pass price                                         <h5>price:{price}</h5>
+   </>                                                                                           
+  )                                                                                              
+                                                                                             
+                               |                                                                
+                               |                                                                
+                                                                                                
+                             phone                                                              
+                         price:30,000                                                        
+                         
+                         . "hi-tech"
+                         .  "durable" 
+                         .  "fast"
+
+

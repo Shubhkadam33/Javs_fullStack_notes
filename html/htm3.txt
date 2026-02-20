@@ -1,0 +1,47 @@
+formatting tags
+
+Tag	            Use
+<b> / <strong>	  Bold text
+<i> / <em>	 Italic text
+<u>	         Underline text
+<br>	         Line break
+<hr>	         Horizontal line
+<del>            completely  not visible
+
+list:
+
+| List Type                | Tag    |
+| ------------------------ | ------ |
+| Ordered List (numbered)  | `<ol>` |
+| Unordered List (bullets) | `<ul>` |
+| List Item                | `<li>` |
+
+
+form:
+
+| Question                               | Short Answer                         |
+| -------------------------------------- | ------------------------------------ |
+| **What tag is used to create a form?** | `<form>`                             |
+| **Input fields are created using?**    | `<input>`                            |
+| **Dropdown**                           | `<select><option></option></select>` |
+| **Textarea**                           | `<textarea></textarea>`              |
+
+
+link and images:
+
+
+| Question                           | Answer                                                       |
+| ---------------------------------- | ------------------------------------------------------------ |
+| **How do you create a hyperlink?** | Use the `<a>` tag: `<a href="https://google.com">Google</a>` |
+| **How to display an image?**       | Use `<img src="image.jpg" alt="description">`                |
+
+
+
+| **HTML**                                                            | **HTML5**                                                                                                          |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Older version of web markup language.                               | Latest version of HTML with new features.                                                                          |
+| Does **not** support audio and video tags directly.                 | Supports **<audio>** and **<video>** tags without extra plugins.                                                   |
+| Mostly dependent on external plugins like **Flash** for animations. | Provides **Canvas** and **SVG** for drawing graphics & animations.                                                 |
+| No built-in support for offline storage.                            | Has **Local Storage** and **Session Storage** for offline data.                                                    |
+| Limited semantic tags.                                              | Provides new **semantic tags** like `<header>`, `<footer>`, `<section>`, `<article>` for better readability & SEO. |
+| Less focus on mobile responsive features.                           | HTML5 is designed keeping **mobile responsive web** in mind.                                                       |

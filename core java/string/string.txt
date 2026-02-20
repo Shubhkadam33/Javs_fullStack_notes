@@ -1,0 +1,108 @@
+string is calss in java that is immutable (we can't change ,can't modify)
+
+immutable means yuou canot modify ,change origanl string ,you can only change string tempory based 
+
+String variablename =new String("Name");
+
+>variable_name ---> this is variable name where string is store
+> new -new keyword used to create new obj of string
+>String =class
+
+there is two way to create string
+1)String s="fortune";  //by using string literals
+2) String s1=new String("fortune"); //by using new keyword
+
+
+>String literals store in Scp(String constant pool)
+>In heap area store array ,collection,obj
+>heap area also known as dynamic memory allocation
+>scp is small part of heap area
+
+String first="shruti";
+String second="shruti";
+
+In scp only String constant store.
+>scp have functionality that check before that String store or not ,if store then it will not provide memory allocation for  second variable 
+>when multiple string var store same data that time same addresss refer to string 
+.dublicate string not allowed in string
+
+2) String s1=new String("fortune"); //by using new keyword
+
+>when ever you are declaring string by using new keyword this string store into heap area
+>even multiple string have same data ,everytime new obj is created
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+String first ="shruti"  |_______ both data store in same memory address It is store in scp
+String second="shruti"; |
+
+String s1=new String("cloud");  |_____both data store in different memory address becuse every time new obj is created ,it is store in heap area
+String s2=new String("cloud");  | 
+
+Q.which is better for storing String ?
+>In scp there is no memory wastage and leakage problem
+                 |___________________________________|
+                               |
+                            memory effient
+if multiple string store same data then not provide different memory allocation ,same memory address refer to same string
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+different between equals() methods and == operator
+
+equals() methos check content
+== operator check memory address
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+String is immutable but if we want to change original value then :
+
+there is two class of string;
+1.StringBuilder
+2.StringBuffer
+
+StringBuilder str1 =new StringBuilder("Am");
+StringBuffer str2=new String Buffer("Good");
+
+why we use String builder ,String buffer
+>If you want to modify existing string then use mutable classes of String that is String builder and buffer
+
+In String buffer and builder use  append method for adding two string
+In normal string(immutable)- use concate method
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Heap                                                              scp( String constant pool)
+
+1.It stores object ,array ,class ,collection                    It stores String liternals
+2.can store dublicate object                                    canot store dublicate string literals
+3.performance of heap area is slower                            performace of the scp is fast
+4.not memory effient                                            memory effient
+5.String s=new String("FCI")                                    String s="FCI"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                  String                      String Builder                     String Buffer
+mutable           Immutable                    mutable                           mutable
+performance       slow                         fast                              slow
+thread safe       yes                          no                                yes(synchronization)
+memory ?          It will always create        It will modify same object        It will modify same object
+                  a new object in heap
+                  area
+
+String s=new String("pune");
+String Builder sb=new StringBuilder(pune");
+
+performance of string ?
+>String is mutable means we cannot change String that way string is slow
+         mofication of string is slow so String builder is fast
+
+>String buffer is slow because string is Synchronization
+                                            |
+                                          at a same time only one task execute
+non-syn means multiple task execute at same time
+
+thread safe ?
+>if one by task is exuted then we will get correct output but if multiple task exeute same time then not grantee of complete task
+                     that way String ,String buffer is thread safe because It is synchronous 
+
+            

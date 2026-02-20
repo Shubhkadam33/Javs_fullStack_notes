@@ -1,0 +1,80 @@
+PreparedStatement 
+
+🎯 Q: What is PreparedStatement in JDBC?
+
+Answer:
+PreparedStatement is an interface in JDBC used to execute precompiled SQL queries with dynamic input values.
+It is a sub-interface of Statement, but it is faster, safer, and more efficient than Statement
+
+⚙️ Why We Use PreparedStatement
+
+| Reason                               | Description                                            |
+| ------------------------------------ | ------------------------------------------------------ |
+| ✅ **1. Prevents SQL Injection**      | Protects database from malicious input.                |
+| ⚡ **2. Faster Execution**            | Query is precompiled once and reused many times.       |
+| 💬 **3. Easy to use with variables** | You can pass values at runtime using `?` placeholders. |
+| 🔄 **4. Cleaner code**               | No need to build SQL strings manually.                 |
+
+💬 In short (Interview 1-liner):
+
+PreparedStatement is a precompiled SQL statement used to execute queries multiple times with different inputs, providing better performance and security than Statement.
+
+you can use prepared statement to pass parametrized value into table
+    we can pass multiple value at a dynamic 
+PreparedStatement  ps=con.prepareStatement("insert into student3 values(?,?)");
+ps.setInt(1,202);
+
+baciaaly we pass parametrized value prepared statement
+(?,?) we set this value ps.setInt(col_index(count),setvalue)
+1  2     3    4     5
+id|roll|name|phone number
+
+package JDBCPROGRAMS;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class preparestatementdemo {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		//1.load  class of jdbc driver
+				Class.forName("org.postgresql.Driver");
+				System.out.println("jdbc driver loaded!!");
+				
+				//2.create connection portnumber,username,password
+				String URL="jdbc:postgresql://localhost:5432/java8sept";
+				           //rdbmsdriver://localhost:portnumber/databasename
+				String username="postgres";
+				String Password="Shubham123";
+				Connection con=DriverManager.getConnection(URL,username,Password);
+				System.out.println("2.connection is created....!");
+				
+				//3.create a statement
+				PreparedStatement  ps=con.prepareStatement("insert into student3 values(?,?)");
+				ps.setInt(1,202);
+				ps.setString(2,"chaya");
+				
+				ps.setInt(1,303);
+				ps.setString(2,"maya");
+				
+				
+				
+				
+				//4.execute the statement
+				ps.executeUpdate();
+				
+				
+				System.out.println("4.query exeuted!");
+				
+				//5.close connection
+				con.close();
+				System.out.println("5.connection close");
+				
+
+	}
+
+}

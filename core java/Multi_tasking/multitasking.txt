@@ -1,0 +1,247 @@
+                                                    multitasking
+                                                    /           \
+                                                   /             \
+                                                  /               \
+                                                 multiple +       task
+
+If this is one system(os -window) there is multiple task is going on behind
+
+
+go to ----> task manager -->app(6) In my case 6 app work on background /going on behind
+                             like media player ,Spotify ,task manager ,window explorer
+
+In one system multiple task execute that is called multitasking
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                         multitasking
+                                                         /           \
+                                                        /             \ 
+                                                       /               \
+                                       process based multitasking      thread based   multitasking
+                                           (multiprocessing)               (multithreading)
+    
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Multiprocessing: 
+
+                                            
+                                           chrome   spotify   media playert
+                                             \       |        /
+                                              \      |       /
+                                               \ ___________/
+                                               |OS system |
+                                               |__________|
+                                               /     |    \
+                                              /      |     \
+                                             /       |      \
+                                           cpu      cpu     cpu
+
+>Multiple process is running on same system at same time is called multiple processing
+> 1 processor means one cpu
+
+
+we connected multiple processor/cpu to OS and that processor execute particular task
+
+>we not learn this multiprocessing in java ,it is part of ENTC student
+
+you think that multiple processor like chrome ,teams ,notes that work parallel In reality no 
+            In mili second  that processor to process switch like In millisecond teams vrun  easy note ,easy note vrun chrome kde yetay
+
+that multiprocessing  maintain /achieve by OS
+
+> particular os excute /perform multiple task
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+thread based multitasking
+
+
+
+
+
+                                                ___________
+                                               |OS system |
+                                               |__________|
+                                               /     |     \
+                                              /      |      \
+                                             /       |       \
+                                          teams   easy note   chrome
+                                         /  |  \
+                                        /   |   \
+                                       /    |    \
+                               recording   chat   sharscreen
+
+team is main task and that main task under multiple substask
+                              that subtasks exeuted by thread
+
+>that subtask achieve by subtask
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+when we build /develop java application that time we use muti threading concept
+
+> particular os excute /perform multiple task
+In  particular task mdhe kay chalu aahe --->sub task
+
+>multiple subtask are executing at the same time called as multithreading this can be achieve in java programming lang
+
+another eg of multithreading:
+
+youtube
+
+you also observer youtube:
+
+
+     -------------------
+     |                | 
+     |   youtube      |
+     |    video       |
+     |                |
+     |----------------|
+  
+
+In that you tube video at background woring music ,progrees bar,caption ,mute ,unmute exeute in parallel
+           
+>that small small task going on that execute at a time
+>at a time he yek manus kru shakt nahi that way we need to create thread
+
+thread-> means a single unit on a small component that will execute particular task
+eg .
+1)yek thread krun progress bar pude neu shakto 
+2)second thread kdun caption
+3)thired thread throw video play
+4)4th thread vrun auto chalu 
+
+we divide work with different people that why performace increase ,save time and output lavkr yenar
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+main
+  |
+  |____ sub
+  |______add 
+  |_______Div  
+  |_______mul
+  |
+
+
+  
+you know java have already one "main thread"
+      and that thread kdun multiple task execute krto
+
+Q that thread sakle task parallely excute krto ka ?
+>no at a time will be one task execute after completing first task then move to second task
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+In multithreading we create user defined thread with the help of thread class
+
+sub---->t1
+Add---->t2
+Div---->t3
+mul---->t4
+
+>this will improve our performance that way multithreading need in java
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+1)process--->it is the task is execute on the system
+
+2) thread--->it is small unit/component that is derived from process
+
+eg eclipse:
+
+eclipse is nothing but process
+In that eclipse there is  small small task going on like create package ,dependency add , Jar file add ,project add
+
+thread is derived from process means it is part of process
+
+3) executing multiple task in same time is called multitasking
+
+4)we can achieve multitasking two ways:
+    
+   i) process based multitasking
+
+                                         chrome   Spotify   media player
+                                             \       |        /
+                                              \      |       /
+                                               \ ___________/
+                                               |OS system |
+                                               |__________|
+                                               /     |    \
+                                              /      |     \
+                                             /       |      \
+                                           CPU      CPU     CPU
+
+whenever your system connected to multiple processor is called process based multitasking
+               multiple processor execute task at same time
+
+
+    ii) thread based multitasking 
+
+                                 
+
+                                                ___________
+                                               |OS system |
+                                               |__________|
+                                               /     |     \
+                                              /      |      \
+                                             /       |       \
+                                     Recycle bin file manager MS world
+                                     
+
+recycle bin:
+1)you can sort the file
+2)you can delete the file
+3) you can sort the file according to time or title or size
+
+so there is small small task are going on
+        that small small task execute /perform by thread
+
+
+5) multithreading ----> executing multiple thread at the same time is called multithreading
+
+6)why we need learn multithreading ?
+> to improve the performance of OS /application /system so we need multithreading
+
+
+Without Thread (Single-Threaded)
+If a system works without threading, it does one task at a time.
+Example:
+First, you listen to audio of the YouTube video.
+After that finishes, you watch the video.
+Then you read the captions.
+Then you watch again on mute.
+Each step happens one after another.
+This takes more time.
+
+without multithreading so 5 min cha video 3-4hr lagnar
+
+--------------------------------------------------
+
+with thread- we allocate task to thread so increase performance of allocation
+
+
+7) what is scope /where use multithreading
+> system/software
+>youtube application
+>gaming application  |most
+>animations          |use
+
+
+----------------------------------------------
+
+candy crash
+after candy crash new cash comes from up
+paralley point increase
+new award will get
+background music play
+
+small small task going on
+
+we require multithreading in gaming application /animation /software
+
+
+                          
+                                                                      
+                            

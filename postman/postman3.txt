@@ -1,0 +1,111 @@
+how to fetch data from database ?
+
+open postman --> get(method) ---> http://localhost:1232/viewstudents --> see in response
+
+we want to fetch data which is submit registration form
+
+>now postman se request bhejuga but vo request hogi get vali
+
+
+@RestController
+@CrossOrigin("*")
+public class MyController {
+	
+
+
+        @Autowired
+	StudentService ss;
+
+	@GetMapping("/viewstudents")
+	public ResponseEntity<List<Student>> viewstudents(){
+		try
+		{
+			List<Student>data=ss.getallstudents();
+			return ResponseEntity.ok(data);
+		}
+		catch(Exception e){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();  //build only used for sirf error throw krne keliye use hota hai
+
+		}
+	}
+	
+	
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+service file -->
+
+@Service
+public class StudentService {
+	
+	@Autowired
+	StudentRepo sr;
+		
+	public List<Student> getallstudents(){
+		return sr.findAll(); //select*from student
+	}
+
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+@Repository
+public interface StudentRepo  extends JpaRepository<Student,Long>{
+	
+	Optional<Student>findByEmail(String email);
+   
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public ResponseEntity<List<Student>> viewstudents(){
+                        |
+                     controller mai  student list mai data get kiya
+                     
+
+pahle response mai status code and hmara cusyom message de rhe the , now nikal dena 
+
+
+@Getmapping("/viewstudent") becuse hmne request get kai thi
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@Getmapping("viewstudents");
+public ResponseEntity<?>
+                      |
+                 now ? nhi aayega list of student aayega ,? menans null empty hai , to abhi vaisa nhi hai so "list of student aayega " kivki yah list mai return krne vala hai hmko"
+
+
+List<Student>data=ss.getallstudents();
+                          |
+                        udhar ka function call krege 
+
+
+ >for this case let see how to reponse "phle jaisa nhi dena hai"                     
+
+>jab aapko data return dena hota hai tab sirf "ok( )" likho
+                                                  |
+                                               isa body ke under request data  de dena
+                                        
+                                                
+List <student>data =ss.getallstudents();
+return ResposeEntity.ok(data)
+
+>fail uva to previous vala catch logic likna
+>means service file ka data student mai collect hoga and store in data and data response mai bhej dena
+
+
+
+
+
+
+
+
+
+

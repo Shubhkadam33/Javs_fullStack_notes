@@ -1,0 +1,69 @@
+statement interface
+It is used for run this query(statement)
+Statement interface is good when ever you are pass a only one statement,if want to store data dynamically,dynamic operation then use prepared statement
+
+it is use for single statement/query
+String insert="insert into student2 values(101,'pooja')" ,String create_table="create table student3(id int,name varchar(49))";
+
+🎯 Q: What is Statement in JDBC?
+
+Answer:
+Statement is an interface in JDBC used to execute static SQL queries (like CREATE, INSERT, UPDATE, DELETE, SELECT) against the database.
+
+It is mainly used when the SQL query does not change at runtime.
+
+⚖️ Difference Between Statement and PreparedStatement (Interview Tip)
+
+
+| Feature                   | **Statement**                       | **PreparedStatement**         |
+| ------------------------- | ----------------------------------- | ----------------------------- |
+| Query Type                | Static                              | Dynamic                       |
+| Compilation               | Compiled every time                 | Precompiled once              |
+| Performance               | Slower                              | Faster                        |
+| Security                  | Not secure (SQL Injection possible) | Safe (Prevents SQL Injection) |
+| Placeholder (`?`) support | ❌ No                                | ✅ Yes                         |
+
+
+💬 In short (1-line answer):
+
+Statement is used in JDBC to execute static SQL queries directly on the database — suitable for simple, one-time operations.
+
+package JDBCPROGRAMS;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+public class jdbcday1 {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		//1.load  class of jdbc driver
+		Class.forName("org.postgresql.Driver");
+		System.out.println("jdbc driver loaded!!");
+		
+		//2.create connection portnumber,username,password
+		String URL="jdbc:postgresql://localhost:5432/java8sept";
+		           //rdbmsdriver://localhost:portnumber/databasename
+		String username="postgres";
+		String Password="Shubham123";
+		Connection con=DriverManager.getConnection(URL,username,Password);
+		System.out.println("2.connection is created....!");
+		
+		//3.create a statement
+		String create_table="create table student3(id int,name varchar(49))";
+		Statement st=con.createStatement();
+		System.out.println("3.statment is created!");
+		
+		
+		//4.execute the statement
+	
+		st.executeUpdate(create_table);
+		System.out.println("4.query exeuted!");
+		
+		//5.close connection
+		con.close();
+		System.out.println("5.connection close");
+		
+
+	}
+
+}

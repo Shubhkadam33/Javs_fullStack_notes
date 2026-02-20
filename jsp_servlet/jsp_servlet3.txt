@@ -1,0 +1,37 @@
+| **Servlet**                                                  | **JSP**                                                     |
+| ------------------------------------------------------------ | ----------------------------------------------------------- |
+| servlet is a java code                                       | jsp is a HTML-based compilation code                        |
+| servlet is difficult to code than jsp as it is HTML and java | jsp is easy to code as it is HTML and java                  |
+| servlet is faster than jsp                                   | jsp is slower than servlet                                  |
+| servlet can accept all protocol requests                     | jsp only accept HTTP request                                |
+| In servlet we can override the service() method              | In jsp we cannot override the service() method              |
+| It can handle extensive data processing                      | It cannot handle extensive data processing very efficiently |
+|servlet act as controller                                     | jsp act as viewer                                           |
+
+
+Servlet:
+
+A Servlet is a Java program that runs on a server and is used to create dynamic web content.
+It acts as a middle layer between a web browser (client) and the database or business logic (server side).
+
+Why Use Servlets?
+ Platform independent (Java-based).
+ Can use JDBC for database access.
+ Foundation for JSP, Spring MVC, etc.
+
+
+Jsp:
+JSP stands for Java Server Pages.
+ It is used to create dynamic web pages using Java + HTML.
+ Works on top of Servlet technology — every JSP is internally converted into a Servlet.
+
+
+Why Use JSP?
+ Easier than Servlets
+ Separation of Design & Logic
+ Automatic Servlet Conversion
+ Built-in Objects
+ Supports Reusability
+ Integration with JavaBeans & MVC
+ support tag library(jstl)
+support expression lang(EL)

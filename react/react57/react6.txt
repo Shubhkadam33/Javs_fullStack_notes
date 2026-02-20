@@ -1,0 +1,180 @@
+useState():
+
+> useState is React Hook that lets you add a state variable to your component
+
+const [stste ,setState] =useState(initialState);
+
+useState return an array with exactly two values:
+1. The current state.During the first render,it will match the initialation you have passesed.
+
+2. The "set function " that lets you update the state to a different value and trigger a 
+
+-------------------------------------------------------------------------------------------
+
+react Hook means aise function jo state ke sath deal krneme help krte hai
+
+state vaiables menas aise var jinke under changes aane par usa case me react component ko re-render krna pdta hai(that timr use state var ,not normal var ,props use that time)
+
+agar hme event ke basic pe UI mai changes chahiye that time use "state"
+
+react.dev --->use state -->read documentation for more knowledge
+
+--------------------------------------------------------------------------------------------
+
+const [stste ,setState] =useState(initialState);
+                               |
+our useState method in we firsly pass initial state just like count=0 means initialization value  ,if we want to start from 0  our "state variable" then write "useState(initialstate);"
+
+useState(initialState);  this method return array (jiske under 2 element hote hai)hmesha 2 values hogi ,na 2 ,na 4
+
+first element means : state variable  eg if useState(0) menas if we pass(shuruvat mai) initial value pass 0 that time (state variable)  for eg count value will be 0 "count=0"
+    then uske bad update hoti jayegi state var value
+
+second element means: there is a set function yani yah aisa method hota hai jiske under state variable ki value update hoti hai
+               jab setstate method call hoti hai tab phle state var ki value update hoti hai then uske bad re-render hota hai pura ka pura component hota hai vah
+
+This method also called "updater function" kivki iska kam hota hai hmare state variable ko update krna
+-------------------------------------------------------------------------------------------
+now we learn how to bild counter using "useState"
+
+useState()  //It will return array
+
+firsly we see in that array actual mai kya print hota hai
+useState() //we can not use directly this method ,firstly we have to import from react
+
+import {useState} from "react";
+
+ Counter.jsx:
+
+import {useState} from "react";
+
+export default function Counter(){
+   let arr= userSate(0);
+   console.log(arr);
+   
+  return (
+       <h1>useState method </h1>
+  );
+}
+                 |
+           see in console
+
+[0, f]
+0:0
+1: f()
+length:2
+
+[intial value of state var(eg count var) ,function where start var value will be updated]
+
+eg     let arr= userSate(10);
+             |
+        [10 ,f()]
+         0:10
+         1:f()
+          
+        
+-----------------------------------------------------------------------------------------
+
+generally most time in react ,apne array hai unko deconstruct krte hai
+   let arr= userSate(0);
+not write that like
+
+let [stateVaiable ,setSateVaiable]= useSate(0);
+        |______________|
+               |
+               |
+           both name are userdefined but remember write meaningful and standard 
+
+if there is count var(normal var) and I want to make that var state var then:
+
+let [count ,setCount] =usestate(0);
+      |
+   now this count var make state var
+
+
+------------------------------------------------------------------------------------------
+
+import {useState} from "react";
+
+ Counter.jsx:
+
+import {useState} from "react";
+
+export default function Counter(){
+   let [count ,setCount]= userState(0);
+   
+   let inCount = () => {
+        count =count +1;
+        console.log(count);
+       
+  return (
+     <div>
+       <h1>Count ={count}</h1>
+       <button onClick={inCount}> Increase Count </button>
+    </div>
+  );
+}
+     
+
+              |                                                    console
+
+           states in React                                           1
+               count=0                                               2
+                                                                     3
+          | increase Count |--->click on button
+
+
+
+issue is not update count value in UI
+
+-------------------------------------------------------------------------------------------
+
+issue is not update count value in UI
+
+count re-render nhi ho rha beacuase sirf count mai changes krnese kuch nhi horha
+             hme "SetCount" method se count ki value update krna hai
+so count ki value ko update krne keliye "isa bar  setCount method use krege " 
+             setCount mai hamari new value pass kr sakte hai
+   
+
+setCount(count+1) //yeh actually re-render ko trigger krvata hai
+
+
+
+export default function Counter(){
+   let [count ,setCount]= userState(0);
+   
+   let inCount = () => {
+        setCount(count+1)  // this is not better way to pass value ,we can learn tomorrow 
+        console.log(count);
+       
+  return (
+     <div>
+       <h1>Count ={count}</h1>
+       <button onClick={inCount}> Increase Count </button>
+    </div>
+  );
+}
+     
+
+              |                                                    console
+
+           states in React                                           0
+               count=0                                               1
+                                                                     2
+          | increase Count |--->click on button
+
+              |
+           count=1
+           count=2
+           count=3
+             
+notice :see in UI and console
+
+jo UI mai count value and console mai count value mismatch ho rha hai ,vo chij isliye occur kr rhi hai because hmara re-render alag tarh se work krta hai             
+
+
+
+     
+        
+  

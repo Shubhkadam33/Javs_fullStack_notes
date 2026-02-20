@@ -1,0 +1,69 @@
+day feb
+
+Q.you have to verify can one thread perform single task ? -->yes
+one thread ---> single task
+one thread ---> multiple task  (this is possible)
+
+when we use thread.sleep in "run method " that time we only handle by try/catch block
+                  why not handle throws "keyword "
+
+because run method is prefined if we write throws in this method level it will give you error so even they not suggest you handle by throws
+
+
+if we write thread.sleep in main method that time they suggest you can handle that exception by throws or try/catch block
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+one thread and multiple task is possible but it is timeconsuming 
+
+     one thread -->multiple task 
+             that is not needed becuse allreday main method do this " one thread -->multiple task "
+ but this is not multithreading,becuse if we want to achieve multithreading then we need to create thread
+
+if we assign multiple task for single thread then what happen --> it will a time cosuming process ,It will low your performance of the application
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+create obj                   New
+                              |
+After calling start()      Runnable<-------|
+                              |            | Not Runnable ( sleep ,yield ,join ,wait)
+JVM assign processor to    Running -------->
+thread                        |
+                              |
+After executing task        dead                        
+
+
+how thread go to Running to Runnable state ?
+> When we use sleep ,join ,wait that time thread go to not Runnable state
+
+
+when any thread excute that time if  any interception come that time that interception stop your execution 
+                that time it will throw exception which is checked exception 
+that check exception handle by throws or try block 
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+why we use thread.sleep ?
+>after applying thread.sleep we understand how actually thread execute one by one
+               means so you understand how thread switch in millisecond
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+summary:
+
+1)one thread ---> single task
+2)one thread ----> Multiple task (time consuming)
+3)Multiple thread --> single task
+4)Multiple thread --> Multiple task
+
+2) it will time consuming activity ,in actual you not here is multithreading  (if we want to achive multithreading then we need multiple threading
+   In large app this is not use because  it is work one by one
+
+
+3)
+
+

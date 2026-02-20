@@ -1,0 +1,230 @@
+Handling Multiple inputs:
+
+>we create a common handleInputChange() for all elements
+
+event.target.name  -------> changed field
+event.target.value -------> new value of the field
+
+
+if we want to handle multiple input then firstly we try basic approach 
+
+export default function Form(){ 
+  let [fullName,setFullName]=useState("");
+  let [username,setusername]=useState("");
+
+  
+  let handleNameChange=(event)=>{
+   setFullName(event.target.value);
+  };
+
+  let handleUsername=(event)=>{
+   setUsername(event.target.value);
+  };
+
+
+return(
+  <form>
+     <label htmlFor="fullName">Full Name</label>
+     <input placeholder="enter full name" type="text" value={fullName} onChange={handleNameChange} id="fullName" />
+     <button>submit</button>
+     
+      <br><br/>
+
+     <label htmlFor="username">username</label>
+     <input placeholder="enter full name" type="text" value={username} onChange={handleUsername} id="username" />
+     <button>submit</button>
+   </form>
+)
+
+
+                                           |
+                                           |
+                              fullname |       |
+
+                              username |       |   |submit|
+
+
+>here there is small problem that is abhi to hmare pass do input box hai
+       if we want to bahut sare details leni hai like firstname ,middlename ,lastname ,email ,password , age
+
+if we write same logic for multiple input then it get complext becuse we write same loic repear kije usestate,method
+
+-------------------------------------------------------------------------------------------
+
+that way now we create common handler
+
+    handler           onChange
+      |                 |
+      |_________________|
+single function ke help se onchange invoke hoga
+
+yeh common handler aab changes ko treak krega
+
+
+target--->which field change                  | ina dono ki information hmesha event obj ke pass hoti hai
+value---->target ke under kya value aay hai   |
+
+-----------
+
+now we have to push all loic in same function
+
+we want to store all form related information store in obj
+
+object
+{
+   fullName:" "
+   username:" "
+   password:" "
+}
+
+now that single obj treak  all thing of from state
+
+-------------------------------------------------------------------------------------------
+
+export default function Form(){ 
+     let fieldName=event.target.name;
+
+  let handlInputChange=(event) => {
+     let fieldName=event.target.name;
+     console.log(fieldname);  //fulname
+  
+ }
+
+return(
+  <form>
+     <label htmlFor="fullName">Full Name</label>
+     <input placeholder="enter full name" type="text" value={formData.fullName} id="fullName" onchange={handleInputChange} name="FullName"/>
+     <button>submit</button>
+     
+      <br><br/>
+
+     <label htmlFor="username">username</label>
+     <input placeholder="enter full name" type="text" value={formData.username}id="username" onChange={handleInputChange} name="username"/>
+     <button>submit</button>
+   </form>
+)
+
+---------------------------------------------
+ let fieldName=event.target.name;---->
+>yeh field name kahase aayena target.name se aayega
+    target ke under name property aani chahiye matlab "dono input element mai name 
+property/attribute use
+
+there is one trick
+<input name="">
+<input name="">
+
+what write inside name ?
+>can write anyting like name="abc" ---> no
+
+>ham amare input element ko jo nam dege vohamare state variable ke sath match krna chahiye
+eg name=" "
+         |
+      match with state vaiable name  eg    let [formData setFormData]= useState({ fullName:"" , username:""});
+
+that way
+ name="FullName"
+ name="username"
+
+>why iske picheka reson kya hoga ?
+if input element name "fullname" then in fieldname   print fullname
+    then isa fullname value ko kha use krege--> is fullname value ko ham log use krege "state var ke under isa key(fullname) ko access krne keliye
+    that way     ye vali  let fieldName=event.target.name; and      let fieldName=event.target.name; yeh dono match hone keliye yeh name="fullname" match hona chaiye
+
+                              |
+
+
+
+jise hi onchange event hoga ye function invoke hoke console pe print krega
+
+
+
+
+                                           |
+                                           |                                                                  console
+                              fullname |       |                                                                 fullname
+                                                                                                                 username
+                              username |       |   |submit|                                                      
+
+                              >whwn we write anything insdide that box then see in console but not chahes in input box becuse we dont write setfunction  
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+export default function Form(){ 
+     let [formData,setForm]=useState({fulName:"" ,username:""})
+
+  let handlInputChange=(event) => {
+     let fieldName=event.target.name;
+     let newValue=event.target.value;  // now wrir this to see which we tyoe text in input box
+
+     //console.log(fieldname);  //fulname
+     console.log(newValue)
+  
+ }
+
+return(
+  <form>
+     <label htmlFor="fullName">Full Name</label>
+     <input placeholder="enter full name" type="text" value={formData.fullName} id="fullName" onchange={handleInputChange} name="FullName"/>
+     <button>submit</button>
+     
+      <br><br/>
+
+     <label htmlFor="username">username</label>
+     <input placeholder="enter full name" type="text" value={formData.username}id="username" onChange={handleInputChange} name="username"/>
+     <button>submit</button>
+   </form>
+)
+
+--------
+
+     
+                                           |
+                                           |                                                                  console
+                              fullname |       |                                                                 a
+                                                                                                                 b
+                              username |       |   |submit|                                                   
+      
+when user type in input box then we can see in console now but not see in input box
+
+----------------------------------------------
+
+
+
+export default function Form(){ 
+     let [formData,setForm]=useState({fulName:"" ,username:""})
+
+  let handlInputChange=(event) => {
+     let fieldName=event.target.name;
+     let newValue=event.target.value;  // now wrir this to see which we tyoe text in input box
+
+     //console.log(fieldname);  //fulname
+     //console.log(newValue)
+setFormData((currData)=>{
+    currData[fieldName]})
+  
+ };
+
+return(
+  <form>
+     <label htmlFor="fullName">Full Name</label>
+     <input placeholder="enter full name" type="text" value={formData.fullName} id="fullName" onchange={handleInputChange} name="FullName"/>
+     <button>submit</button>
+     
+      <br><br/>
+
+     <label htmlFor="username">username</label>
+     <input placeholder="enter full name" type="text" value={formData.username}id="username" onChange={handleInputChange} name="username"/>
+     <button>submit</button>
+   </form>
+)
+
+
+now hame kya krna hai -->state var ke under fieldname ko dudke assing krni hai new value
+
+then how to assign any value in obj ?
+>noe filedname ko find krke assign krna hai
+
+when we deal with obj -> tab  onj ke key ke sath deal krna kabhi nhi hota hai ,purni obj ko puri tarh reconstruct krke nhi obj assigh krni pdhti hai tabhi "hamare obj mai chsges valid mana jata hai"
+
+

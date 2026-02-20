@@ -1,0 +1,78 @@
+styling ko add krneke bhut sare tarikhe hai in react
+>React ke under kafi sare styling tool exists krte hai
+>abhi hab "styling tool" ke bare mai bat nhi krge kivki ham abhi beginner stage pr hai
+>abhi ham bat krege normal kudse bnai huvi css kaise likh sakte hai vo bat krnevale hai
+
+
+there is two way to styling component:
+
+              style.css
+              /    |   |__________productlist.jsx
+        app.jsx  product.jsx
+
+it is correct but not standard way to write
+
+>each component have separate css file ,we component wise divide css file
+
+App.jsx -> App.css
+product.jsx ->product.css
+productlist.jsx -> productlist.css
+
+notice: same component file name as css file name,it is not mandatory but standard way so every one understand 
+
+eg: component filename, function name ,css filename =same name so easy to understand
+
+-------------------------------------------------------------------------------------------
+
+product.jsx:
+
+function product(){
+    return (
+       <div className="product">
+           <h3> product Title</h3>
+           <h5> product Description</h5>
+    )
+
+standard way:  <div className="product">  generally outer/root element ko className dete hai kisi bhi component ke under className same hona chhiye as the component itself
+
+ but you can write different name also  eg <div className="box1">
+-------------------------------------------------------------------------------------------       
+
+how to connect css file to jsx file ?  -> import "./product.css" //import then directly write css file name
+
+how to connect css file in html ->using "link" tag
+    but in react ham import krte hai
+
+>react ke under something called webpack
+>webpack react ke under possible krata hai import and export functionality ko
+>webpack ke under additional feature hota hai ki ham css file ko impoer,export kr sakte hai
+
+-------------------------------------------------------------------------------------------
+
+product.css
+
+.product{
+    border: 1px solid white;
+    border-radius:24px;
+    border-bottom:5px;
+    padding-bottom:5px;
+    padding: 0.5px 0 5px
+
+}
+
+//there is not need export we can directly import css file
+
+product.jsx:
+
+import "./product.css
+function product(){
+    return (
+       <div className="product">
+           <h3> product Title</h3>
+           <h5> product Description</h5>
+    )
+
+
+
+
+

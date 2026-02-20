@@ -1,0 +1,243 @@
+why we learn form element 
+becuse with compare to other dom element like <p>,<div>,<h1>(inme thodese changes hote hai). our form element like <iput>,<button>,<submit> behave different mensa its special elemnet
+
+>that all form element apni "internal state "khudh mantain krte hai 
+>this internal state menas not react state (hamyha react state ki bat nhi kr rhe hai)
+>this internal state menas ina element ke pass kuch internal data ,internal information maintain hota hai aur inke sath aur default behavior inke sath aate hai ,hamare liye shayad as a programmer desirable na ho
+
+eg. when we form submit that time with tha bases of event we want to sumit from like onchange ,onSubmit when we refresh page data dissappear as soon as submit "that is default behaviour of form
+
+from submit ->data aceess ->then we work with data  //today not learn that concept we learn differnt concept
+
+if har yek element kudse internal state maintain krega to react state ka mtalab hi nhi hoga
+    that way react ne concept laya hai if we want to control that element with the hepl of "controll component"
+
+what is use of control component ?
+> form ke differnt differnt element hai ya form  ham chahte hai apni kudha ki internal state na ho use jobhi state de die jaye vo react de ,react ke state vaiable throw uske sare ke sare changes track kiye jaye using like setstate ,state variables that like have then react control that form element
+
+
+"single source of truth" means kisibhi point mai check krna ho input box kya lihha hai kya likha nhi hai . isa trhikeke chije element se nhi puchege oha ham "react ke state var se puchege " kivkki vhi hamara single truth of element hoga
+
+---------------------------------------------------------------------------------------------
+normally jaise form hai visebhi use kiya ja skta hai par ham react ke under vaise use nhi kr sakte hai
+        standard way kya hai to use form ? ---> controlled component 
+
+with the hep of state we can track changes which in foem elemet
+-------------------------------------------------------------------------------------------
+App.jsx
+
+import "./App.css";
+import form from "/from:;
+
+function App(){
+  return(
+       <>
+         <Form/>
+       </>
+  );
+}
+
+export default App;
+
+
+export default function Form(){
+   return(
+       <form>
+            <input placeholder="enter full name"/>
+            <button>Submit</button>
+       </form>
+   );
+}
+
+
+this is normal way to write form code ,in this code form kudh se internal state maintain kr rha hai
+   i want to jistne bhi input  element hai unke sath react state ke sath assiate kre
+-------------------------------------------------------------------------------------------
+
+import {useState } from "react";
+
+export default function Form(){
+   let [fulName ,setFulName]=useSate("");
+
+ return(
+    <form>
+        <input placeholder="enter full name" type="text"/>
+        <button>Submit</button>
+    </form>
+);
+}
+
+
+we want to connect this state var to <input element>( we want to assiate react state with form element) how ?
+
+
+------------------------------------------------------------------------------------------
+
+value={fullName}
+jobhi input ke under value rkhi hogi vo hmari state var ki value hogi
+
+
+
+import {useState } from "react";
+
+export default function Form(){
+   let [fulName ,setFulName]=useSate("shubham");
+
+ return(
+    <form>
+        <input placeholder="enter full name" type="text" value={fullName}/>
+        <button>Submit</button>
+    </form>
+);
+}
+                   
+                        |
+                        |
+                   |shubham |   |Submit|
+                       |
+                    this appear because of "we value associate with react state "
+
+ 
+-------------------------------------------------------------------------------------------
+
+|shubham |   |Submit|
+
+>notice that : we we try to remove one letter or added some content that time not change that value
+     because koi change tbhi aayega tabhi value ke under kuch change aayega ,value ke under tabhi chages aayega  jab fullname ke under change aayega
+         so we can achive this with the help of event
+
+        <input placeholder="enter full name" type="text" value={fullName} onChange={}/>
+>input ke under konsa event hota hai ---->onChange 
+>onchnge event jisehi hot hai ,ham chahte hai hmare fullname keunder Harari value aajaye
+      menas input box ke under kohibhi vhange aaye then ham fullname state var ke under leke aaye
+
+ ------------------------------------------------------------------------------------------
+
+
+import {useState } from "react";
+
+export default function Form(){
+   let [fulName ,setFulName]=useSate("shubham");
+
+   let handleNameChange =(event) =>{
+        console.log(event.target);
+   };
+
+ return(
+    <form>
+        <input placeholder="enter full name" type="text" value={fullName}  onChange={handleNameChange}/>
+        <button>Submit</button>
+    </form>
+);
+}
+                   
+                        |                                                                                            console
+                        |                                                                                 
+                   |shubham |   |Submit|                                            <input placeholder="enter full name" type="text" value={fullName} onChange={handleNameChange}/> 
+                   
+                      |  
+                    when we try to type in that input box see in changes in console (target kis element ko kiya hai vh print hoga console pe       
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                  kya new value /updated value hmare pass aai
+                                   |
+        console.log(event.target.value);
+                            |
+          konse element ko target kiya hai
+                        
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+import {useState } from "react";
+
+export default function Form(){
+   let [fulName ,setFulName]=useSate("shubham");
+
+   let handleNameChange =(event) =>{
+        console.log(event.target.value);
+   };
+
+ return(
+    <form>
+        <input placeholder="enter full name" type="text" value={fullName}  onChange={handleNameChange}/>
+        <button>Submit</button>
+    </form>
+);
+}
+                   
+                        |                                                                                           
+                        |                                                                                 
+                   |shubham |   |Submit|                                                                          
+                       |
+                     yeha change value krte time kuch nhi dekhega changes 
+                    console pe dhikrge
+
+
+                     eg : shubham                                              console
+                           
+                           shubha                                               shubha 
+                           shubham1                                              shubham1
+
+not changrs in text box but you can see changes in console  
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+I want see updated value in input box
+
+ 
+
+import {useState } from "react";
+
+export default function Form(){
+   let [fulName ,setFulName]=useSate("shubham");
+
+   let handleNameChange =(event) =>{
+        setFulName(event.target.value);
+   };
+
+ return(
+    <form>
+        <input placeholder="enter full name" type="text" value={fullName}  onChange={handleNameChange}/>
+        <button>Submit</button>
+    </form>
+);
+}
+                   
+                        |                                                                                           
+                        |                                                                                 
+                   |shubham |   |Submit|                                                                          
+                       |
+                     yeha change value krte time kuch nhi dekhega changes 
+                    console pe dhikrge
+
+
+                     eg : shubham                                              console
+                           
+                           shubha                                               shubha 
+                           shubham1                                              shubham1
+
+    
+brcuse of set function now we can see chages in input box  
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+summary
+now we can see flow of that chages value in inpox box becuse when we see in UI that time we except that there is automatic but no so we can  see now internal flow
+
+                input changes<----------
+                     |                 |
+                   onchange            |
+                     |                 |
+                 handleNamechange      | 
+                     |                 |
+                  setfullName ----->fullname
+
+when we try changes in input box that time evoke onchage then call to handleNameChange method then  handleNameChange  methos call to setfullName then tsetFullnmae method se fullname ke under changes ho rha hai then jise hi fullname ke under changes horha rha hai that changes see in input box
+
+jise hi state var mai chages aate hai react ke under re-rendering hoti hai (mena supr se leke niche tak fir code excute hota hai)
+
+
+                            

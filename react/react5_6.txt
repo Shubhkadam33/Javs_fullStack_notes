@@ -1,0 +1,205 @@
+Rewrite App:
+remove all code all rewrite code for understanding 
+
+import './App.css'
+
+function App() { 
+  return <h1> hii programmers</h1>      
+}
+
+export default App
+
+app component ham bol rhe hai means ye function hi hmara app component hai
+>component jobhi return kr rha hai vo hmara UI dikega browser mai
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+import './App.css'
+
+function App() { 
+  return <h1> hii programmers</h1>
+  <button>click me</button>    
+}
+
+export default App
+
+>error because jsx expression must have one parent element
+>do element yeksath return nhi kr sakte
+>only single element return hoga ,yek time pe yekhi element return ho sakta hai
+>ham chahe to yek element kr under multiple element embedded krke use kr sakte hai
+---------------------------------------------------------------------------------------------I want to create Title component so now for practice i crete Title component in app.jsx file ,but remember each component have separate file even compent to small or big(rule is same)
+
+our 1st Component:
+Component is a reusable and independent piece of code
+>app component ke under hi sare component ko embedded kiya jata hai
+>Tile component ko create krna is avary similar to the writing a function
+>Function Component name() //comp name stating letter should be capital
+>ye return value koi bhi "html element ho sakta hai
+
+creating a component:
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+function App() { 
+  return <h1> hii programmers</h1>
+  <button>click me</button>    
+}
+
+jaise function ko declare/create krna enough nhi hai and function ko call bhi krna hota hai vaise hi component ko render bhi krna pdta hai
+
+>jaha bhi hme component ko render krna chahte hai,two way hai render krne ke 
+
+Rendering a component
+1)<Title></Title>
+2)<Title/>
+
+component ko render krne keliye "Html tag" ke tarh likh sakte ho ilke <h1></h1>
+>like yo can image create function of component then use html tag(that html tag i teternally implements,like  para tag ka kam hai paragraph likna vaise hi ye title tag ko implement kiya in function so we direcly use this user defined tag
+      <Title></Title>  //user defined
+      <h1></h1>  //predefined
+
+>ham apne Title tag ko App component ko render kr sakte hai
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+function App() { 
+  return <Title/>
+    
+}
+
+if you want to render multiple chije that time that all chije div ke under dalte hai
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+function App() { 
+  return <div>
+       <Title/>
+    </div>    
+}
+
+<div vali line yha se start kr sakte hai but ye pdneme achha nhi dikta so hme div ko next line se start krte hai
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+function App() { 
+  return 
+      <div>
+       <Title/>
+    </div>    
+}
+
+>error because return and isa div tag ke bich mai gap aagya to react ko lag rha hai return se kuch return ni ho rha hai,return ke bad sari jeche empty hai
+     solution use () taki ham sari chijo ko jod paye
+------------------------------------------------------------------------------------------
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+function App() { 
+  return 
+      <div>
+         <h1> This is my app component</h1>
+         <p>inside app component we have :</p>
+        <Title/>
+    </div>    
+}
+
+>abhi bhi ham return se single root element return kr rhe hai par ham div ke under multiple element ko use kr sakte hai
+-------------------------------------------------------------------------------------------
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+function App() { 
+  return 
+      <div>
+        <Title/>
+        <Title/>
+        <Title/>
+        <Title/>
+    </div>    
+}
+          
+       |
+       |
+I am the Title
+I am the Title
+I am the Title
+I am the Title
+
+just like i want to display h1 three times that er write three h1 tag that like
+
+-------------------------------------------------------------------------------------------
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+Function Description (){
+   return <h3> I am the Description!</h3>;
+}
+
+function App() { 
+  return 
+      <div>
+        <Title/>
+        <Description/>
+        <Title/>
+        <Description/>
+    </div>    
+}
+          
+       |
+       |
+I am the Title
+I am the Description!
+I am the Title
+I am the Description!
+-------------------------------------------------------------------------------------------
+
+generally ham  other component ko app.jsx file ke under nhi likte usi component nam se
+>har component ki alag file bhti hai like Title.jsx ,Description.jsx
+
+src->Title.jsx(file)
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+>save and run you can see in browser empty but how to access this Title component in app.jsx (like how to connect this two different files beause app.jsx to nhi pta duri konsi file connect hue hai
+     solution:we have export from Title file and impoer this file in app file
+
+Title.jsx:
+
+Function Title(){
+  return <h1> I am the Title</h1>;
+}
+
+//export 
+
+-----------------
+
+App.jsx:
+
+//import
+
+function App() { 
+  return 
+      <div>
+        <Title/>
+        <
+        <Title/>
+       
+    </div>    
+}
+   
+

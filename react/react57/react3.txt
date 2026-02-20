@@ -1,0 +1,86 @@
+Event object:
+
+We can access the event object in Handler
+
+jab bhi koi event occur krta hai uske sath associated yek event obj hoti hai ,vo hamesha handler ko automatic pass hoti hai
+
+
+function handleClick(event){
+     console.log("Hello");
+     console.log(event);
+}
+
+
+export default function Button(){
+         return(
+           <div>
+              <button onclick={handleClick}>click me!</button>
+           </div>
+         );
+
+> ye jo "event obj" hai iske under event ke related kabhi sari inffomation hoti hai like iske under target hota hai ki event konse element keliye occur kiya hai and more detail ,vo sari chije ko print kr sakte hai
+                            |
+                      |click me|------> after click on button ->see in console ->Hello !
+                                                                                 Event all information(in depth)
+In event obj there is different different attribute of event ,prefined methods (inmese most popular method is "preventDefault() method" it is used in form cases) ,event type:click , target:button (target means yeh event konse element ke liye occur kiya hai)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+form.jsx
+
+function handleFormSubmit(){
+      console.log("form was submitted");
+}
+
+export default function form(){
+    return(
+        <form>
+            <input placeholder="write something"/>
+            <button onClick={handleFormSubmit}>Submit</button>
+       <form/>
+
+
+                   |
+           | write something | |submit|
+
+           | abcd |    |submit|
+                         |
+                        click on submit button then check in console
+                     
+
+jaise hi submit huva vaisehi vha par print hoke aaya but vh  "rukha" nhi rhi  gayab ho rhi hai -ye kya hai form ka default behaviour hai(yeh thodi der keliye appear krti hai and uske bad gayab ho jati hai
+              agar hme default begaviour ko prevent krna hai ten what can i do,event obj ke under special method hoti hai "preventDefault()"
+use of that method:event obj ke related default associated default behaviour hote hai unko prevent krta hai                           
+
+| write something | |submit|
+ 
+| abcd| ->after submit -> | | and In console output thodi der tak dikta hai and input box bhi khali hota hai after click on submit
+
+|abcd| ->after submit -> |abcd| and see console ouput "form is submiited" ,input not empty and output is stable //after apply this method
+
+why we use event obj ?
+> generally kapi sare default beheviour associated hote hai form se bases on submission ,vo sare behaviour ko prevent krna chah rhe hai then we can access event obj to prevent this behaviors 
+-------------------------------------------------------------------------------------------
+
+function handleFormSubmit(event){
+      event.preventDefault();
+      console.log("form was submitted");
+}
+
+export default function form(){
+    return(
+        <form>                                                  or    <form onclick={handleFormSubmit}>
+            <input placeholder="write something"/>                            <input placeholder="write something">
+            <button onClick={handleFormSubmit}>Submit</button>                <button>Submit </button>
+       <form/>
+                                             |
+                                             |
+
+  |abcd| ->after submit -> |abcd| and see console ouput "form is submiited" ,input not empty and output is stable //after apply this method
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+react ka kam hai UI element ko update rkhna vo console ko update nhi krta so need to click on refresh button which in above
+
+

@@ -1,0 +1,97 @@
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Set    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+           set  
+1)hashset  2)Linkedhashset 3)Treeset
+
+
+>set does not allowed dublicate value
+>set interface only allowed one null value
+>only store unique value
+>it is faster than list because it is not maintain insertion order
+
+
+when use set interface ?
+when we want to store unique value only that time we use set
+>if there is no matter insertion order only i want fast performance that time use
+
+1)hashset
+
+>hashset internally implement hashTable +dictionary 
+>It is not maintain insertion order
+
+clear() method is used to remove all elements from a HashSet.
+addAll()-is used to add all elements of one collection into another collection.
+collection1.addAll(collection2);
+
+2)linkedhashset
+
+>It is internally implement hashtable +linklist
+
+
+when we use linklist and hashset ?
+
+hashset
+>if there is no matter insertion order but  we want to store unique value and fast performance 
+
+linkedhashset
+>It is slightly slow because insertion order maintain 
+>when we want to store unique value  as well as maintain insertion order that time we will use Linkedhashset
+
+
+why dublicate value not allowed in hashset / why unique value store in hashset?
+>because it is also support dictionary
+>dictionary it a part of legacy clasee
+>obj is store in the form of key and value pair
+>key is must be unique not dublicate
+>value can be dublicate
+
+
+:::::::::::::::::::::::::: How work internally hashtable :::::::::::::::::::::
+
+capacity of hashtable is 11
+indexing start from 0 to 10
+
+i want to store 32 in hashset then how it can decided where value exactly store ?
+>formula  obj % capacity
+
+32 %11=10(remainder)
+12%11=1
+15%11=4
+
+* worst situation -after modular one or more element index postion is same that time hashtable internally create one more node
+
+ index   obj
+  4      15 --|37|
+
+
+15%11=4 
+37%11=4
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Treeset
+>TreeSet stores elements in sorted (ascending) order automatically
+if we write a...z ->alphabet wise
+if we write 0-9  ->asending wise
+>only allow generic collection (beause it will return everytime sorted set)
+>It is not allowed store null value(because if there is null value than how we can sort that the problem so)
+>Treeset is slower than hashset and linkedhashset
+>when you want to store 
+
+floor()-It returns the greatest element in the set that is less than or equal to the given element.
+getFirst(),getLast() / first(), last() both methos are same
+higher()-It returns the greatest element in the set
+lower()-It returns the smallest element in the set
+subset()-like substring we have seen  in string
+tailset(start)-it is similar like subset(),we have to give only  starting element
+headset(first)-it is similar like subset(),we have to give only  last  element
+
+
+
+
+
+
+
+
+
+

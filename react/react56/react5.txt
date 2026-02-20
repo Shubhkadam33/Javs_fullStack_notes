@@ -1,0 +1,119 @@
+Dynamic component styling:
+
+>I want to add styling bases on condition
+>dynamic styling means it is decided in runtime
+
+our motive: I want to set background color of product  which have discount (bases on condition)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+now I want to change background color all product (yellow)
+
+let style ={backgroundColor :"blue"}; 
+                |
+                |
+              camelCase
+notice:normally when we styling from "css file" that time
+In css file:
+   background-color: red;
+   border-radius :14px;
+   margin -bottom :15px;
+          |
+       use hyphen 
+   
+when this properties write in "jsx format/file" that time we write in "camelCase"
+In jsx:
+   backgroundColor
+   borderRadius
+   marginBottom
+   fontSize
+   
+there is no "hyphen" use camelCase
+
+---------------------------------------------------------------------------------------------
+function product({title ,price,feature}){
+   let styles={backgroundColor:"blue"};
+
+   return(
+      <div className="product" style={styles}>
+             <h3>{title}</h3>
+             //<h3 style={style}>{title}</h3>  all three product styling red but only style title(red)
+             <h5>price:{price}</h5>
+             {price >3000 && <p>Discount of 5% </p>}
+     </div>
+  );
+
+
+
+          phone   |
+        price:3000|----------> red
+      Get Discount|
+
+          laptop      |
+        price :40,000 |---------->red
+       Discount of 5% | 
+           
+
+           pen      | 
+          price:1   |-------------->red
+        Get discount|
+
+
+there is no condition all product ko stylling mil rhi hai
+
+*if I want to add stylin on all product then best way is used css file*
+    "condition bases styling" possible in jsx file not in css file
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+let styles={backgroundColor:price>30000 ? "yellow":""};  //styling basing on condition
+---------
+
+function product({title ,price,feature}){
+   let styles={backgroundColor:price>30000 ? "yellow":""};
+
+   return(
+      <div className="product" style={styles}>
+             <h3>{title}</h3>
+             //<h3 style={style}>{title}</h3>  all three product styling red but only style title(red)
+             <h5>price:{price}</h5>
+             {price >3000 && <p>Discount of 5% </p>}
+     </div>
+  );
+
+
+
+          phone   |
+        price:3000|
+      Get Discount|
+
+          laptop      |
+        price :40,000 |---------->red
+       Discount of 5% | 
+           
+
+           pen      | 
+          price:1   |
+        Get discount|
+
+agar muze condition ke base par styling apply krni hai then use this
+
+notice: you can see price>3000 code repeat ho rha hai then more good code (niche likta hu)
+-------------------------------------------------------------------------------------------
+
+
+function product({title ,price,feature}){
+   let isDiscount=price>3000; //new line add
+   let styles={backgroundColor: isDiscount ? "yellow":""};
+
+   return(
+      <div className="product" style={styles}>
+             <h3>{title}</h3>
+             //<h3 style={style}>{title}</h3>  all three product styling red but only style title(red)
+             <h5>price:{price}</h5>
+             {isDiscount && <p>Discount of 5% </p>}
+     </div>
+  );
+
+
+
+ 

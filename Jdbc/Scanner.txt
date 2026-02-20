@@ -1,0 +1,54 @@
+Scanner 
+
+package JDBCPROGRAMS;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+public class cd {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+
+			//1.load  class of jdbc driver
+			Class.forName("org.postgresql.Driver");
+			System.out.println("jdbc driver loaded!!");
+			
+			//2.create connection portnumber,username,password
+			String URL="jdbc:postgresql://localhost:5432/java8sept";
+			           //rdbmsdriver://localhost:portnumber/databasename
+			String username="postgres";
+			String Password="Shubham123";
+			Connection con=DriverManager.getConnection(URL,username,Password);
+			System.out.println("2.connection is created....!");
+			
+			//3.create a statement
+			String ins="insert into student2(id,name) values(?,?)";
+			PreparedStatement st=con.prepareStatement(ins);
+			Scanner sc=new Scanner(System.in);
+			System.out.println("Enter Id:");
+			
+			int id=sc.nextInt();
+			
+			System.out.println("enter name");
+			String name=sc.next();
+			st.setInt(1, id);
+			st.setString(2, name);
+			
+			//4.execute the statement
+		
+			st.executeUpdate();
+			System.out.println("4.query exeuted!");
+			
+			//5.close connection
+			con.close();
+			System.out.println("5.connection close");
+			
+
+	}
+
+}

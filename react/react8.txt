@@ -1,0 +1,79 @@
+writing Markup in Jsx
+
+1) return a single root element
+2) close all the tag
+3) camelCase most of the things
+
+when we write jsx code that time we have to follow basic rules of jsx
+
+if you want to understand Indept rules of jsx then go:
+react.dev/learn ->Describing the UI -> writing Markup with Jsx ->read rules
+
+Rules of jsx:
+1.Return a single root element:
+>if we want to return multiple element like button,img,h1,p then weh ave to wrap all element in div
+
+---------------------------------------------------------------------------------------------
+close all tags:
+>sare ke sare tag likte hai jsx ke under vo sare close tag hone chahiye
+
+In html
+there is two type of tag:
+1)Paired tag
+>These tag have opening and closing tag
+>they tags have opening and closing tag
+syntax: <tagname> content</tagname>
+eg: <p> this is paragraph </p>
+<h1></h1> ,<body></body> <html></html>
+
+2) Unpaired tag:
+>These tags do not need a closing tag
+>also celled self closing tag
+syntax: <tagname>
+eg:<img> ,<link> ,<input> ,<meta>,<hr> ,<br>
+  
+
+but In jsx must be close all tag:
+function App(){
+   return <img/> or <img></img>
+   //return <img> error becuse now we are in jsx file ,we have to follow jsx rule ,but in html file "<img>" is correct
+   
+>there is no opening tag(self closing tag) in jsx file
+><Title> error (Jsx element Title has no corresponding closing tag)
+
+Give we logical reason why evey tag have closing tag ?
+>when babel convert jsx file into js file that time tab babel internally looks for closing tag that why har element ke sath clsing tag hona chahiye taki babel achese conversion successfully kr paye
+
+------------------------------------------------------------------------------------------
+
+3.camelCase all most of the things :
+
+>generally maximum chije CamelCase me likhna hota hai
+> eg.component name, variable name(In react)
+
+In html
+<h1 id="title"> This is ID </h1>
+<p class="box">this is class1</p>
+
+
+if we want to write attribute in jsx :
+
+<h1 id="title"> This is ID </h1>
+<p class="box">this is class1</p> error because class is a reserved word in js ,class is use d in oops concept that class so as attribute name nhi likh sakte hai ,uska alternative likh sakte hai that is "className" :
+    In html  <p class=box1></p> //class attribute
+    In jsx   <p className="box1"> </p>  //className Attribute
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

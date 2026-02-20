@@ -1,0 +1,31 @@
+oops concept
+
+object oriented programming system
+
+why oops needed in java ?
+>we can connect to real world
+>we can build a security in coding
+>modularity(we can build modularity)
+>readiblity ,reuablity
+>efficient and effective /coding
+
+class:
+1)It is blueprint of obj 
+2)It contain field,properites and behavior
+3)It is the collection of var ,method,datatype
+4)It is does not occupied the memory until and unless you will create the obj of class
+
+obj:
+1)real world entity
+2)Instance of class
+3)It is occupied the memory
+
+Q. is class occupied sum memory ?
+>no
+>It is does not occupied sum memory until and unless you will create the obj
+>it is just blueprint of obj
+
+class perosn->defining class
+{
+   int number; |___properties /fields /features
+   String name;| 

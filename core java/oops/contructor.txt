@@ -1,0 +1,30 @@
+Rule:
+1)constructor name should be same as classname
+2) constructor can have access specifiers
+3) constructor doesn't have return type
+
+
+constructor 
+>constructor are automatically executed when your obj are created 
+there is no need to call the contractor ,it  will automatically call when obj are initialize or created
+
+interview questions
+1.how many type of constructor overloading
+2.rules of constructor
+3.differnt between method and constructor
+4.when to use constructor and when to use method
+
+
+method                               contractor
+
+1.userdefined                     1. Name should be same as classname
+2.can return value                2.canot return the value
+3.method need to call             3.automatically called when object are created
+4.method can be static            4. method cannot be static
+5.method overriding is possible   5. constructor overriding is not possible 
+
+contractor type 
+1) default constructor
+2) parameterized constructor
+3)private constructor
+4)copy constuctor             

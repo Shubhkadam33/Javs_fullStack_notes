@@ -1,0 +1,22 @@
+backend
+
+com.example.attendnace.controller  1) AttendnaceController.java 2)AuthController.java 3) FacultyController.java  4) HomeController.java 5)LectureController.java 6) QRController.java  7) StudentController
+   
+com.example.attendnace.entity 1)Attendnace.java  2) Faculty.java  3)Lecture.java 4)Role.java 5) Student.java 6) User.java
+ 
+ com.example.attendance.repository 1) AttendanceRepository.java  2) FacultyRepository.java  3) LectureRepository.java 4) StudentRepository.java 5) UserRepository.java 
+ 
+com.example.attendance.security 1)JwtFilter.java 2) JwUtil.java  3)SecurityConfig.java
+
+  com.example.attendance.service 1)AttendancePdfService.java 2) AttendanceService.java 3) FacultyService.java 4) LectureService.java 5)QRService.java 6) StudentService.java
+
+ com.example.demo.dto 1) AttendanceReportDTO.java 2) AttendanceRequest.java  3) LoginRequest.java
+
+
+In fronted
+
+api.js  components Navbar.jsx 2) ProtectedRoute.jsx 3) Home.jsx 
+
+In pages admin 1) AddFaculty.jsx 2)AddStudent.jsx 3)AdminDashboard.jsx 4)AttendanceAnalytics.jsx 5) AttendanceReports.jsx 6) Login.jsx 7) ViewFaculty.jsx 8) ViewStudents.jsx  
+In faculty 1) AttendanceHistoryf.jsx 2) FacultyDashboard.jsx 3) FacultyLogin.jsx 4) LectureQR.jsx 5) StartLecture.jsx 6)ViewAttendance.jsx  7)ViewLecture.jsx 
+In student 1) AttendanceHistory.jsx 2) ScanQR.jsx 3) StudentDashboard.jsx 4) StudentLogin.jsx  App.jsx

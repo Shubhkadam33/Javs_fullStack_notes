@@ -1,0 +1,69 @@
+
+               ______ catalog  ------------->port no 8080  ----> database 1
+required all  |_______shopping cards -------> port no 8081 ----> d2
+running state |_______ Discount ------------> port no 8082 ----> d3
+              |_______  ordering ----------->port no 8083 ------>d4
+
+each service have diff project ,port no ,database
+
+Q how all service communicate with each other ?
+> firstly all service must be running state and each service communicate with the help of url
+
+-------------------------------------------------------------------------------------------------
+
+all services are independent ,because all service run in different different port no so if one service is stop then that not effect on other service
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+how to build microservice ?
+1) user service --> db:userdb ,table:user_id,name
+2)order service -->db:orderdb ,table:order_id ,product
+3) Report service -->there no need database because user service and order service isa service mai dhikhane vale hai
+
+create three project and port no diff and database diff ,running all service
+
+
+1)create spring boot starter project -- name -UserService
+2) add dependency previous
+2) application.property -copy and paste hibernate config
+3) user.java id,name(setter and getter)
+4)repo reday kro ,extend jpa 
+
+5) I write service file(query fire) logic in direct in controller so no need to create separate service file because our main motive is 
+Repo get kro ,idhar hi get kr sakte hai @Autowired UserRepo ur;
+
+so without time waste we use this shortcut   
+
+                        |
+                        |
+     now test in postman (write /user write in browser /postman)
+localhost:8080/Users
+       |
+ {"id":1 , "name":"age" }
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+now reday kro "orderService
+
+file -->new -->other -->spring boot starter project -->next -->orderService(name) -->next
+
+new starter project dependencies:
+postgres/musql driver ,springboot devtool ,spring data jpa ,spring web -->finish
+
+com.example.demo -->new -->class -->orders(Name)
+com.example.demo --> New -->class -->orderController -->finish
+
+com.example.demo -->new -->interface -->orderRepo
+
+application properties =8082
+
+
+localhost:8081/orders
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q.ask in interview ,your project which follow architecture monolithic or microservices
+
+>if monolithic structure follow if one file currpt or if we will get error in one file then whole project can not run
+
+
+        

@@ -1,0 +1,370 @@
+1) Network strong
+2) console-build yes or no->yes
+3)build 100% (complilation status) bottom option see 100% download finish the project ready 
+
+if not build then delete project .again  create project
+
+now spring readymade class use
+
+what is drawbag of jar file - we must share  sent jar file +project =In spring
+In maven ->no need to share jar file because
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+step 1:
+pom.xml(jar/dependencies)
+
+spring-webmvc-5.3.32
+jarax.Servlet-api-4.0.1
+
+//Database
+musql-connector-java-8.0.11
+spring-jdbc-5.3.32
+
+//view /pages
+jstl-1.2 //jsp standard tag library 
+
+
+jar file-download from google and add in build path
+dependecies-it is work like jar file but process is different
+            google ->maven repository->search dependency->version->sroll down->copy <dependency> </dependency> ->paste->pom.xml in <dependencies> </dependencies> section->ctr+s(save)
+            -> then see in left side  automatically add jar file/dependency in maven dependencies->open  see jar file
+
+remember ->stable version use beause stable/supported version work properly
+          latest version-It is transition mode so not garantee to work properly in worst case
+
+frontend(design) and backend(login/operation) if you want to connect both then use controller
+
+jstl( Jsp standard tag library)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------step 2:
+
+web.xml-write configuration
+I will share you web.xml file in whatapp
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="3.1">
+
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+
+compare with  spring core and maven project
+
+in core hava we manuuly create package and class so we write <sevlet> demo.student</servlet>
+      but in maven project ,when we create project,maven give default package with sample class so no need to tell where is my class so directly write inbuild package 
+<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+step 3:
+
+remember
+
+In web.xml file <servlet-name> spring </servlet> spring is user-defined name, anything write which you want to
+          but when we create another xml file that time file name same  as servlet-name which is write in <servlet-name>
+
+file name - spring-servelet.xml
+              |
+    save name match with <servelet-name>
+
+WEB-INF ->right click->new->other->spring-servlet.xml->finish
+
+verify that this file creating in web-INF ,if by mistake creating another folder then it will be throw error
+* because both file internally connected we.xml and spring-servlet.xml
+
+
+After creating spring-servelet.xml file->remove code->i will sent you whatapp copy and paste here
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    
+
+</beans>
+
+
+In this file we add important configuration ,we have mvc enable just like AOP enable in when we teach AOP concept
+ 
+<!-- Enable Spring MVC -->
+<mvc:annotation-driven />
+
+after adding this  line mvc enable so proper work model ,view, controller
+       so we must add this annotation for enable spring mvc in spring-servlet.xml
+so now we can perform actual task ,now we can see where we use fronrend ,backend ,controller
+
+this steps are compulsory when you are created new project of spring mvc
+
+In spring-servelet.xml ->what type  of configuration write->where is my  jsp pages(location) , Jdbc Coonection establish(user name,pass,database,port no
+------------------------------------------------------------------------------------------------------------------------------------------
+
+<html>
+<body>
+      <form action="add" method="post">
+      <input type="text" name="num1" placeholder="Enter number 1"><br><br>
+      <input type="text" name="num2" placeholder="Enter number 2"><br><br>
+      
+      <button type="submit">Submit</button>
+   </form> 
+   
+name se data pass hota hai
+method post se data seure pass hota hai
+button type submit ->action perform
+
+where we create controller ?
+>see in left side find src/main/java below to src/main/resources
+if this path present then no problem but if not present following strp follow:
+
+
+maven_sample_project_2 ->right click->build path->configure path ->library ->JRE system library[Java SE-1.8] on double click then you can see ->edit library->alternate JRE:jdk-21->finish->apply->apply and close
+
+then you can see
+maven_sample_project2
+      |
+      |_____src/main/java
+      |
+      |_____src/main/resources
+      |
+      |
+
+ remember - if src/main/java this path not present then  you could not create control,model
+
+create controller folder->
+src/main/java/ ->right click->new->class->package: com.demo.controllers ,name: StudentController
+
+means controller java file created in this
+>we create mutiplr controller file in this package
+
+package com.demo.controller
+    public class student controller{
+
+}
+
+now just this is normal  java class/file 
+like when we teach AOP that time we manully create auto wiring but when we use @autowiring then automatic work autowring
+    that like use @controller and import annotation package then it automaticaaly work like controller
+
+
+ In index.jsp action ="add"
+ then In controller @postMapping("/add")
+
+In action what write that match with postmapping then below method excute 
+
+compare syntax servlet we se "request.getParameter()" for data access from url
+ In controller we use shortcut by using annotation  request.param()
+
+@Requestparam int n1 -> means url data strore in integer n
+
+                     |
+                  error
+
+>use same parameter name  ,we use in dex.jsp in name=num1 and name=num2 same use num1 and num2
+not n1 and n2
+> so  no need to use extra step parseInteger it will automatically convert this annotation
+
+
+@Controller
+public class Student Controller
+     @PostMapping("/add")
+     public void addition(@Requestparam int num1 ,@Rquestparam int num2)
+     {
+        int result=num1+num2;
+        s.o.p("addition="+result);
+     }
+        
+
+main connectivity of index.jsp and Studentcontroller
+                     action="add" , @PostMapping("/add")
+
+
+
+rembember-> last time said that In congiuration: tell that where is my controller file because we manuuly create not give maven 
+
+go to webapp->web-INF->spring-servlet.xml
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+set configuration
+
+
+<context:component-scan base-package="com.demo.controllers"></context:component-scan>
+                                            |
+                                         there is my all classes present
+comopent scam bases on package
+
+
+after all this set configuration: click on red button on console side or top of srreen because hmne bahut configuration kiya hai
+    so click on red button so stop/terminate then restart run from index.jsp
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+@Controller
+public class Student Controller
+     @PostMapping("/add")
+     public void addition(@Requestparam int num1 ,@Rquestparam int num2)
+     {
+        int result=num1+num2;
+        s.o.p("addition="+result);
+     }
+       
+error in browser because we cant return anyting
+
+how to show in browser ->
+
+set configuration in spring-Servlet.xml 
+>where is pages folder, which type of pages load that all things told to this/set congiuration in this file
+
+<!-- View Resolver -->
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/" />
+        <property name="suffix" value=".jsp" />
+ </bean>
+
+prefix (folder path) and suffix (.jsp)
+
+web-INF folder scan krega and .jsp pages kha hai yh dekhega,particular kis pages ko target krna hai .jsp vale so there is html pages bhi hai to vo detect nhi krega
+1️⃣ prefix
+/WEB-INF/views/
+This tells Spring where JSP files are stored.
+
+2️⃣ suffix
+.jsp
+This tells Spring what file extension the view uses.
+view means designing part(frontend)
+
+⭐ Why JSP Files Are Kept Inside /WEB-INF/ ?
+
+Because:
+Users cannot directly access JSP files through the browser
+It increases security
+JSP pages can only be accessed through controllers
+
+web-INF->right click->new folder-> pages->finish
+pages->right click->new->other->jsp->welcome.jsp
+
+why we not directly create file in web-INF ?
+>because index.jsp is provide sample pages by spring it is present in directly in web-INF folder so wrong configuration if we create directly in web-INF folder
+so  web-INF->pages( new folder)-> jsp pages
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+welcome.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+     <h1>welcome page</h1>
+     
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+@Controller
+public class Student Controller
+     @PostMapping("/add")
+     public void addition(@Requestparam int num1 ,@Rquestparam int num2)
+     {
+        int result=num1+num2;
+        s.o.p("addition="+result);
+     }
+       
+error in browser because we canit return anyting
+ void replace with String
+ because return in string  that is return="welcome"
+
+there no need to write return="welcome.jsp"
+because teel in configuration in Spring-servlet/xml file only scan .jsp pages
+     so after submitting button load welcome page 
+
+localhost:maven_project_2:/index.jsp
+
+|  1  |
+
+|  5  |
+
+|submit|
+
+
+click on submit button
+
+
+localhost:maven_project_2:/add
+
+welcome page
+
+
+1) return- direct welcome page load
+when you go to browser directly write manuuly /welcome then it will give you error
+
+2)different way to load page(shortcut)
+when you go to browser directly write manually /welcome then it will give welcome page then how ?
+> then make welcome method just like addition method we are created
+>so there is use getmapping not postmapping because you manuuly write /welcome so from brower use get request 
+
+redirect it is used for go to aother method then you learn how we going one method to another method
+
+
+
+//@PostMapping("/add")
+	public String addition(@RequestParam int num1,@RequestParam int num2,Model m)
+	{
+	     int result =num1+num2;
+	     System.out.println("Addition="+result);
+	     
+	     return "welcome";//welcome.jsp
+	     //return "redirect:/welcome";  //redirect it use for go to one method to another method
+		
+	}
+	
+	@GetMapping("/welcome") 
+	public String wel() 
+	{ 
+	  return "welcome"; //welcome.jsp
+	}
+	 
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

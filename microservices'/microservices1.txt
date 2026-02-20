@@ -1,0 +1,131 @@
+microservices in short spring boot project
+
+>In microservice hame spring boot project bnanae vale hai only there is minor  difference :
+   > same logic spring boot , but only different is each service have different project ,port number
+
+Q.In previous spring boot which architecture follow  ?
+> Monolithic Architecture (user interface ,business layer(logic) ,data interface(means JPA hibernate yeh sab yekhi project mai hai)
+
+dis- if one file crash then whole project stop becuse all logic write in same file
+
+
+-------------------------
+
+Now days we use microservices architecture
+
+>ham har yek part keliye alag alag project bnayege
+
+I want to build amazon website there is three component customer service ,seller ,admin 
+     each component/service file have separate project and run on different port no
+
+
+steps:
+1)"spring boot starter" project create
+2)remember -each project run on diff port number taki port number mismatch na hojaye
+
+Adv- if in amazon website one service fail then whole project not stop ,bakike service chalu rhege
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1️⃣ Monolithic Architecture
+🔹 What it is
+
+>The entire application is built as one single unit
+>UI, business logic, and database are tightly coupled
+>Deployed together as one application
+
+
+✅ Advantages of Monolithic
+
+Simple to develop (good for beginners)
+Easy to test
+Easy to deploy (single deployment)
+Less network communication
+
+❌ Disadvantages of Monolithic
+
+Not scalable (must scale whole app)
+One small bug can crash the whole system
+Hard to maintain as project grows
+Technology change is difficult
+Slow deployments
+
+------------------------------------------------------------
+
+2️⃣ Microservices Architecture
+🔹 What it is
+
+Application is divided into small independent services
+Each service handles one business functionality
+Services communicate using REST APIs / Messaging
+Each service can have its own technology & database
+
+🔹 Example
+
+User Service (Java + MySQL)
+Order Service (Node.js + MongoDB)
+Payment Service (Python + PostgreSQL)
+
+✅ Advantages of Microservices
+
+Independent deployment (biggest advantage ⭐)
+Better scalability (scale only required service)
+Fault isolation (one service failure won’t crash all)
+Faster development & deployment
+Freedom to use multiple technologies
+Easy to maintain large applications
+
+❌ Disadvantages of Microservices
+
+Complex architecture
+Difficult to manage services
+Requires DevOps knowledge (Docker, Kubernetes)
+Network latency issues
+Debugging is harder
+
+--------------------------------------------------------------
+
+🔥 Interview Tip (For Fresher)
+
+If asked “Which one is better?”, say:
+Monolithic is suitable for small applications, while microservices are better for large-scale, enterprise applications.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+foe eg: Instagram app
+
+>aapko lagta hai pura application billd in single unit/app -->aisa nhi hai
+>each service like reel ,post ,profile ,chatbox each service build in separate project
+
+In microservices 
+>i)yek part java mai bna sakete hai
+ ii) second part -build in python
+
+tab jake implemente hoke yek project bnta hai,usko ham kya bolte hai(integration bolte hai)
+
+---------------------------------------------------------------------------------------------------------
+
+eg:facebook
+
+facebook fist time bna tha "php" bna tha
+    now likin abhi sirf php mai hai kya--> nhi
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+remember - all service must be in running state
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+why microservice is popular or boom ?
+>facebook yek lang mai hai kya -->nhi different different lang mai hai
+
+>usa company ko lagta haiyeh part ham python mai bna sakte hai ,cosing kam hai and library jadha available hai
+                     dusara part java mai bnate hai kivki security jadha hai
+
+iske liye microservice lagegi
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        
+
+

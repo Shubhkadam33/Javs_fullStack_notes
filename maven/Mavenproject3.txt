@@ -1,0 +1,249 @@
+
+revise
+Spring-servlet.xml
+
+ <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	         <property name="driverClassName" value="org.postgresql.Driver" />
+	         <property name="url" value="jdbc:postgresql://localhost:5432/springmaven1" />
+	         <property name="username" value="postgres" />
+	         <property name="password" value="Shubham123" />
+</bean>
+
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	     <property name="dataSource" ref="dataSource" />
+</bean>
+
+<bean id="dao" class="com.demo.dao.StudentDAO">    
+		 <property name="template" ref="jdbcTemplate"></property>    
+</bean>
+
+
+observe:ref "jdbcTemplate"  enter connected to each other(this three bean)
+
+
+so this jdbcTemplate by using we can access database connectivity in dao file
+
+which is class of Jdbc-> JdbcTemplate
+JdbcTemplate objName;
+by using obj we create query apply on database
+
+can we create userdefined  obj->yes but in this case no
+
+
+<bean id="dao" class="com.demo.dao.StudentDAO">    
+   <property name="template" ref="jdbcTemplate"></property>    
+</bean>
+
+you can see :name="Template" is obj of JdbcTemplate , so you make sure is Template obj ,JbdcTemplate Tempate   then with the help of Template you can apply query on database
+       but you dont want to obj name Template then you can change name="you want to obj name" suppose name="jd1" then JdbcTemplate jd1; then with the help of Template you can apply query on database
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+src/main/java ->com.demo.dao ->studentDAO.java
+
+studentDAO.Java
+
+public class StudentDAO {
+	
+	JdbcTemplate template;
+
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
+	}
+	
+	public boolean registration(Student s)
+	{   
+		//two whay to create query ,you can use any one
+		
+		//String sql="insert into  student(fullname,email,password)values('"+s.getFullname()+"','"+s.getEmail()+"','"+s.getPassword()+"')";
+		//template.update(sql);
+		
+		String sql="insert into student(fullname,email,password,address)values(?,?,?,?)";
+		template.update(sql,s.getFullname(),s.getEmail(),s.getPassword(),s.getAddress());
+		return true;
+
+	    	
+	 }
+
+}
+
+
+JdbcTemplate template; iska only make setter not getter  because i want to only store in dabase not retrive data from database
+
+source->generate setter and getter
+ template
+☐ getTemplate()
+☑ setTemplate()
+
+generate
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+studentcontroller.java
+
+@Controller
+public class StudentController {
+	
+	
+	//	public void save(@RequestParam String fullname,@RequestParam String email,@RequestParam long password)
+	//there is no need to store store i n indivdual vaiable we can store in obj  
+	@Autowired
+	StudentDAO sdao;
+	@PostMapping("/save")
+	public String save(@ModelAttribute Student s)
+	{
+	//	System.out.println(s.getFullname());
+	//	System.out.println(s.getEmail());
+	//	System.out.println(s.getPassword());
+	    boolean result=sdao.registration(s);
+	    if(result) {
+		     System.out.println("registration successful");
+		     return "redirect:/studentsdata";
+	    }
+	    else {
+		   System.out.println("fail");
+		   return "redirect:/";
+		
+	     }
+	}   
+	    @GetMapping("/studentsdata")
+	    public String studentdata(Model m)
+	    { 
+	    	List<Student> list=sdao.getallstudents();
+	        m.addAttribute("list",list);
+	    
+	    	return "studentsdata"; //studentsdata.jsp
+	    }
+	   
+}
+
+@Postmapping ("/save")
+public void save(@ModelAttribute Student s){
+    
+}
+ 
+s name ke obj mai pura kapura data hai jo hmne submit kiya tha
+
+i have to sent submit data which is store in s obj to Dao file then how i can sent ?
+>i want to sent data function throw so  firsly we have to coonect dao file and controller ,extend not allowed
+
+@Autowire
+studentDao sdao;
+
+now two file is connected
+
+sdao.registration(s); //call and sent obj to this method but error beause this method is not exit ,firstly create registration method in studentDAO file
+
+
+
+public class StudentDAO {
+	
+	JdbcTemplate template;
+
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
+	}
+	
+	public boolean registration(Student s)
+	{   
+		//two whay to create query ,you can use any one
+		
+		//String sql="insert into  student(fullname,email,password)values('"+s.getFullname()+"','"+s.getEmail()+"','"+s.getPassword()+"')";
+		//template.update(sql);
+		
+		String sql="insert into student(fullname,email,password,address)values(?,?,?,?)";
+		template.update(sql,s.getFullname(),s.getEmail(),s.getPassword(),s.getAddress());
+		return true;
+
+	    	
+	 }
+
+}
+
+
+student s : this student class is write in controoler model 
+pahle firstly  use Jdbc mai excuteupdate() now we not use this method because there is no statement ,prepared statement like this
+by using template obj we can access methods
+template.update(prepared); //not use this situation
+template.update(sql); //use this beause single query (rember last time said that when work on multiple query at time that time use prepared  an when there is single query that time use statement)
+
+
+after completing logic in registration method sent repose to controoler ,so firsly remove void write Boolean and return true;
+
+@Controller
+public class StudentController {
+	
+	
+	//	public void save(@RequestParam String fullname,@RequestParam String email,@RequestParam long password)
+	//there is no need to store store i n indivdual vaiable we can store in obj  
+	@Autowired
+	StudentDAO sdao;
+	@PostMapping("/save")
+	public String save(@ModelAttribute Student s)
+	{
+	//	System.out.println(s.getFullname());
+	//	System.out.println(s.getEmail());
+	//	System.out.println(s.getPassword());
+	    boolean result=sdao.registration(s);
+
+	    if(result) {
+		     System.out.println("registration successful");
+		     return "redirect:/studentsdata";
+	    }
+	    else {
+		   System.out.println("fail");
+		   return "redirect:/";
+		
+	     }
+	} 
+if you want to check/verify data store in database then this if else write
+if return true ->then in result store true ->then registration succeesful
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+what write in controller ,what type of logic write?
+>data kidhar se kha jane vala hai and kisko access krna hai that all decided by controller
+
+what about Dao file?
+>write crud operation on database
+
+
+  @GetMapping("/studentsdata")
+	    public String studentdata(Model m)
+	    { 
+	    	
+	    
+	    	return "studentsdata"; //studentsdata.jsp
+	    }
+	   
+}
+
+error in browser  ans in console ->registration successful data store in database,but it is a bad habit ,yesa rukna nhi chahiye yek to reurn ya redirect krke duare page par jao ,this is good habit
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+if you want to insert data in table then this flow
+fronend ->controller->dao file->apply insert quey on table
+
+if you want to fetch data from table then this flow
+dao file(data fetch) ->controller-> frontend (if yo want to show table in page so no need go postgress and check table(standard way)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

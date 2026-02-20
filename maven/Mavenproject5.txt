@@ -1,0 +1,339 @@
+If controller crash then not work java application
+
+I want to fetch data using loops but In jsp java loop not work but we need loops
+   that time use JSTL library ,this is provide shortcut of if-else, for loop, while loop
+
+StudentDAO                 -> student controller  ->studentdata.jsp
+retrive data from database    give data to->        display on browser 
+
+
+public List<Student>getallstudents(){
+    	String sql="select *from student order by id desc";
+    	return template.query(sql,(rs,numberofrows)->{
+    		Student s=new Student();
+    		s.setId(rs.getInt("id"));
+    		s.setFullname(rs.getString("fullname"));
+    		s.setEmail(rs.getString("email"));
+    	
+    		s.setPassword(rs.getString("password"));
+    		s.setAddress(rs.getString("address"));
+    		return s;
+    	});
+    }
+there no write datatype like int ,void,string , because return throw data list me bhejne vale hai,  directly use list of student that why loop lgege data fetch krneko in jsp file
+list<student> list means ->return list of student (not a single record of student ,fetch all student record so use list),student is class name
+
+return template.query() : explain
+> query() compare with jdbc ,In jdbc we use executeQuery() for exeuting query ,In spring maven  we direct use shortcut that is query()
+
+
+query(sql,) :
+>query method ko query pass kro ,jaisehe query set kiye ,resultsel, kite rows ,no of rows vhapar dikhega
+
+()->{}
+> in curly bracket we use logic
+
+(rs,numberofrows)
+>rs means result set ,numberofrows mai count aata hai kivki Esko btana pdta hai result itna time chalana hoga,yek yek obj return krna hoga and list mai rkhna hoga
+
+
+{}
+>isme yek yek obj rturn krneka login likhna hai kivki list abhitak empty hai ,list mai yek yek element jayega kaise ye login likna
+>In this write konse class ka obj collect krna chahte ho->ham student class ka obj collect krna chahte hai
+
+student s=new student();
+s.setId(rs.getInt("id")
+
+rs (result set) mai attribute aahega
+
+return s:
+>to yeh yek obj return krega and hmare list mai add krega
+
+summary of this code:
+In normal jdbc we use while loop here different method use
+>yehapar aap yek yek obj return kr rhe ho and vha obj list<student> mai rkha ja rha hai
+>rs mai kite time chlega iska count hota hai eg noofrows=3
+>first vala student aayega then return ko diya jayega
+ second vala student aayega then return ko diya jayega
+ nth
+>jaise he resultset ne kha ,aage aapke kuch nhi hai,kivki aapke table mai three he recored the. to vha rs stop hoga 
+
+
+compare with normal jdbc code-when we fetch data from database
+1)statement
+2)select* from student
+3)while loop use(In spring rs(resultset) concept use)
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+studentController
+
+ @GetMapping("/studentsdata")
+	    public String studentdata(Model m)
+	    { 
+	    	List<Student> list=sdao.getallstudents();
+	        m.addAttribute("list",list);
+	    
+	    	return "studentsdata"; //studentsdata.jsp
+	    }
+
+list<student>list =sdao.getallstudents(); means
+|___________|           
+     |
+edhar list mai data store tha so controller mai bhi list mai data store hoga 
+
+m.addAttribute("list",list);
+> aage page par data bhejne kel iye use hota hai
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+studentsdata.jsp
+
+import jstl library
+
+while(){
+ <tr>
+   <td></td>
+   <td></td>
+   <td></td>
+</tr>
+}
+
+phle aisa old logic tha
+
+*********************new logic:*****************************************************
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+   <h1>student data</h1>
+   <table border="1">
+       <tr>
+         <th>Id</th>
+         <th>Fullname</th>
+         <th>email</th>
+         <th>password</th>
+         <th>Address</th>
+        <th></th>
+       </tr>  
+       <c:forEach var="s" items="${list}" varStatus="status">
+        <tr>
+          <td>${status.index+1}</td> 
+        <%--   <td>${s.id}</td> --%>
+          <td>${s.fullname}</td>
+          <td>${s.email}</td>
+          <td>${s.password}</td>
+          <td>${s.address}</td>
+          <td>
+               <a href="deletestudent/${s.id}">Delete</a>
+               <a href="profileedit/${s.id}">profile Edit</a>
+               
+          </td>    
+        </tr>  
+       </c:forEach>   
+   </table>
+   
+       
+
+</body>
+</html>    
+
+explain:
+
+when you add JSTL lib tagline then you got shortcut 
+prefix="c"
+>means only just write c: then it will suggest tag
+> c ke alava kuch alag likho to uke tag ki bhi category hogi
+
+<c:forEach var=" " item="" >
+
+var name :user-defined but meaningfull
+
+items=" "
+       |
+   In this write kha se data aayega
+
+m.addattribute("list",list)
+                 |       |
+                 key    value means In actual key mai value store ho gai hai
+
+m.addAttribute("list",list);     item="list"
+                 |
+               list=list
+if you confuse i slove your doubts
+suppose m.addAttribute("studentlist",list);
+                            
+  studentlist=list menas in studentlist store list data then  write item="studentlist" 
+
+> if one line java expression write in jsp file then use ${}
+items="${list}">
+yek yek student data aayega throw list           
+
+> var="s" items="${list}"
+s ke under yek yek student aayega
+ then use same syntax(i want to display (check data aaya hai kya nhi page ke upper check)
+
+<tr>
+          <td>${status.index+1}</td 
+        <%--   <td>${s.id}</td> --%>
+
+          <td>${s.fullname}</td>
+          <td>${s.email}</td>
+          <td>${s.password}</td>
+          <td>${s.address}</td>
+          <td>
+ <td>${s.fullname}></td> means display on browser fullname ,id          
+                 |
+ now check on browser  data fetch huva hai ya nhi so no need to go database and see table
+
+>why we not use normal for loop (old style)?
+ because In normal loop use initiation ,condition,increment,but in this (new style) using Jstl yeh sab skip hogya only use shortcut
+
+ID | Full Name        | Email                  | Password  | Address
+---------------------------------------------------------------------------
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra
+5  | Sagar Jadhav     | sagar.j@gmail.com      | sagar654  | Kolhapur, Maharashtra
+
+latest signup is id 5
+ I want to see latest record in above
+>sql=select*from student
+      |
+  select*from student order by id desc 
+
+
+ID | Full Name        | Email                  | Password  | Address
+---------------------------------------------------------------------------
+5  | Sagar Jadhav     | sagar.j@gmail.com      | sagar654  | Kolhapur, Maharashtra
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra
+
+>I want to delete specific record then what i do >next process
+logic :address ke side mai col aayega and delete link hogi
+
+<td>
+   <a href="">Delete</a>
+</td>
+
+
+ID | Full Name        | Email                  | Password  | Address               | 
+-----------------------------------------------------------------------------------------------
+5  | Sagar Jadhav     | sagar.j@gmail.com      | sagar654  | Kolhapur, Maharashtra | Delete
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra   | Delete
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra   | Delete
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra   | Delete
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra     | Delete
+
+<a href ="deleteStudent/${s.id}>Delete</a>
+             |
+       root keliye id bhi duga ref keliye just like Jspservlet
+
+local/maven_project/studentdata
+
+ID | Full Name        | Email                  | Password  | Address               | Delete
+-----------------------------------------------------------------------------------------------
+5  | Sagar Jadhav     | sagar.j@gmail.com      | sagar654  | Kolhapur, Maharashtra | Delete -----> after clicking on delete link then in url particular id dikhni chahiye then logic right
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra   | Delete
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra   | Delete
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra   | Delete
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra     | Delete
+
+local/maven_project/deleteStudent/5
+                                  |
+                              right  hai because 4 ko delete krna hai
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+@GetMapping("/deletestudent/{id}")
+public String deletestudent(@PathVariable int id) {
+sdao.delete(id);
+return "redirect:/studentsdata";
+}
+
+@GetMapping use kivki url se value/data get kr rhe hai
+@GetMapping("/deletestudent/{id}")
+>url me /deletestudent/{id} aayi hai vh hmne get krke int id mai rkuga kiya controller mai
+>url mai id thi vh maine var mai get krdi then mai id give to query
+>because id se record delete krna hai that way get kiye id
+
+sdao.delete(id);
+>sent id to dao file so make delete method in dao file
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+studentDAO.java
+
+ public void delete(int id)
+ {
+     String sql="delete from student where id=?";
+     template.update(sql,id);
+ }
+
+template.update(sql,id); //  means query and id pass to template.update then this method exute query 
+
+see result browser,after deleting 5th id record
+
+ID | Full Name        | Email                  | Password  | Address               | Delete
+-----------------------------------------------------------------------------------------------
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra   | Delete
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra   | Delete
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra   | Delete
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra     | Delete
+
+Q. I want to see 1,2,3 number like this then how
+>so firstly remove id sent replace indexing
+
+<c:forEach var="s" items="${list}" varStatus="status">
+        <tr>
+          <td>${status.index+1}</td> 
+        <%--   <td>${s.id}</td> --%>
+          <td>${s.fullname}</td>
+          <td>${s.email}</td>
+          <td>${s.password}</td>
+          <td>${s.address}</td>
+          <td>
+               <a href="deletestudent/${s.id}">Delete</a>
+               <a href="profileedit/${s.id}">profile Edit</a>
+               
+          </td>    
+        </tr>  
+       </c:forEach>   
+
+varstatus="status"
+>yh batayega var ka status kya hai yani particular var konse index par hai
+>list,array indexing start from 0 to n
+
+status.index > yeh batata hai particular var konse index par hai
+ but one problem
+
+0
+1
+2
+3
+4
+
+
+but i want to start from index 1 then use  ${status.index+1}
+this is shortcut of jstl
+
+
+ID | Full Name        | Email                  | Password  | Address               | 
+-----------------------------------------------------------------------------------------------
+1  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra   | Delete
+2  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra   | Delete
+3  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra   | Delete
+4  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra     | Delete
+
+
+
+

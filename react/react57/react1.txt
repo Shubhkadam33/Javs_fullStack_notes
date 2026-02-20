@@ -1,0 +1,51 @@
+Events in react:
+
+Handling click events:
+
+we learned how to handle events in js:
+eg: we want to handle click event on button then:
+1>firstly access button on the basic of document.queryselector
+2) after accessing button apply method "addEventlistner"
+3)after apply method means event occur hone par kya hona chahiye (activity) that write in with in function
+
+button
+
+btn=document.querySelector
+btn.addEventlistner("click",()=>
+                  {......}
+                     |
+                   what we want to act perform after event occur
+
+--------------------------------------------------------------------------------------------
+
+now we learn how to handle events in react
+
+agar kohibhi "element" par click krnepar kaise handle krege today learn
+
+function printHello(){
+     console.log("Hello");
+}
+
+function printBye(){
+      console.log("bye");
+}
+
+export default function Button(){
+         return(
+           <div>
+              <button onclick={printHello}>click me!</button>
+              <p onClick={printBye}>this is para foe event demo</p>
+           </div>
+         );
+}
+
+                     |
+                     |
+                     _________
+                    |click me|------> after click on button ->see in console ->Hello !
+
+                  this parah is for event demo------>click on paragraph ---->see in conole->bye!
+                     
+<button onclick={printHello}>click me!</button>
+          |           |
+      attribute      assign this function to onclick attribute

@@ -1,0 +1,155 @@
+abstraction:
+>hiding the implementation details and showing only functionality /information
+>for user not need to known how work internally ,user only need to know functionality
+
+
+Example 2: Fan
+In a fan, you can:
+Turn ON / OFF
+Change speed (1, 2, 3)
+You don’t know:
+Motor working
+Coil rotation
+Electricity flow
+You only know what it does, not how it does.
+👉 This is abstraction.
+
+>hiding internal data and showing only functionality
+
+how to achieve polymorphism ->two way --> method overloading and method overriding
+          similarly we can achieve abstraction by using abstract class and Interface
+
+                abstraction
+                /         \
+               /           \
+              /             \
+      Abstract class       Interface
+
+normal class -->right click--->new-->class
+
+that normal not have functionality which is not hiding internal detail and showing only functionality
+
+eg:
+
+public class A{
+      void show()
+      {
+         
+       }
+}
+
+you can notice : compulsory method la {} dyv lagt so then how we hiding internal data
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+jasa public class public keyword ne start hote
+    similarly abstract class start with abstract keyword
+
+class-public/abstract/final
+
+public- access all over in project
+final- we cant  inherit that class
+abstract -internal detail hide and display only functionality 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+In public class we can take static ,non static ,return ,parameter method and not support abstract method
+In abstract class contain/allowed abstract method as well as normal method
+
+eg
+>I want to store password but not show password
+
+abstract void password();
+
+observe/rule:
+> ; we are ending the statement
+>normal method have body (opening and closing bracket )
+>abstract method does not have any body 
+
+
+
+
+abstract void password(); //this is see user
+
+then where we implement data or from where we store password ?
+>we have to create another class and implement  that unimplemation method
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+how to make abstract class:
+step1:we need to class one is abstract class ansd second is abstract class where implement implementation details
+steps1: we have to make abstract class
+
+public class appuser{
+     abstract void password();
+}
+          |
+          |
+         error
+we also make type apuser abstract
+ 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+abstract class appuser{
+     abstract void password();
+}
+  
+if we want to implement abstract class then we need one more class
+
+public class appimplementation{
+
+
+}
+
+>error because when we want to inherit data one class to another that we need to use extend keyword
+
+public class appimplemenation extends appuser{
+
+}
+
+>error becuse public class only support static ,non static ,return type ,parameter method
+         not support abstact method that why we got error
+
+hover and read error --we need to implement un implementation method
+
+suggest->add unimplemented methods
+
+@override
+void password(){
+}
+
+after give from eclipse @override why ?
+> because we extend parent class(apuser) in child class(appimplementation)
+         also in parent and child class have same method that why we use @override 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public class appimplementation{
+
+     @override
+     void password(){
+         System.out.println("1234");
+     }
+
+
+if you want to print that detail in console then use main method
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

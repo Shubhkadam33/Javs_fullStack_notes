@@ -1,0 +1,77 @@
+react is a javascipt library used for creating user interface
+
+
+what userinterface ->element (card ,navbar ,button , tags)
+
+
+react is  a very popular library it is developed by facebook
+
+
+react offial page(website)-react.dev (react documentation)
+
+with the help of react -create user interface from component 
+
+react mai component bar bar suneko milega
+
+individual piece of code (component)button card symbol ,heart 
+
+jo indidual chija dikai de rhi hai vh reusable hai
+
+if i want to show two  smilar button in website then muze yek hi component ko bnana pdhega then use anywhere (means created one use multiple time)
+
+
+you can imagine component ko function ki tarh
+
+what is function -reuable piece of code
+kisibhi function yek bar bnaya jata hai and ham reusable kr sakte hai jabhi use pdhe
+
+func(a,b)
+{
+   return a+b;
+}
+
+kabhibhi a+b ka sum calculate krna hai tab ham isa function ko invoke krte hai invoke means isko call kr sakte hai
+     similar like kisi component ko invoke/call krte hai tab but in react hab component ko render krna ( render means kisi jis ko use krna) 
+reusable piece of individual code-component
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+jab bhi ham react se ui /frontend bnate hai tab sariki sari chije almost component hoti hai
+
+video card,thamb nail,like button-compoent
+in sari jichoko milake yek bada component bna hai video component 
+
+yeh sare component hierchical form krte hai ,hierarchical yeni kuch component hote hai vh dusare component hote hai
+
+                            hierarchy
+                               video
+                              ___|_________________
+                              |      |            |
+                          thumbnail description like
+
+this three are subcomponents ,this three component comes under video component 
+if you want to show like button in different place then render/use this like component so readability archive 
+video,video list(combine video list),searchable video component
+
+search->Atlassian (whole fronted created in react)
+
+ react is about building a component onces then reusable it when ever we need
+
+ any website may be particular component like button created in react or whole webside created in react
+
+component is piece of code
+
+
+yek component ka html ,css ,js alag hai
+dusare  component ka html ,css ,js alag hai
+
+react.dev->fork->codesandblock(after clicking fork this website automatically open->simple practical code with ouput(you can test your ouput)
+
+
+
+now page divide component wise rether than dividing on the basic of stuture , on the basic of designing on the basic of logic/functality
+
+you can obverse In app.jsx js and also html code present 
+
+Inside js we can embedded html code
+jsx is way of writing html inside js code so jsx is not pure js and not pure html

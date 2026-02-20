@@ -1,0 +1,104 @@
+interface
+
+>with the help of interface also we can achive abstraction
+
+jasa class is blueprint of obj
+similarly interface is blueprint of class
+
+>It have public ,static ,final method
+>It is used for abstraction
+>It is used for multiple inheritance
+
+remember:
+> for class we select class similarly for interface we select "interface"
+
+In abstract class we need to use abstract keyword for method
+    In interface there is not mandatory /optional abstract keyword for method
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+when we use access data:
+class to class ----> extends
+interface to class --->implement
+interface to interface --->extends
+
+
+public interface signal{                 public class signal_data implement signal{
+     abstract void color();                       
+}                                               @override
+                                                public void color(){
+                                                    S.O.P("red color");
+                                                    S.O.P("green color");
+                                                    S.O.P("yellow color");
+                                                 }
+
+static-->call--->fu();
+                 className.fu();
+
+interface -->call--> fu();
+                     interface_name.fu();
+
+what is advantage of abstraction:
+1)security 
+2)it code optimize
+3)flexible
+4)usability 
+5)readability 
+
+
+Reusability no because in signal class only method declare ,not wring inside methods  and implement that method in another class that why there is no reusability achieve just like in inheritance 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+till java jdk  7 -->interface have only abstract method or you can say non implementation method
+
+It is abstract method when ee implement in another class that time this abstract method transfer into non static method so call kon denar -->obj
+
+after jdk 7  mens in 8,9:
+eg:
+default method:
+
+default void location()
+{
+}
+//yala method body aahe and it is similar like non static method
+
+non static method:
+void city()
+{
+}
+error-because interface does not support non static method
+we can take abstract method ,default method ,static method in interface
+                this are three method of interface
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+multiple inheritance support in java using only interface
+
+
+In inheritance extend a,b,c //error
+In interface  interface a,b,c //allowed 
+
+one child class inherit data from multiple parent class
+
+    Parent1     Parent2     Parent3
+      \           |           /
+       \          |          /
+        --------------------
+                 |
+               Child
+
+eg:
+
+interface a{                          public class muitipleInheritance implement a,b,c{ 
+}                                     }
+
+interface b{
+}
+
+interface c{
+}
+
+
+                                         

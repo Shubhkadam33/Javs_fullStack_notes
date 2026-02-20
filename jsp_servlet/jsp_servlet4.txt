@@ -1,0 +1,177 @@
+during downloading eclipse two option visible 1.java developer
+                                              2.enterprise edition
+
+1.java developer - we can run basic java programming(core java),only for  console based application
+2.enterprise edition (J2EE)-dynamic web project, maven project ,spring starter project
+
+if you have choose  1st option during downloading then can't run advance java projects ,you must be download enterprise edition
+
+                       *****how to check which one i choose *****
+
+help->about eclipse IDE ->enterprise Java and web developer(correct)
+
+
+Q. which server you added and which version ? ->Tomcat server
+
+                          Add Tomcat server
+                                |
+                      Create A New Dynamic Project
+                                |
+                         Run Your Project
+
+
+       ****where we check we  have server or not ? ****
+
+  Window -> show view ->other ->Server(search and click)
+
+you can see " No server are available .click the lick to create a new "
+
+
+Q. How to add Tomcat Server and which version use ?
+
+9 version is proper Supported/Stable version.
+10 version is not Stable ,There is no grantee run your program ,many problem/error occurs(if not stable version)
+
+
+google Search -> Apache tomcat  9 download-> click on first link(Apache Tomcat  website)->Scroll down -> In binary distribution->core:zip->extract All
+
+No server are available (click this link to create a new server) click->select the server type->Apache->Tomcat v9.0 server(select version which you download)
+->Next->brower->unzip folder(click on apache-tomcat9.0 folder(go inside of that folder) then copy path->select folder->finish 
+
+
+
+
+
+Tomcat is a server (a web server + servlet container).
+
+Apache is an organization, not the name of the server.
+
+Saying “Apache server” is wrong for Java projects.
+
+
+Server type:
+     Apache(we choose)
+     basic
+     1BM
+     oracle
+    Red Hat
+   
+
+then you can see first time ->tomcat v.9.0 server at localhost [stopped republished]
+
+but i want "Tomcat v9.0 server at localhost [started  synchronized]
+
+click on [stopped rep..]  means not started after clicking you can see [started synchronized]
+
+
+
+
+Q. how to change port number ?
+ By default :8080
+why you want change-that port number busy ,not working that port number ,i want change that way i change (this major reason).
+
+ tomcat v.9.0 tomcat at local host[stopped synchronized] ->double click->port number option
+
+In advance java-  (In console or  any where)normal message -In red color
+                                            error meaagr->blue color
+click on this ->right click->start ->if visible[stopped synchronization] ->then we sure that successful add server
+
+✅ 2. How many digits are in a port number?
+✔ Port numbers are 16-bit → maximum 5 digits
+
+Min: 0
+
+Max: 65535 → 5 digits
+
+Common examples:
+
+8080 → 4 digits
+
+3306 → 4 digits
+
+443 → 3 digits
+
+65535 → 5 digits (maximum possible)
+
+
+
+✅ Q4. Why port number is not 6 digits?
+
+Because a port number is stored in 16 bits.
+
+Maximum value of 16-bit = 2^16 – 1 = 65535
+
+So port cannot go beyond 5 digits.
+
+If port was 6 digits → it would require more than 16 bits → not allowed by networking standards.
+
+
+
+✅ 3. Unicode range in Java
+
+Java uses UTF-16, so:
+
+✔ Unicode range = U+0000 to U+10FFFF
+✔ Java char range:
+
+Since char is 16-bit:
+
+Min: '\u0000' (0)
+
+Max: '\uFFFF' (65,535)
+
+******* how to create dynamic project *******
+
+file->new->other->Dynamic project->next->project name(you want) also check Target runtime is Apache Tomcat v.9.0 (is right version or not)
+->next->next-> select(check box) Generate web.xml deployment descriptor -> finish
+
+
+YourProjectName/
+ ├── src/
+ │    └── com.example/
+ │          └── MyServlet.java
+ │
+ ├── WebContent/   (or webapp/)
+ │    ├── index.jsp
+ │    ├── About.jsp
+ │    └── WEB-INF/
+ │          ├── web.xml
+ │          └── lib/
+ │               └── (JAR files)
+ │
+ └── build/
+
+
+src/ → Java servlet files
+
+WebContent/ or webapp/ → JSP ,html files
+
+WEB-INF/web.xml → Deployment descriptor
+
+WEB-INF/lib/ → JAR files
+
+
+index.html/jsp ->right click->Run as -> Run on server->(ensure which server download that server is available->click on this server->next
+
+                          configured
+   add
+  remove                  project1
+                          project2
+
+
+In configured many project there then remove all only store which you want to run project->finish
+
+
+
+***** I want change browser where output will be see****
+
+window->web browser->Default system web browser
+                     firefox
+                     internet explore
+                     Microsoft edge
+                     chrome
+
+
+
+
+

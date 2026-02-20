@@ -1,0 +1,22 @@
+REST API
+
+https://cwc.com/api
+
+app    ------------------>   server
+       <------------------
+           JSON
+
+Rest API means Representation  state Transfers
+
+GET -Read data
+POST -Add data
+PUT - Update data
+DELETE - Remove data
+
+
+200
+400
+500
+
+
+>Rest API is stateless ,server does not Remember previous Request

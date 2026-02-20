@@ -1,0 +1,51 @@
+thread lifecycle:
+               
+                 JVM allocate the processor             After executing the task
+|New|-->|Runnable| ---------------------------> |Running|------------------------> |dead|
+ born        \                                   /   
+              \                                 /    
+               \                               /   
+                \____| sleep() , wait() |_____/       
+                     |  not-Runnable    |
+                     |    join()        |
+
+
+1)when ever we create obj of thread class that time thread going to new state
+2) whenever we call to start method then thread going to runnable state
+    >In runnable state thread is now ready to execute your program
+3) JVM have thread schedular that decide which thread to allocate the processor  and when
+
+processor means one pitch / environment /
+
+eg1: cricket
+when we provide pitch then we can batting ,bowling ,fielding
+pitch means processor / cpu
+player means thread
+batting ,fielding ,bowling means task/process
+--------------------------------------------------
+
+eg2:eclipse
+
+when eclipse provide environment  then we create diff diff task ---> then build application
+
+4) after allocating processor to thread then threat going to running state
+                                                                 |
+                                                           In running state thread execute run method 
+
+5) after finishing /executing the task ,thread will go to dead state
+
+6) when thread at exuting task that time get interrupt like sleep ,wait() then thread again going to Runnable state
+                and Jvm once again allocate proceesor 
+
+------------------------------------------------------------------------------------------------------------------------------------------
+ brain storming:
+
+t1.start(); //runnable
+t1.start(); //error
+because we try to start thread which is already in dead state because rule is after thread executing task then thread going to dead state
+
+wait() like 5 min break lunch/tea time
+
+
+
+         

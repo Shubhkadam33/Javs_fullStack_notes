@@ -1,0 +1,325 @@
+Spring architecture Diagram
+                                  
+                  |Spring Boot|                 Spring boot
+                       ⇑
+              |Spring MVC /web modules|         Spring-web ,Spring-web mvc
+                       ⇑
+                   |Spring AOP|                  Spring-AOP
+                       ⇑
+           |Spring data/JDBC/ORM integration|   Spring -jdbc ,spring-data ,spring-orm
+                       ⇑
+            |Spring context /core container|    Java application
+
+
+>Today we have to add  Spring Jar file into project so Normal core java project converted into Spring
+>core Spring is foundation of Spring
+
+Spring framework is a powerful and lightweight Java framework use to build enterprise level application  easily and efficiently
+
+Spring was introduced  to simplify Java development by handling those complex part like object creation dependency management ,transaction and security automatically
+
+dependency management  means why we use ?
+>In core java we use when we want to access data one class to another class that time we use inheritances concept(using extend and interface) this part remove in spring ,we use Autowring
+
+spring AOP- is a work like CCTV camera means it is used for decting many thing like error ,it is observe In our project wrok properly or not
+
+many error comes in this core spring project
+
+>In core java -See in console ,Normal message,ouput in blue color and error in red color
+>In Framework(Advance)- See in console  Normal message in red color and error in blue color
+
+Spring MVC -model view controller
+>model(table),bean, setter/getter(encapsulation) ,entity ,logic ,backend= M have different folder
+>View -> view means designing part ,frontend part -V in different folder
+>Contoller >It is middle man between frontend and backend
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step 1->Java Application
+
+>Simple create Java project
+>Add Spring Jar files then we will start  our configuration
+
+------------------------------------------------------------------------------------------------------------------------------------------Inversion of Control(IOC)->
+Inversion of control(loc) ->
+   
+what is loc container
+>Inversion of Control (loc) is a principle in software engineering Where the Controller of object creation and Management is transferred (or converted) from the developer to the framework
+
+type of  IOC(two main container type) ->  1)bean factory
+                 2) Application Context
+
+isake bina project run nhi hoga
+
+Why loc ?
+>loose coupling -classes don't depend directly on concrete implementations
+>easier Testing -object can be replaced with mock dependencies
+>better code management -Spring handle the Lifecyle of bean automatically
+
+In core spring we use  jar file after going In Spring maven then replace jar file to dependencies
+
+when  we want to run project then we will run from bean factory ,Application Context which in xml file
+
+>dono maise kohibhi use kr skte hai run krne keliye optional hai 
+>suppose ww run from bean factory menas iska obj bnakar run krna  hai ,kisika dono maise kisi sebhi run ho skta hai
+
+>if bean factory not work then use Application context
+>if bean factory not work then use bean factory
+
+It is totally depend on your eclipse configuration which type is not work for particular situation so you can use any type which is suitable for you
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bean Factory:
+
+>BeanFactory is the simplest container in Spring that provide basic loc (inversion of control) and Dependency injection support
+>creates benas lazily (only when requested)
+>Lightweight
+>Doesn't support advanced featires like event publishing or internationalization
+
+
+BeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
+Student s = (Student) factory.getBean("s1");
+s.display();
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ApplicationContext:
+
+ApplicationContext is a more advanced container that extends BeanFactory
+and provides additional enterprise-level functionality.
+
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+Student s = context.getBean("s1");
+s.display();
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Steps To Create Spring Application
+1. Create the Java Project.
+2. Add spring jar files
+3. Create Java class
+4. Create the xml file
+5. Create the Main method class
+
+
+Steps
+1. Create a new Java Project
+2. Create bean/model file in your package like demo/Student.java
+
+
+package demo;
+public class Student {
+private String name;
+private String address;
+//generate getter & setters
+public void displayinfo() {
+System.out.println(name+” ”+address);}
+}
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. Create applicationContext.xml file in src package
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:p="http://www.springframework.org/schema/p"
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+<bean id="s1" class=“demo.Student">
+<property name="name" value="Abcd "></property>
+<property name="address" value="Pune "></property>
+</bean>
+</beans>
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+4. Create Test.java with main method
+
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+Student s = (Student) context.getBean("s1");
+s.displayinfo();
+
+BeanFactory factory = new XmlBeanFactory(new ClassPathResource("applicationContext.xml"));
+Student s = (Student) factory.getBean("s1");
+s.display();
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+go to practical
+
+file -> new ->project ->Java project -> spring_basic_project_1 ->finish
+
+package -demo
+demo-right click -> class ->student
+
+Jar file add ->
+
+project ->right click -> build path ->configure bulid path -> library  ->class path -> add external jar
+
+extract spring Jar go in folder select select all file ->open Apply
+
+remember - In .class mai main method nhi hogi
+
+Demo
+  |---student .java
+  |
+  |-----module-info.java
+
+
+ "module-info.java" -yeh bydefault file aai hai ye delete krna kivki ye file pure flow ko disturb krti hai ,error aata hai
+
+eg - jsp servlet - we sent data throw form in input box , yek yek data get kiya parameter mai 
+         now aisa krna nhi hai ,iskle liye trick hai
+
+public class Student{
+    private String name;
+    private String Address;
+}
+
+with cmapre jsp servlet expain:
+form mai kya kya information chahiye yha idhar likh sakte ho like private String name, Address
+    jab form se data submit ho jaye ga tab data inko milega get hoke name and address
+
+so in core spring
+name and address ko data assign krna hai to kaise krte ho
+
+how to pass data:
+1) static block
+2) constructor
+3)getter and setter 
+
+There is two way to create getter and setter:
+1)we can create manully method getter and setter like getName() , setName()
+2) go to student.java file ->right click ->source ->Generate getter and setter
+   select getter and setter to create 
+   ✅ Address
+                 ----> genetate
+   ✅ name
+
+
+why Spring jar file add ?
+> Spring jar file convert core Java file into spring that why add Jar file
+
+Getter and Setter not in Jsp servlet that In jspServlet we use "getParameter()" for get value
+
+
+In Spring core -> for value assign and getting data we use getter and seeter
+
+ eg : with comapare JspServlet if i want to get name then use getName() method
+     like  after logic in dashboard page show username
+     like In profile edit page usa object ka pura data dikhai dega
+
+Iyou want to get specific attribute then use getter
+
+
+abhi apko yek yek attribute get krne acha create only one thod because if In one form there is multiple attribute then it is time consuming process so make only one thod
+
+eg showdetails()
+ {
+    S.O.P("Name" + name);
+    S.O.P("Address"+ address);
+  }
+
+beams means model ,In mvc ka m jo hai vo yha hai
+
+In core spring : there only use m not v and c because there is any form(frotend) so obviously there no also controller because controller use for transfer data frontend to backend
+and backend to frontend
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+src ->right click ->xml file -> name (applicationContext.xml)
+remember -> xml file demo package ke under nhi jani chahiye ,demo package ke niche chahiye kivki "file miss match" hoti hai
+because after run application detect nhi hogi xml file  if xml file in demo.class so that why we want to add xml file outsise the class
+
+remove boiler  code after creating xml filw ,i will sent you code in ypur WhatsApp group then cpoy and paste in applicationContext.xml
+
+Ⓧ<?xml version="1.0" encoding="UTF-8"?>  
+Ⓧ<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
+    
+  
+</beans>
+
+
+
+Ⓧ means this this not error this is bydefault configuration ki error hai
+
+In core hava how we create obj of class ?
+> Student s1=new student(); //create student
+
+but In core spring there is different way to create obj
+>there we use <bean> suppose one bean is one student ,another bean means 2nd student like obj1 ,obj2
+> id="s1" id must be unique  like s1 is student1(obj1) ,s2 is student2(obj2)
+
+s1 ans s2 yeh hmare name hai but problem yah hai ki konse class ki jene hme data dena hai and konse package mai hai
+ class ="demo.student"; //demo package mai student hai
+
+s1 lika hai aapka choice hai kuch bhi lik sako vha par ,sirf konse class ko data dena hai vh brabar liko
+
+
+Inside Student class kya kya hai ?
+>properties- name ,address  ,methods hai
+
+<bean id="s1" class="Demo.student">                    
+   <property name ="name" value="abcd" > </property>    _____________ Student 1              
+   <property name ="address" value="pune" > </property>
+
+
+student2 lega hai then copy paste id=s2 and data change
+
+* if we have "form " then this xml file nhi hoti because if there is form then In "input box we can data fill "then submit
+    but In spring core  data bhejne keliye xml file ka use krte hai
+
+name means Student class Attributes name like name ,address
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+last step:
+
+now two file is ready student.java and applicationContext.xml
+
+In Student.java mai data aane vala hai and xml se data sent hone vala hai
+    but one problem we want to run this project ,we convert this java file into core spring but main logic in java file(model no v and c)so we need main method for running this core spring
+ project
+
+so we have to make another java file for main method like student .java
+
+Demo ->class ->test.java -> ✅public static void main()->taki pura run krke test kr sakta hu actually mai data mila hai ya nhi
+
+test.java
+
+suppose we use applicationContext then what we write in this ?
+>xml file konsi hai
+>konse bean ko call krna hai
+
+yah sab liko application context mai
+     
+ApplicationContext con = new ClassPathXmlApplicationContext("applicationContext.xml");
+Student s = con.getBean("s1");
+s.display();
+
+
+ApplicationContext con = new ClassPathXmlApplicationContext("applicationContext.xml");//you can treat as a create obj pf class/xml this
+
+how to get bean ,i want to get s1 bean means obj1/student1 then how ?
+> obj.getBean(); //which beans you want to get
+>obj.getBean("s1");
+
+Student s=con.getBean("s1");
+       |
+     error
+
+hover-add cast to student -> click->casting kr deta hai means vo bean dieclty transform kr deta hai
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+jsp_servlet -run from index.jsp
+core spring->run from test.java
+spring mvc ->run from index.jsp
+spring boot->run from SpringBootApplication.java
+
+
+

@@ -1,0 +1,25 @@
+react mai state ko samaj nese phle yek aur concept samjna pdhega hooks concept
+
+Hooks:
+
+Hooks were a new addition in React 16.8
+>They let use state and other React feature without writing a class
+
+>shru shru rract aai thi ,tab component build hote the vo function ki form mai build nhi hote the,pahle component the vh class component the ,now abh jo component build krte hai function keyword ko use krte hai inko kahte hai functional component 
+
+>react ke documentations har jah advice die hai "functional component" ko buld krna chahiye
+
+> pahle class component mai jo feature the vh "function component" mai exist nhi krte the
+     to ini feature ko add krne keliye "Hooks" ka concept aaya hai
+
+hooks is a new addition of react 16.8 version
+
+hooks is methods/function ,They let use state and other React feature without writing a class
+        mens phle state use krne keliye class use krna pdta tha so new concept introduced "hooks" concept which is add state and add extra feaures in "function component"
+
+so ham sari chije kr sakte hai jo class component mai krte the
+
+when Hooks is introduced that time 100 hooks /method hote the now in "18 version" add new 5 feaures so now total 15 features
+ most used hooks/method in react is use() ,it is used for state
+
+hooks means jo hamare aaise method/function hai ,vo hamare component ke under hi aur jada functionality,features dete hai

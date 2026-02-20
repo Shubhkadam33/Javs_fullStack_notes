@@ -1,0 +1,156 @@
+Exception handling
+
+Exception -any unwanted situation or unwanted problem in program
+> Exception is the unwanted problem occur during the execution of program
+>Exception handling is nothing but to handle the exception to maintain the flow of program
+        to maintain the execution flow of our java program .we need exception handling in java
+
+Q.why we need handle exception ?
+>If any unwanted situation comes in program then what happen -->our program get immediately stop
+>when we want maintain flow of execution that time use handle exception
+
+           
+           ----------code-----------
+           ----------code-----------
+           ----------code-----------
+          
+      ----------5th line  error exception---------
+            
+           ---------code----------
+           ---------code----------
+           ---------code----------
+
+because of exception immediately code compiler stop
+
+>that way we need exception handling in java to handle the exception
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+there are some keyword to handle exception
+
+1.try
+>that will handle exception
+>we will write exception
+>exception that is occurring in program that will comes under the try block
+
+we can't handle exception only try block so we also for that handling of exception we will need catch block
+
+catch-handle the exception
+
+>whatever problem comes in program try to handling using try and catch block
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+type of exception:
+             
+                  there is two type of exception
+                    /                      \
+                   /                        \
+                  /                          \                 
+          checked exception           unchecked exception
+      ( compile time exception)      (Runtime exception)
+
+
+1)checked exception
+> whenever compile our program compiler will get one exception that exception called compile time exception
+checked exception occur during compile time
+
+   i) file not found exception
+   ii) io exception
+   iii) database-sql exception
+
+when we add external file that time we will get  checked  exception
+
+
+2)unchecked exception
+>after executing program we will get unchecked exception
+
+eg1. arithmetic exception
+2/0
+10/0
+0/0
+this is possible or not ?
+infinity because we cant divide any no  by 0 we called undefined or infinity or arithmetic exception 
+
+
+no problem in syntax after executing program it will give arithmetic exception
+
+-------------
+
+eg 2: array index out of bound exception
+
+suppose array declare 5 size and we want to add value at 6 index that time will get array index out of bound exception
+
+you can see in console "blue in color exception"
+
+
+eg3: NullPointerException
+>If you not handle the unchecked exception your program will get crash
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Exception
+
+>exception is main class in java
+>exception is parent class of all exception like checked exception and unchecked exceptions 
+
+we will pass exception obj to catch block then catch block handle that exception
+
+as a beginner we don't know which type of exception occur that time use main class that is exception class
+    if you know exact type of exception than you will you it
+
+> that obj will hold which type of exception coming in try block
+.that obj store type of exception which is write in exception
+
+
+try {
+    int num=9/0;
+}
+catch(exception e)
+{
+
+}
+S.O.P("thuesday");
+      |
+     Tuesday
+
+>now handle that exception
+     if you want to check which type of exception occur or exception handle of not
+                   thast time we print obj e in catch block
+
+       |
+
+    arithmetic exception /by zero
+     Tuesday
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+when compile throw exception that time color of exception is red
+when we will print that exception that time color of exception is blue
+
+eg:
+if batman play batting and there is no fielder then who will fielding
+    similar we need catch block to handle that exception
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+you can print customized message also
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+error--> stack overflow , memory leakage problem
+
+eg.
+ In c drive there is no space
+        during installing time we select workspaces path in c drive
+
+when we create project that time store project at c driver, one day that c drive get full
+              that we will get error like memory leakage problems , stack overflow problem
+
+
+>error we cant be handled
+
+eg real life:
+
+
+
+
+

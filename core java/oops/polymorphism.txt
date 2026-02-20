@@ -1,0 +1,126 @@
+poly morphism
+
+one thing many forms
+
+eg
+ I am student at fortune cloud
+I am son at home
+I am employe at company
+
+I am the same person but my role and behavior change based on the situation this is called polymorphism
+
+inheritance achieved in class level  
+        similarly polymorphism achieve in method level
+
+there is two way to achive polymorphism
+1) compile time polymorphism  (method overloading)
+2) runtime polymorphism  (method overriding)
+
+real time  use:
+payment is the single module but can have multiple form 
+       like we can payment with the help of credit ,debit card ,UPI, cash and delivery
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+public class methodoverloading{
+            void payment()
+            {
+               s.o.p("credit");
+             }
+            void payment()     //error at compilr time that way called compile time polymorphims
+            {
+              s.o.p("debit");
+             }
+
+
+error because we use same method  which is not possible in java
+
+but rule is make sure use same method name
+           so we can differentiate with the help of following  type
+           1) no parameter
+           2) passing parameter
+           3) by changing datatype
+           4) by changing the sequence of datatype
+           5) by passing no of parameter
+
+method overloading achieve in single class
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2) method overriding 
+>we can achieve overriding using at least two classes
+>whenever child class access a method from the parent class with the same method name as well as same parameter  is called method overriding
+
+
+class parent{                           class child{
+   void info()                               void info()
+   {                                         {
+     s.o.p("hi am parent");                    s.o.p("hi am child");
+   }                                         }
+}
+                               
+                                 |
+                                 |
+                              
+                          hi am child
+                          hi am child
+
+ where is make main method and how to aceess data parent to child ?
+>by using extend keyword and main method write in child class becuse we want to access data  from parent class in child class
+
+Q. child ob1=new child();
+   ob.info();
+   ob.info();
+
+which method call child class method or parent class method  or both method run ?
+>both time run child method
+
+
+but you want to run parent method also then use -----> super keyword
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+because of parent class have same method that why child class override parent method
+
+go to parent class-----> Super.info();
+
+
+
+class parent{                           class child extends parent{
+   void info()                               void info()
+   {                                         { 
+                                               Super.info(); 
+     s.o.p("hi am parent");                    s.o.p("hi am child");
+   }                                         }
+}
+                            
+                                     |
+                                     |
+                                  hi am parent
+                                  hi am child
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+task:
+
+create two classes company and employ and both have same method is "detail()"
+             In company method details() diff company name
+                               detail()  employ info
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+same method name as well as same parameter ------> method overriding
+
+overriding achieve --> at least we need two class and inheritance , same method name and same parameter if there
+
+
+parent{
+    void info(int b){
+    }
+   
+child{
+    void info(){
+    }
+
+
+It is not over-riding
+
+

@@ -1,0 +1,168 @@
+start from 1,2,3,4 i know for understand right actual id no 4,3,3,1 for better understand
+
+ID | Full Name        | Email                  | Password  | Address               | 
+---------------------------------------------------------------------------------------------------
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra   | Delete | editProfile
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra   | Delete | editProfile
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra   | Delete | editProfile
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra     | Delete | editProfile
+
+i want to this editProfile link in table
+>if i want to edit "id 3 Akash" data ->click on editProfile
+>i want to show already as it is details show(which is previously store data in id3 this is firsly show) then we can edit
+
+ust like real life eg:
+Instagram profile edit ->update -> submit ( edit profile succeefully)
+
+today flow ->
+you can see in StudentData page in edit(link) option ->after click on edit link go to controller(yhapar id leke aayege ,id leke aanaeki process vaisehi rhegi jaise "deleteStudent" ki thi
+->next I make profileedit/edit page and iske upar data bhi dikhaduga ki student ne phle data kya fill kiya tha ->then edit ->submit(update)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+step 1)
+
+studentdata.jsp 
+<a href="profileedit/${s.id}">profileedit </a>            
+                        |
+                  same step <a delete/$s.id}> like this id pass krege
+
+go to browser
+
+localhost /maven-sample/studentdata
+
+ ID | Full Name        | Email                  | Password  | Address               | Actions
+---------------------------------------------------------------------------------------------------
+4  | Neha Kulkarni    | neha.k@gmail.com       | neha321   | Nashik, Maharashtra   | Delete | editProfile
+3  | Akash Deshmukh   | akash.d@gmail.com      | akash789  | Nagpur, Maharashtra   | Delete | editProfile ---> clik on this
+2  | Priya Patil      | priya.patil@yahoo.com  | priya456  | Mumbai, Maharashtra   | Delete | editProfile
+1  | Rohan Sharma     | rohan.sharma@gmail.com | rohan123  | Pune, Maharashtra     | Delete | editProfile
+
+verify that: after clicking  id 3 editProfile link then url call kr rha hai kya and id ja rhi hai kya
+   after click on editprofile
+ localhost/maven_project/profileedit/3
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2) studentController.java
+
+
+@GetMapping("/profileedit/{id}")
+public String profileedit(@PathVariable int id, Model m) {
+Student s=sdao.getStudentById(id);
+m.addAttribute("student", s);
+	    
+return "edit"; //edit.jsp
+}
+
+
+same logic as it "deletedata" see above code from your controller
+>id get from url and store in id using pathVariable then id sent to the dao file ,how i can do this
+> pass id throw method
+>sdao.getStudentById(id); //error beause this method not exit ,go to dao file and make getStudentById method
+> adata model m se means m.addAttribute("student",s) se aage jayega (dao file mai)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+page ->Jsp ->edit.jsp
+
+esa Jsp page pr firsly data fetch because jis student ne phle kuch bhi fill kiya hai vha dikhana pdega
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+when we want to only single record fetch that time use queryforobj() method use
+then this syntax use
+
+ public Student getStudentById(int id) {
+    	String sql="select *from student where id=?";
+    	return template.queryForObject(sql,(rs,numberofrows)->{
+    		Student s=new Student();
+    		s.setId(rs.getInt("id"));
+    		s.setFullname(rs.getString("fullname"));
+    		s.setEmail(rs.getString("email"));
+    	
+    		s.setPassword(rs.getString("password"));
+    		s.setAddress(rs.getString("address"));
+    		return s;
+    	},id);
+    }
+
+this syntax compare with previous syntax(when we want to fetch all data) like  "template.update(sql,id) "
+                                                                                                |   |___ ,id);
+                                                     sql means from templateForObject{....to..... }                                                                                         
+ without ,id); :->is function ko id hi nhi diye then Kiska record get krna hai
+     if you forget this that time id=? isme value jati hi nhi so that why use },id);
+                 compare for use previous delete operation , template.update(sql,id);
+
+
+compare previous syntax and current syntax
+ when we want to fetch all record that time use query() method
+          when we want to fetch single record that time two chages do that is change datatype use Student and queryforObject
+
+> numberofrows mai only onecountaayega,kivki yekhi student ka data fire hoga ,konsa data lena hai vh id mai pta chlega
+    then return mai one obj aayega
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+edit page
+
+there is no need to use loop because there is only single record we can fetch without loop
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+     <form action="../updatestudent" method="post">
+      <input type="hidden" name="id" value="${student.id}">
+<%--       <input type="text" name="id" value="${student.id}">
+ --%>      
+      <input type="text" name="fullname" placeholder="Enterfullname" value="${student.fullname }"><br><br>
+      <input type="email" name="email" placeholder="Enter email" value="${student.email }"><br><br>
+      <input type="password" name="password" placeholder="Enter password" value="${student.password }"><br><br>
+      <textarea name="address" placeholder="Enter address">${student.address }</textarea><br><br>
+      <button type="submit">Submit</button>
+   </form>
+
+</body>
+</html>
+
+<input ...........value="${student.fullname}
+by using value you can fetch data 
+
+remember ->
+<textarea   .....>
+          |
+     iske under value mat add krna
+ 
+ <textarea >${student.address }</textarea><br><br>
+                 |
+          write there without using value then that time user data visible in textarea
+
+see in browser 
+                
+----------------------------------------
+            Edit Student Profile
+----------------------------------------
+
+ID: 3
+
+Full Name:
+[ Akash Deshmukh ]
+
+Email:
+[ akash.d@gmail.com ]
+
+Password:
+[ akash789 ]
+
+Address:
+[ Nagpur, Maharashtra ]
+
+----------------------------------------
+[   Update   ]     [   Cancel   ]
+----------------------------------------
+
+
+today we learn: which you want to edit record that recored firstly see in form
+       but jisa student ko select kiya hai usi student ka recored editpage pe dikega

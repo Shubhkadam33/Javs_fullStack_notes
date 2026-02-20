@@ -1,0 +1,141 @@
+conditionals:
+>Adding element on the basic of some condition
+
+just like we use condition in js that like use in react agat kisi UI element ko render krna chahte hai bases on some condition
+
+I want to  if product price >30k that time i will give you discount 5%
+
+thre is different way to add condition in react:
+
+
+function App(){ 
+    let options=["hi-tech", "durable" ,"fast"]                                      function product({title, price=1}){
+   return (                                                                              console.log(features)
+                                                                                     return(
+    <>                                                                                  <div classname="product">
+     <product title="photo" price={30000}/>                                                 <h3>{title}</h3>  
+     <product title="laptop" price="40,000"/>                                              
+     <product title="pen"/>  // if i not pass price                                          <h5>price:{price}</h5>
+   </>                                                                                           
+  )                                                                                              
+                                                                                             
+                               |                                                               
+                               |                                                                
+                                                                                                
+                             phone                                                              
+                         price:30,000                                                        
+                         
+
+                            laptop
+                         price:30,000
+                           
+                            pen
+                         price:1    //bydefault value set
+
+ I want to apply condition:
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1st way:
+
+function product({title,price}){
+     if(price>30000)
+           return(                                 output
+              <div className="product">          ---------------->        phone
+                  <h3>Title</h3>                                        price:30000         
+                  <h5>price:{price}</h5>;
+                  <p>Discount of 5% </p>                                  laptop
+              </div>                                                     price 40,000
+         )                                                              Discount of 5%
+    else                                                                
+       return(                                                             pen
+              <div className="product">                                  price:1
+                  <h3>Title</h3>
+                  <h5>price:{price}</h5>;
+                  
+              </div>
+
+simple way but yha pe khi sari repeat chije/logic ho rhi hai
+
+------------------------------------------------------------------------------------------
+2nd way
+
+tenary operator many times used in react
+                                  else(empty string abhi keliye)
+                                  |
+> let isDiscount=price>3000 ?"5":"";
+                              |
+            if true this execute
+
+function product({title,price}){
+          let isDiscount=price>3000 ?"5":"";
+
+           return(                                 output
+              <div className="product">          ---------------->        phone
+                  <h3>Title</h3>                                        price:30000         
+                  <h5>price:{price}</h5>;
+                  <p>{isDiscount}</p>
+                           or
+                 {price>3000 ?"5":"";}  //write direct in this
+                                                                         laptop
+              </div>                                                     price 40,000
+         )                                                              Discount of 5%
+                                                                   
+                                                                         pen
+                                                                         price:1
+  good but one problem:
+ inspect: we know" pen and phone" no discount but you can see using inspect "empty paragrapth tag generated" like <p></p>
+                because hme condition lagai hai if condition false then print empty string
+  dom ke under extra node create ho rhi hai                
+ -------------------------------------------------------------------------------------              
+3rd way:
+I want to no generate extra dom elements               
+ 
+                                     else node ki jagh null hoga(if we want to no print anyting that case use null)
+                                        |
+{price>3000 ? <p> "discount of 5%</p> :null;
+                       |
+                    if condition then only that case paragraph will be generated
+
+now check in inspect :thre is no any generate extra para 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
+4th way: 
+  If I want to add link when there is no discount
+
+{price>3000 ? <p> "discount of 5%</p> :<a href="/">Get discount</a>;
+
+
+          phone
+        price:3000
+      Get Discount
+
+          laptop 
+        price :40,000
+       Discount of 5%
+           
+
+           pen
+          price:1
+        Get discount
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5th way:
+
+  {price>3000 ? <p> "discount of 5%</p> :null;
+                                          |
+                                      if condition false then i want to no generate extra node/para without using null or ""
+
+{price>3000 ?  && <p> "discount of 5%</p>;
+
+if condition 1 is true tbhi condition two check kiye jati hai
+if condition 1 false then not check 2nd condition becuse && rule is both condition must be true ,if 1st condi false then obviously there no need need to check second condition "this is internal work) ,this very good way,smart way,less time execute technique 
+
+
+
+
+
+
+
+
+

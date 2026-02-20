@@ -1,0 +1,206 @@
+                                    multiplethreading
+                                    /               \
+                                   /                 \
+                              thread class           Runnable Interface
+
+how to achieve multithreading in java ?
+>there are two option-->you can create multiple thread by using thread class and Runnable interface
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+thread class
+predefine thread class just like scanner class ,file handling ,collection that all predefined classes
+
+>thread class have predefined methods ,constructor 
+>we need to import thread package and with the help of extend keyword we can access predefined methods
+
+first class create --->extend thread
+
+public void run()
+{
+   S..O.P("thread 1 is running");
+}
+
+public static void main(String [] args){
+    m1 t1=new m2();
+    t1.start();  //it will execute by thread
+    t1.run();   //it will execute  by "main" thread
+
+         |
+         |
+thread 1  is running
+
+>jvm give processor /assign task to thread
+
+when we call stat method then  thread automatically execute run method
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public void run()
+{
+  
+}
+
+this method is predefined even public also prefined
+              if you replace public to protected i will get error
+
+compiler thread run krnya sathi  main method pasun  execution chalu krto
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+public void run()
+{
+   int c=6/0 
+   S..O.P("thread 1 is running");
+}
+
+public static void main(String [] args){
+    m1 t1=new m2();
+    t1.start();  //it will execute by thread
+    t1.run();   //it will execute  by "main" thread
+
+         |
+         |
+exception in thread "thread-0" java.lang.arithematicEception
+exception in thread "main" java.lang.arithematicEception
+
+
+when we create thread  then bydefault automatically name assign thread is "thread 0"
+
+>we can manually set name also set priority 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class youtube extends thread{
+    void play_video()
+    {
+       S.O.P("video is playing");
+    }
+
+    video play_audio()
+    {
+     
+    }
+
+    void caption()
+    {
+      S.O.P("caption is display");
+    }
+ 
+    public void run()
+    {
+       play_video();
+       play_audio();
+       caption();
+
+    }
+
+
+public static void main(){
+       youtube y1=new y1();
+       y1.start();
+
+}
+
+
+//thread excute only run method we have to call other method from run method
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+predefined thread methods:
+
+bydefault name Thread 0
+
+t1.setName("audio_threat");   //we can set userdefined thread name
+t1.getName();   // it will return name of thread
+-----------------------------------------------------------------------
+we set priority means which is first execute thread
+>priority range 1 to 10
+t1.setPriority(3);
+
+------------------------------------------------------------------------
+
+jvm provide unique id to each thread
+    jeva processor/task allocate kratoy tevha prathek thread la  yek vegli id detoy
+
+so hya thread la jvm ne id ky deli aahe  he bghanyasathi use 
+t1.getid();  //deprecated method ,that method not use sarkha
+
+------------------------------------------------------------------------------
+
+Q min and max priority of thread
+>min-->1
+ max--->10
+
+------------------------------------------------------------------------------
+
+is alive means we cancheck our thread is alive or dead
+>after execution thread will be dead
+>it will return true or false
+
+-------------------------------------------------------------------------
+isvirtual();
+virtual thread kon banavte --> jvm ,os nahi
+
+----------------------------------------------------------------------
+
+is doemon()
+>rakshsa
+it will ceck in thread is thre virus or not 
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+thread class steps:
+
+1)extends the thread class  / inherit the thread class
+2)override run method
+3) create the obj of class
+4)create the thread
+
+>why override means same method with same para in parent as well as child class
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+t1.isAlive();  //false becuse obviously before checking of creating thread ,it is always false
+Thread t1=new Thread();  //here we direct create obj of predefined thread class
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                       process                              Thread
+what ?        It is the program ,task or system         It is smallest unit of process
+weight ?      Highly in weight                          light weight
+speed ?       slow                                      fast
+memory sharing   different memory                      same memory
+dependency       Independent                           dependent
+
+
+
+explain
+1) process is noting but particular task or program . 
+            Thread is derived from process or It is smallest unit of process
+
+2) thread is light weight that it is consume less memory (memory efferent) 
+             that also reason performance increase
+
+3) process speed is slow because os allocate each process to cpu(processor) ,it is time consuming 
+
+4) each procees allocate different memory
+   multiple thread allocate same memory because it is derived from process  (memory efficient)
+
+5) process is independent
+    pratek processor independent
+ 
+   thread- is it depend or independent?
+     |
+     It is dependent 
+    
+
+>thread is depend on each other
+    even when we create thread not directly run until and unless jvm tyna process allocate krat nahi
+      
+      
+
+
+
+
+
+

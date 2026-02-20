@@ -1,0 +1,99 @@
+Insrc write main logic here
+
+src
+ |App.css
+ |_App.jsx
+ |_index.css
+ |_main.jsx
+ |
+
+
+app.jsx=App is main root component 
+
+component ki hierarchy hoti hai
+
+               App
+               ⬇️
+             videolist
+               ⬇️
+              video
+               ⬇️
+               like
+ 
+
+like component inside video component ,video component inside videolist company,videlist component inside App component(means all sub component inside app component menas app component is root elements 
+
+purakaka pura home page app component hai ,to baki sare component app component ke under aate hai
+
+i say that In particular  component have  html,css,js hota hai ,2nd component ka html,css js alag
+>app.jsx (html+js)  and app.css ->single component ko bnanemai kam aa rhi hai ye two file
+>like.jsx (html+js) and like.css (2nd/other component)  
+
+run from index.html file because it is main  file 
+
+there is no need to refresh,auto refresh 
+-------------------------------------------------------------------------------------------
+ <body>
+     <h1>this is my first react app</h1>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+
+ <h1>this is my first react app</h1> -there is no write like this this is work but In standard all logic in component.jsx
+
+<div id="root"></div>:
+hamara app component isa dive ke under render hota hai
+     
+go to browser ->inspect- see index.html code hover on <div id="root"></div>->see in left side all select
+
+In index.html isme only root ,script tag hota hai
+
+<script type="module" src="/src/main.jsx"></script>
+source file ,index file which is connected to main.jsx file
+-------------------------------------------------------------------------------------------
+main.jsx:
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+createRoot(document.getElementById('root')).render
+>yhapar ham root element ko access kr rhe hai
+>and usa root element ke under render kr rhe hai apne app component ko
+
+
+-------------------------------------------------------------------------------------------
+
+app.jsx return kr rha hai and yah sari jiche export hoke main.jsx ke under ja rhi hai
+                    |
+main.jsx root element mai app.jsx ko render kr rha hai
+
+yh app render hoke root element ke under aarhi hai matalab hai index.html mai root ke under hmara app component dikai dega
+
+yesari jije dikhai de rje hai webpage ke under ye na to index.html,main.jsx ke under creted ho rhi hai yj sari jije app.jsx ke under crete ho rhi hai
+ ------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

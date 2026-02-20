@@ -1,0 +1,99 @@
+                                               <----------------------------------------HTML------------------------------------------------->
+
+
+HTML-stands for hyper text markable lang
+!- html basic structure(boiler plate)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+
+-Doctype represent-version of an element ,html5-new feature add ,It tells the browser that the document is HTML5.
+-In head selection
+   meta- unpaired tag ,It is used for search engine optimization(SEO).
+                       It is used for make responsive webpage
+                       It is used for adding keywords
+                       Provides metadata like charset, keywords, viewport.
+
+Responsive: means It is automatically adjustable  to our screen size
+
+
+tags-predefined or keywords which have specific meaning and which is enclose in angular bracket
+
+there are two type of tag:
+1)paired tag
+2)unpaired tag
+
+1)paired tag:
+
+   -there is combination of opening and closing tag is called paired tag
+   -compulsory we have to use closing tag
+   eg: <html> </html>
+
+<html> </html>
+<head> </head>
+<title> </title>
+<body> </body>
+<h1> </h1>  (same for h1 to h6)
+<p> </p>
+<div> </div>
+<span> </span>
+<b> </b>
+<i> </i>
+<u> </u>
+<strong> </strong>
+<em> </em>
+<form> </form>
+<table> </table>
+<tr> </tr>
+<td> </td>
+<th> </th>
+<ul> </ul>
+<ol> </ol>
+<li> </li>
+<section> </section>
+<nav> </nav>
+<header> </header>
+<footer> </footer>
+
+2)unpaird tag:
+
+   - no need to close manually
+   - it is also called self closing tag
+   eg: <img> ,<hr>,<input>,<br>
+
+
+<br>     (line break)
+<hr>     (horizontal line)
+<img>    (image)
+<input>  (input field)
+<link>   (CSS link)
+<meta>   (page information)
+<source> (media source)
+<col>    (table column)
+<area>   (image map)
+
+  
+-Collection or no of webpages is called website
+-webpage- means collection of data(meaningful information)
+-By using html and css we can create static website,without functionality-static
+-functionality-dynamic-javascript
+-html it is used for create  a structure of webpage
+
+
+
+
+
+
+
+
+
+

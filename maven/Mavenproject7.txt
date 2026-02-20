@@ -1,0 +1,213 @@
+create login.jsp page
+
+todat task:
+Enter email,password ->correct ->dashboard.jsp ->logout
+Enter email,password ->In correct ->login.jsp
+
+ email and password(data) submit -> controller -> dao file (query mai check kiya jayega email,password hai ya nhi ) ->if query return anything or null then we decide where will go
+
+if obj return null,it means that this email and password not present in database
+
+if -else condition apply:
+Not null then go to dashboard.jsp
+Null then go to login.jsp
+
+steps1:
+ login.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+     <h2>login form</h2>
+     
+     <form action="" method="post">
+        <input type="email" name="email" placeholder="Enter Email id"><br><br>
+        <input type="password" name="password" placeholder="Enter password"><br><br>
+     
+        <button type="submit">Submit</button>
+     </form>
+     
+     
+</body>
+</html>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+studentController.java
+
+@Getmapping("/login")
+public String login(){
+  return "login"; //login.jsp   
+
+/login utl me jake dircly kro tab login page dikhega
+
+verify now - write /login in url if login page open then correct logic
+
+localhost/maven_project/index.jsp 
+                          |
+                        change /login write
+localhost/maven_project/login
+
+        login form
+enter email id
+enter password
+submit
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+submit ->controller ->dao file->query fire ->verify
+<form action="logiccheck" method ="post">
+
+action ="logincheck" in  postmapping  access
+
+studentController.java
+@PostMapping("/LoginCheck")
+public void login Check(@Requesting String email,@Requestparam String password){
+    sdao.login(email,password);
+}
+
+now no use data model for collecting data because baki vali filed empty jayegi
+      if we collect data in obj baki data empty aayega sirf emailed ,password fill hojayegi that why not use model concept
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+if this emai,password in table then obj mai aajayega
+   otherwise null return
+
+after coming email and password in controller then sent to to the dao file using method throw pass emai and password
+
+sdav.login(email,password);
+error so go to dao file create this method
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public Student login(String email,String password) {
+    	String sql="select *from student where email=? and password=?";
+    	return template.queryForObject(sql,(rs,numberofrows)->{
+    		Student s=new Student();
+    		s.setId(rs.getInt("id"));
+    		s.setFullname(rs.getString("fullname"));
+    		s.setEmail(rs.getString("email"));
+    	
+    		s.setPassword(rs.getString("password"));
+    		s.setAddress(rs.getString("address"));
+    		return s;
+    	},email,password);
+    }     |_____________|
+               |
+           value set ?,?
+
+student obj reurn krta hai , return s mai null ya data hai yh verify kr sakte hai
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+student s=sda0.login(email,password);
+
+if(s!=null){
+    S.O.P("login succeesfully");
+else{
+    S.O.P("logic fail");
+
+
+enter email ,password ->write data->login succeesfully
+                       -> wrong data ->exception error see in console
+
+if not null then redirect to dashboard
+if null then redirect to loginpage
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ @PostMapping("/logincheck")
+	 public String  logincheck(@RequestParam String email,@RequestParam String password) {
+		try {
+			Student s=ss.logincheck(email,password);
+			
+			return "redirect:/dashboard";
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			return "redirect:/login";
+		}
+	 }
+	 @GetMapping("/dashboard")
+	 public String dashboard(Model m) {
+		 
+		 m.addAttribute("user",s);
+		 if(s==null) {
+			 return "redirect:/login";
+		 }
+		 return "dashboard"; //dashboard.jsp
+	 }
+	 
+	 
+	 @GetMapping("/logout")
+	 public String logout() {
+		
+		 return "redirect:/login";
+	 }
+
+
+
+we want to return so chage datatype void to string datatype
+
+public String logincheck(@Requestparam string........){
+   if(s!=null){
+       return "redirect :/dashboard";
+   }
+  else
+      return "redirect:/login";
+
+now we use @getmapping because muze dashboard ka bhi page banana hai
+
+@Getmapping("/dashboard")
+public String dashboard(){
+   return "dashboard "; //dashboard.jsp
+}
+
+after login succeesfully we are going to dashboard page
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+dashboard.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+     <h1>Welcome to Dashboard</h1>
+     ${user.email}<br>
+     ${user.email}<br>
+     ${user.address}<br>
+     <a href="logout">logout</a>
+     
+
+</body>
+</html>
+
+In this page i want to add "logout" button so click on logout button so go to logn page
+
+* logout in href so use getmapping
+
+@Getmapping("/logout")
+public String logout(){
+    return "redirect:login";
+}
+
+
+
+
+
+
+
+
+
+
+
+

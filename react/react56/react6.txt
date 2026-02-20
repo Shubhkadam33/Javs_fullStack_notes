@@ -1,0 +1,9 @@
+inspect -> console -> read message (download the react Devtool for a better development experience
+
+react devtool is extension of broswer (yeh extension help krta hai development  for react) click link ->https://react.dev/learn/react-developer-tools-> install for chrome ->add to brave(add extension)
+     where we check/verify extension is added -> inspect -> ">>" click see option "component" option
+ye component jitnebhi react project uke component ki information dekh sakete hai (heiechical of component)
+     just like element option ->html code konse element par konsa code hai yeh dekha sakte hai ->simillary (component)
+
+
+live practical go to "atlassin" webside -=>inpect -> "<<" ->component 

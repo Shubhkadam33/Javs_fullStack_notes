@@ -1,0 +1,47 @@
+three is two way to create thread
+ii) runnable interface
+
+1) implement the runnable interface:
+
+class MyRunnable implements Runnable{....}
+
+2) override the run() method:
+
+public void run(){
+    S.O.P("runnable thread running");
+}
+
+3) create a thread object and pass your runnable object to it:
+
+MyRunnable r1=new MyRumnnable();
+
+Thread t1=new Thread(r1);
+
+4) start the threat using start() method:
+
+t1.start();
+
+
+>Advantage of Runnable: you can extend another class while still creating a thread because java support single inheritance but allows multiple interface.
+
+
+>use extends Thread when you just need a quick thread
+> Use implement Runnable When you want better design and reusability 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+>runnable is interface
+
+
+              data
+interface ----------->class = implement
+
+runnable interface have run method but not start() method
+      that we use Thread class pass ref var to Thread class
+
+
+
+
+
+
+

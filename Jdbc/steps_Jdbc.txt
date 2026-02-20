@@ -1,0 +1,63 @@
+steps
+
+1] load class of jdbc driver
+2]create connection portnumber,username,password(coonection establish)
+3]create a statement
+4]execute the statement
+5]close the connection
+
+1)loading jdbc we can write sql query
+2)coonect to rdbms -yo should know port number,username,password
+3)all query write in execute statement
+4)we write statement as query that exeute or run 
+5)close connection coonection close beause when you crate another class that time problem occur so we have to close coonection after the query execution
+
+make sure our rdbms(postgress-pg admin4)open when you apply crud opration using jdbc in eclipse 
+1)class.forname("org.postgresql.driver");
+
+google->class name of postgres for jdbc driver->org.postgresql.Driver
+
+error beause we want add external file9jdbc) that why exception occur we can handle by try-catch or throws-classNotFoundException
+check->postgres in installing time(stack builder->postgressql(x64)->database driver->pgJdbc v42.7.2-1->next-> pg nstalling process
+      toolbar->search->pg admin4 open this software and password write
+      make sure all jar file write in folder 
+
+2) connection
+
+every rdbms have different URL
+
+goole>jdbc url for postgres->    jdbc:postgresql://localhost:5432/mydb
+                          syntax:rdbmsdriver:postgresql://localhost:portnumber/database_name
+
+String URL="";
+String username="postgres";  (bydefault)
+String password="Shubham123"
+  go to pg admin4->open ->create database  (write this database name in URL)
+
+jdbc api have predefined interfaces,classes,mathods it is comes from java.util package
+connection con=DriverManager.getconnection(URL,username,password);
+
+we can not create obj of connection beause it interface
+it will throw the exception that is sql exception because you want to add external rdbms(using url,password,username)
+
+connection is interface,Drivermanger is class and that class have predefined method that is getconnection();
+
+
+
+3) create  statement
+
+String create_table="create table student(id int,name varchar(80)";
+Statement st=con.createStatement();
+
+4) execute statement
+
+st.executeUpdate(create_table);
+
+5)close connection
+con.close();
+
+
+
+
+
+

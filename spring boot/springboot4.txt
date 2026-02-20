@@ -1,0 +1,50 @@
+
+day4
+ refer maven_project_2
+
+Registration submit ->viewdata.jsp page
+    then
+today task -> I want to data fetch from database i show in viewdata in browser
+
+compare with mvc
+ use jstl lib for "for each" used for data see in broser
+
+reverse flow compare with mvc
+In mvc
+1) execute query in dao file
+2) dao data sent to controller
+3)then controller pass data to viewdata.jsp
+
+In spring  boot:
+1) student service
+2) controller
+3) viewdata
+
+viewdata.jsp
+
+//jstl lib import
+// for each  data fetch
+
+* I want to visible delete button on table , after click specific record,delete 
+
+1)viewdata
+<a href ="delete /${s.id} >
+
+2) mycontroller
+
+3) service
+  
+profile edit
+
+compare mvc project
+
+1) studentdata.jsp
+2) controller
+3)studentDao
+
+In springboot
+
+1)viewdata.jsp
+2) mycontroller
+3)student service
+

@@ -1,0 +1,248 @@
+today we learn:
+we want to pass data from client to server but i don't have any frontend like react so by using postman how we can pass data client to server ?
+
+In previous lecture we make registration form and In that form with the help of input box we pass the data client to server but now we dont have any registration form for passing data ,by using postman how we sent data
+
+today we learn sent data from postman and retrive data from database and display on postman tool
+
+In previous lecture data in the form of obj because frontend and backend in one place ,now frontend and backend in different software so data in the form of json formate
+
+                         Json format every one can understand but  obj can not understand react or orther tool ,json format equally treat
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+after verication api then coonect to website ,app,react ,angular
+> postman used for pythonfullstack ,dotnetfullstack ,Javafullstack (same frontend we can use) ,only backend is different
+>not easily hack because fronted and backend in different place
+>In company frontend different team and backend diff team
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+how to sent data postman tool ---> backend
+
+suppose we submit data from registration form ,know we use postman tool to sent data to backend in "json format"
+
+postman --> controller  if -else use In if block httpstatus.Accepted (registration successful)
+                                        else block  httpstatu.rejected (fail)
+
+> httpstatus.
+            |
+          status code
+you can all status code ,yo already see in google ,if not internet connected :gateway 404 error"
+
+application.propertes
+>compare with other project
+now no need resource(css,js) ,pages(jsp) so remove ,only add hibernate configuration
+>not use resources and pages because  now we use postman and restapi
+
+>when we want to data sent from postman that time use "post" method
+                                                        |
+                                                     postman se kya request bhejna hai
+
+
+>yha body se data jayega pstman mai ,if react is there that time input box se data jayega
+
+body ->◯none ◯form-data ◯ X.WWW-form-urlencoded ⚪raw ◯binary-> ◯Text ◯JavaScript ⚪JSON ◯HTML ◯XML
+
+-----------------------------------------------
+
+how to right json format ?
+> json format is key:value pair
+>json format mai field match with student.java(entity) so no error(remember)
+
+{
+    "fullname":"abcd xyz" ,
+     "email": "abc@gmail.com" ,
+      "password":"1234"
+       "address":"pune"
+}
+----------------------------
+    "fullname":"abcd xyz" 
+     key:value
+
+postman tool -->post -->url -->body ---> raw ----> JSON
+
+              sent request
+JSON format --------------> controller -->service file <---repo file----> save in database
+
+
+-------------------------------
+
+Q. jab haamra form submit hota tha tab yha ham Modelattribute /RequestParam likhte the ?
+> in this case there is no use  "ModelAttribute and requestparam"
+>jab aapko data other log bhejte hai tab in controoler data aaata hai "@RequestBody" kivki client log data bhej rhe hai( postman tool or react)
+
+@RequestBody student s;
+                     |
+                     data store in s
+
+> jab aapka data "json" format mai hota hai tab use @RequestBody
+
+
+----------
+
+now data in s -->ss.registration(s) service file ---->store in databse
+>use try and catch block ,best option so application stop nhi hoga ,if registration not 
+>catch block mai not write "accepted" kivki fail registration so use" bad request" bhej dena
+>both server must be running state we communication with client and server
+
+---------------
+
+application -->rus as spring app --> see in console -->port number 8081
+
+post -->localhost /registration /submit
+ 
+                  200 Accepted
+Registration suceesfully completed
+          |
+          |
+means data store successfully in database
+
+-------------------------
+ in RestAPI target on controller baki flow same hai
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+what is need for restapi ?
+> fronted(postman /react) and backend ( controller ,student.java(entity/table) , StudentService.java(queryfire) ,studentRepo (provide predefined query) ,postgress(dbms)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q.how to sent data from postman to backend ?
+
+step 1:
+postman --> post ->http://localhost:8081/register --->body ----> row -->json 
+
+In body 
+{
+    "fullname":" xuz yz",
+    "email":"xyz@gmail.com",
+    "password":"1225",
+    "address":"st"
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+step 2: go to eclipse(controller)
+@RestController
+@CrossOrigin("*")
+public class MyController {
+    
+	@Autowired
+	StudentService ss;
+	@PostMapping("/register")
+	public ResponseEntity<?> registration(@RequestBody Student s){
+		try {
+			ss.registration(s);
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Registration Succeesfully");
+
+		}
+		catch(Exception e){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fail");
+
+		}
+	
+		
+	}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+step3:student.java (entity/table)  
+                                           
+@Entity
+@Table(name="student")
+public class Student {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	@Column
+	private String fullname;
+	
+	@Column(unique=true)
+	private String email;
+	
+	@Column
+	private String password;
+	
+	@Column
+	private String address;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", fullname=" + fullname + ", email=" + email + ", password=" + password
+				+ ", address=" + address + "]";
+	}
+	
+	
+
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+step4: studentRepo
+
+@Repository
+public interface StudentRepo  extends JpaRepository<Student,Long>{
+	
+	Optional<Student>findByEmail(String email);
+   
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+step 5: StudentService
+
+@Service
+public class StudentService {
+	
+	@Autowired
+	StudentRepo sr;
+	
+	public void registration(Student s)
+	{
+		sr.save(s); //insert
+	}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+check in postman verify data store not 
+
+>submit
+
+In response:
+200 ok
+
+registration successful (means data store in databse successfully)

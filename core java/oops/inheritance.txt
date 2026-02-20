@@ -1,0 +1,77 @@
+inheritance
+When we want to use same logic from class A  in Class be that time use inheritance concept
+>time complexity increase ,not creative if we are  write same logic in  class
+
+Extend
+>with the help of extend keyword we can achive inheritance concept 
+
+1) single inheritance
+
+                parent
+                  |
+                  |Extend
+                  |
+                child
+
+
+one child class inheritance property from one parent class
+
+2)Multilevel inheritance
+
+min and max kiti class gheu sakto
+ at least min=3
+max-infinity
+
+                GrandParent
+                    |
+                  parent
+                    |
+                  child
+
+> one class can take property from  another class and another class can take property from another 
+>child class inhrit property from  parent class and parent class inheritance property from grandparent class
+
+3)Hierarchical inheritance
+multiple child inheit property from single parent class
+
+                           parent
+                           /  |  \
+                          /   |   \
+                     child1 child2 child3
+Q-where male main method ?
+>  child1 or child 2or child3 in any one child class we can make main methid
+
+Q.how to access child2 data in child1 ,there is extend that time create obj of class in class1 
+
+4)hybrid inheritance 
+
+>mixture of anything
+>single + multilevel +hierarchical inheritance
+
+
+                          parent
+                          /     \
+                         /       \
+                      child1    child2
+                                   |
+                                 sub-child
+
+
+5)multiple inheritance
+
+there are multiple parent and single child
+
+                  parent1        parent2          parent3
+                    \               |               /
+                     \              |              /
+                      \             |             /
+
+                                child1
+
+it is not possible in java because it will create diamond problem or ambiguity problem
+
+ambiguity problem means compile get confused kontya parent class kdun data gheycha aahe
+
+
+Q/we can achieve multiple inheritance by using inheritance 
+                    

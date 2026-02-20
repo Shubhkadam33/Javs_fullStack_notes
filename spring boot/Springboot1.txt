@@ -1,0 +1,80 @@
+where we create Spring boot ?
+eclipse/STS tool -use for spring project
+
+>to much XML configuration ->spring boot remove 
+>no need to add tomcat server because spring have inbuild  embedded tomcat
+>when you add dependency in pom file that time no need to add version of that particular dependency 
+because spring boot uses dependency management system in its parent starter(spring-boot-starter-parent) which is already define correct and stable version so we dont need to specify version manually
+
+application.properties-used for external configuration(databases ,port,path,security,jpa) this small file  replace large xml configuration 
+
+Spring boot Architecture:
+
+           client(brower/mobile/API consumer)
+                      |
+           controller layer(web layer-@Restcontroller/@controller)
+                      |
+          service layer(Business logic-@service)
+                      |
+         Respository layer(data access-@respository)
+                      |
+              (Database (MySQL,postgreSql etc)        
+
+1) for eg  when form submit from browser then data pass to controller using url
+ 
+2)when backend and fronted in separate system that time use @Restcontroller for connect backend and frontend
+when both frontend and backend in one place that time use @controller for connect backend and frontend
+
+after receiving data from url then sent to the service file
+
+3)business file-@service 
+means In MVC dao file is present for execute query ,here we use @service
+
+In spring 
+dao file(only make file of studentDao.java) then write login of query
+   but in spring boot there is mandatory to use annotation that is @service
+(using this jpa reo we create of obj of that class in this service files so we can access predefined method of hibernate throw jpa ,then query fire then data sent to the database)
+
+4)Respository layer
+we create interface file not java file and extend jpa repo
+this Jpa(java persistant API) give you readymade method of hibernate like save,update,delete,fetchall,deleteById
+   so no need to write write full query only use prefined  method
+
+
+
+<<<<<<<<<<<<<<<<<<<<how to create spring boot project in eclipse>>>>>>>>>>>>>>>>>>>
+
+1)firstly check in your eclipse spring boot install or not
+     how to check->
+file -> new ->other ->search(spring)->if bot visible(then i can told you how to setup the project for building spring boot)
+
+if not visible means you dont have spring spring boot so you have install it
+
+* when we want to install  extra resources like spring boot then from where we install this ?
+-> market place
+help->eclipse marketplace->search option ->spring boot(search)
+  recommended
+  spring tools  4.32.2 release   |install|
+
+remember- 1)no install spring tool 3 because all packages not present in spring 3
+          2) when during installation make sure net is on also dont shutdown your pc if you shutdown your pc then all package will be getting corrupt
+
+           ☑️
+           ☐
+           ☐
+           ☑️
+there is already selected box ,dont need to checked box
+
+suceesful-install -restart pc
+
+2)file ->New ->other ->search spring ->spring starter project ->click->next -> project name ->type(select  |maven| ) ->java version |17| ->next
+Availabe |search |->Spring web ,spring boot devtools after clicking show in left side->finish
+
+why add spring web- because you will be created webapplication project
+why add sprinf boot devtool -because when we  do changes in project then automaticaaly restart our project
+           if we dont add  "spring boot Devtools" then when we do changes in project that time every time clik on 🟥  stop button run (restart)project eveytime
+
+3) how to verity that our project ready to build spring boot project -after installing and setup that see in left side " project_name [boot devtools] "
+
+
+

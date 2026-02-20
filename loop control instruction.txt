@@ -1,0 +1,82 @@
+loop control instruction
+
+there are four type of loop statement:1)for loop
+                                      2) while loop
+                                      3) do while loop
+in this we use break,continue keyword
+
+when we want to repeat same task multiple time then we use loop statement or perform same task again and again 
+ eg 
+print hello
+print hello
+print hello
+
+same task 
+
+.....for loop....
+
+for(initialization;condition;increment/decrement){
+
+}
+
+eg.
+for(int i=0;i<=6;i++/i--)
+
+
+when we use this:
+eg 10 times print hello 
+when we known count of interation
+
+infinite lopp -when me not mension condition,increment operator not used then program go to looing state
+
+
+.....while loop.............
+
+while(condition)
+{
+
+   //do something
+}
+
+
+eg:
+
+int i; //declaration
+while(i<=5)  //termination condition
+{
+
+   printf("%d",i);
+   i++
+}
+
+}; not use both because meaning is terminate
+condition first check
+also known as entry control loop
+
+.....do while loop......
+
+do{
+
+    //do something
+}while(condition);
+
+
+eg:
+
+do{
+    printf("%d\n",i);
+    i++;
+}while(i<=5)
+
+also known as exit  control loop
+
+exeute first,then checks condition
+runs onces even if condition is false
+
+......break.....
+
+used astop loop or switch
+
+.....continue....
+
+skip the current iternation

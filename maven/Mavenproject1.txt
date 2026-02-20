@@ -1,0 +1,56 @@
+Maven project
+
+prerequisites:
+
+>network must be coonected
+>error chances are more with compare spring boot
+>if network is slow or disconnect during setup maven project then file will be corrupted then delete this file and  again create new maven project
+>when we create maven project, maven give you readymade structure .
+
+Why Maven is used ?
+>dependency Management
+>Standard project structure
+>Build automation
+>version control and consistency
+>support large and multiple module projects
+>easy integration with CI/CD tools
+>plugin support
+
+There is no need to download Jar file and add in class path
+if we want to "mysql-connector" jar file for database connectivity then not add jar file only add dependencies
+
+google->maven  repository(website)->search your jar file/dependency ->copy->paste in pom.xml in <dependencies> </dependencies>
+
+also in automation testing used maven project 
+
+when we want to change version of jar file then only write 3.12 to 4 then directly switch version  and ctrl +s (save) then we directly switch in which we want to write in particular version
+
+
+How to create Maven Project ?
+1.create a new maven project
+2.select "maven-archtype-webapp option from dropdown
+3.Enter GroupId (package Name)
+4.Enter Artifact id(project Name)
+5.finish
+6.open index.jsp file and run it using tomcat server
+
+
+2. select which application you use ,choose maven
+3. GroupId means package name and ArtifactId menas clasees /project name
+   In groupId collection of artifactId
+6. after finishing project maven give you bydefault index.jsp page you run from this jsp file
+  we add tomcat server in jsp_servlet project so there no need add again tomcat server because onces we add tomcat server this server applicable for all project
+          observe in console you can see all how much downloaded requirement resources,after downloading all then you can see option "Y/N" option
+after type Y then our project build if we write "N" then our project not build
+
+summary of steps
+file ->>new->maven project(other)->next->category ->webapp 1.0->select->next->Group id and artifact id->finish->see in console->y->see in console message "build success"
+
+after successfully downloading then go to index.jsp
+src->webapp->index.jsp->write sample code->Run as->Run in server->Tomcat select ->next->right side only store which you want to run project->finish->see in browser 
+
+
+
+
+
+

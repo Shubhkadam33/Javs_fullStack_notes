@@ -1,0 +1,143 @@
+Access Specifiers :
+
+access specifiers are used to set the accessibility pf classes ,method and variable
+1.default
+2.public
+3.private
+4.protected
+
+what is limitation of following access specifiers (yala kuthe paryant access kru shakto)
+
+1.default:
+>within the package ,when ever you don't put any access specifiers to method and variable than there is default access specifiers
+
+2.public
+>anywhere in project(means kontya pan project mdhe)
+
+3. private
+>within class only
+
+4.protected:
+>with in classes ,same package and in another package using restriction
+                                                                 |
+                                                              means subclass
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                           public
+                                           /    \
+                                 method() /      \ method()
+                                         /        \
+                                        c1        c2
+
+                              c2 obj=new c2()
+
+
+we create obj of c2 in c2 but not get error because class level we use public
+                          but when we use protected keyword class level that time we compulsory use extend keyword(inheritance) then we can access class2 data in class1
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public  class1 <-----data
+      
+public  class2 <----- data
+                       |
+                     there is no need to inherit concept ,we can access data 
+
+
+
+protected  class1 <-----data
+      
+protected  class2 <----- data
+                          |
+                          |
+                   must be inheritance 
+
+
+this is minor difference between public and protected
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class level  -------> public ,abstract ,final
+vaiable ,method level ----> public ,protected ,private ,default
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+final keyword
+      
+                             final
+                            /  |  \
+                           /   |   \
+                       class method  variable 
+
+
+1) class level
+>if I use final keyword to class level then cant inherit that class in another class
+
+
+
+final class A{                public class B extends{
+                              }
+}
+
+                 |
+                 |
+                error
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) variable level
+> when we use final keyword for variables then it will make variable as constant ,I can't change that variables again
+> I can't change modify the variable ,It will make as constant
+
+eg
+int num=50;
+num=60;
+S.O.P(num);   ------>60
+
+after we did reinitialize so 60
+
+--------------------------------
+
+final int num =50;
+num=60;
+   |
+ we get error
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+method level-
+can't override
+
+override means ---> same method name with same parameter name
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q. what is use of super keyword ?
+> super keyword use for method overriding
+>super keyword use to access the method of the parent class
+
+what is use of access modifiers ?
+>It is used to the set accessibility for classes ,method ,variable name
+
+switch - switch is conditional statement  ,it is used to check the multiple condition
+
+loop statement -->for ,do while
+break-break the loop statement
+
+continue -skip the current step
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+what is use of this keyword ?
+
+> this keyword point to var ,used for method call ,constructor call
+>this keyword used to refer instance variable  when parameter name and instance variable name are same
+>this keyword used to refer instance var when instance var and parameter name is same
+
+                       
+
+
+

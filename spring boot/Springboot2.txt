@@ -1,0 +1,91 @@
+day2
+
+/ means your home page if not mension in controller then get error
+
+this is called routing
+
+@controller
+public class mycontroller{
+@GetMapping("/")
+public String home()
+{
+   return "home";
+}
+
+when our project run that time controller firstly find "/" 
+
+pages->right click->new->other-jsp file->about.jsp
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+home.jsp
+
+<nav>
+
+   <a href="">Home</a>
+   <a href="">About</a>
+
+</nav>
+
+
+what is write  in href ?
+>when we create simple html code that time use  "about.html " 
+    now we are in framework
+but lets check <a href="Home.jsp">Home</a>
+           |
+localhost:8080/home.jsp
+error page
+
+expection:after click on home we are go to home page but we are framework
+
+> solution: mapping or routing in controller
+
+how to identify our project in framework or jsp_servlet
+>see in url
+1) <a href="home.jsp">Home</a>
+localhost:8080/home.jsp  ->jsp_servlet project
+
+2)<a href="/home">Home</a>
+localhost:8080/home
+In comtroller:
+
+@controller
+public class mycontroller{
+@GetMapping("/")
+public String home()
+{
+   return "home";
+}
+
+@GetMapping("/about")
+public String about()
+{
+   return "about";
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+problem-nav bar,footer need to almost all pages so need to write   nav code in each pages because if we want to change colour of nav bar red to black then we need to changes all pages so it is time consuming and not achieving reusability
+    so just create separate page of commom components which are used in all pages ,if any pages need nav bar just include this nav page
+
+step 1) create sepate page of common component 
+
+header.jsp
+
+<nav>
+   <a href="">Home</a>
+   <a href="">About</a>
+</nav>
+
+step 2) if any pages need nav bar just include this nav page
+
+
+<!DOCTYPE html>
+<html>
+<body>
+
+     <%@ include file="header.jsp" %>
+     <h1>Home page1</h1>
+</body>
+</html>
+

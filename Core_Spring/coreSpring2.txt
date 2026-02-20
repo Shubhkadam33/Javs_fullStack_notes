@@ -1,0 +1,285 @@
+<bean id="s1" class="Demo.student">                    
+   <property name ="name" value="abcd" > </property>                 
+   <property name ="address" value="pune" > </property>
+
+</bean>
+
+How AOP work ?
+>It is detecting class like where this package, bean ka id hai kya
+>It is check 
+
+yah detection chla rha hai iske piche cctv ka kam kr rha hai
+
+this AOP check which you write demo.student this package actuaaly present or not
+
+applicationcontext.xml 
+    |
+Dummy name (koi bhi nam likha sakte hai )
+
+but it is standard name
+
+In many document beans.xml you can write also this
+Dependency injection(DI) :
+    Dependency injection is a design pattern used by the spring framework to automatically provide(inject) the requirement object (dependencies) into a class,instead of creating them manully
+
+when one class depends on another class that a dependency
+
+suppose we not use framework then 
+firsly class declare ->main method->create obj of class ->data initize to obj
+      itna sara na krna pdhe that why dependency injection comes
+
+why you learn inheritances concept -> no need to write same logic  ,just child class inheritance property from parent class
+
+>yaha par fail hone ka process bhi hai , if you remove extend and try to access parent class method ,property then get error
+miche vla class upar vale class se depend tha yah dependency engine hai
+
+
+In maven ,spring project we follow mvc structure so one file is depend on other file 
+1) inheritances (is a relation) 2) aggregation (has a relation)
+
+two types of dependency injection:
+1.constructor injection
+2.setter injection
+
+second type we used in previous video
+In xml file bean ke under property likhi thi abh yhapar property nhi contructor-Arg likni hai
+1) constructor type we pass value in contructor / parameter
+2) stter injection aay to usko property ko value deni pdti hai
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+setter injection ->
+>setter injection is a type of dependency onjection where the spring container inject dependencies using setter methods of a bean (class)
+>Spring call the setter method after creating the bean to supply the required dependencies 
+
+
+Student.java
+
+private String name;
+private String address;
+
+public String getName() {
+return name;
+}
+public void setName(String name) {
+this.name = name;
+}
+public String getAddress() {
+return address;
+}
+public void setAddress(String address) {
+this.address = address;
+
+Xml file
+<bean id="s1" class="Demo.Student">
+<property name="name" value="abcd"></property>
+<property name="address" value="pune"></property>
+</bean>
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+contructor injection ->
+
+prerequisite of constructor you know
+1) how to call constructor
+2) definition constructor- same name as class name
+
+3) jab data inject hota hai tab this keyword se value jati hai
+
+4) two way to write constructor
+    default constructor
+    parameter constructor
+
+constructor injection ->
+constructor injection is a type of dependency injection (DI) where the spring container injects dependencies through a class constuctor
+
+when spring create the object(bean) ,it passes the required dependencies as constructor parameter
+
+Student.java
+
+private int id;
+private String name;
+
+public Student() {
+    System.out.println("Default Constructor");
+}
+
+// single parameter constructor
+public Student(int id) {
+    this.id = id;
+}
+
+public Student(String name) {   //if you want to pass only one argument then you can pass
+    this.name = name;
+}
+
+public Student(int id, String name) {     //if you want pass two argument then you can pass
+    this.id = id;
+    this.name = name;
+}
+
+
+Xml file
+<bean id="e" class="Demo.Student">
+<constructor-arg value="10" type="int"></constructor-arg>
+<constructor-arg value="abc"></constructor-arg>
+</bean>
+
+now we are use diifernt type value so then you know wich value assigh to which attribute
+
+public Student(String name) {   //if you want to pass only one argument then you can pass
+    this.name = name;
+}
+
+public Student(int id, String name) {     //if you want pass two argument then you can pass
+    this.id = id;
+    this.name = name;
+}
+
+minor changes -remove getter and setter method now constructor used for data assighing
+
+means kya sbhi option rhne chahihe eg. contact number ,alternative number you can pass both or one there is mandatory,you have choice
+
+how we decide like 2 parameter till we create contructor ?
+>if there is three attributes there then 0 to 3 parameter constructor make so error nhi aayega because of permutation combination ,this is user choice that way all combination created so error reduce 
+>for eg if there is three attribute but we make two parameter but user sent three argument then wwe get error that why all senioros is important
+
+**********multiple condition /scenario:*****************
+
+ eg .when we one argument
+
+<bean id="s1" class="Demo.Student">
+<constructor-arg value="10" ></constructor-arg>
+
+ explain: s1 means one student
+ 
+Q. 10 value kisko assign hogi ?
+> many student say that 10 value assign to id because 10 is int that why but dyan se dekho 10 is in "" so1 is string not int
+so 10 is assign to name
+ Id=0 ,name=10;
+
+but i want to assighn 10 value to id then how ?
+
+<constructor-arg value="10"  type ="int" ></constructor-arg>
+
+so manuuly likna pdta hai iska type int hai so vo check krta hai Kiska type int hai and usko assign krta hai
+
+               |
+Id=10;
+Name=null;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ eg .when we pass two argument
+
+
+<bean id="s1" class="Demo.Student">
+<constructor-arg value="10" type="int"></constructor-arg>
+<constructor-arg value="abc"></constructor-arg>
+</bean>
+
+whenwe pass two argument that no need to mension type because how you make order during creating contuctor tda data assign honar ,first  arg assign to fiest parameter and second arg assign to second parameter
+
+"your xml file like your html form "
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Constructor Injection with Collection
+  |            |             |
+List          Set           Map
+
+
+
+Constructor Injection with Collection - List
+
+Student.java 
+
+//step 1
+public List<String> skills;
+
+
+
+//step 2
+System.out.println(skills);
+
+
+     or
+
+Iterator<String> itr = skills.iterator();
+while(itr.hasNext()) {
+System.out.println(itr.next());
+}
+
+xml file:
+
+<constuctor-arg>
+
+     <list>
+          <value>Java </value>
+          <value>python</value>
+     </list>
+</constuctor-arg>
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Constructor Injection with Collection - Set
+
+Student.java //step 1
+private Set<String> departments;
+
+Student.java //step 2
+System.out.println(departments);
+
+or
+
+Iterator<String> itr = departments.iterator();
+
+while(itr.hasNext()) {
+System.out.println(itr.next());
+}
+
+xml file:
+
+<constructor-arg>
+   <set>
+      <value>Computer</value>
+      <value>Mechanical</value>
+   </set>
+    
+</constructor-arg> 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Constructor Injection with Collection - Map
+
+Student.java //step 1
+
+Student.java //step 2
+private Map<String, String> books;
+System.out.println(books);
+
+  or
+
+Iterator<Map.Entry<String, String>> itr2 = 
+books.entrySet().iterator();
+
+while (itr2.hasNext()) {
+Map.Entry<String, String> e = itr2.next();
+System.out.println(e.getKey() + " " + e.getValue());
+}
+
+xml file
+
+<constuctor-arg>
+    <map>
+       <entry key="Book 1" value="Author 1"/>
+       <entry key="Book 2" value="Author 2"/>
+
+    </map>
+
+
+
+
+
+

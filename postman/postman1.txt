@@ -1,0 +1,210 @@
+Google ->rest API ->Greek for Greek
+
+Rest API is application ,software also called server
+
+What is a Rest API ?
+
+client ->http  URL->server
+
+eg postman /react /angular --> http (Get ,Post, Delete, put)   URL (https:1232/save) -->server server data sent in json format to client
+
+Json formate :
+
+{
+   Name:shubham;
+   age:23;
+   address: Deur;
+}
+
+
+who is client /client side ?
+>frontend(html/css/js /react/ angular /postman)
+          |                         |
+          |_________________________|
+                    |
+                    |
+                 if  I dont have frontend then use postman so  we can treat client as postman
+
+
+            @Controller
+client <-------------------> server
+             @RestController
+
+          request
+frontend ---------> backend
+postman  <---------
+           response
+
+ 
+client sent request to server menas clients kohibhi ho sakta hai like website ,mobile app ,ant tool
+
+so today our client is postman tool
+
+In postman data pass/sent from url (https:) 
+
+which type od data menas like I want to sent data to server ,fetch data from server then firsly we have tl slect type 
+
+three is 4 types way to handle Rest API method
+1) get 2) post 3) delete 4)put
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------          
+
+what is RestAPI
+> RestAPI is a  simple software used for communicate between silent and server
+
+pre-requirement :
+before sent the data or retirve the data from server firsly check "server in running state or not"
+
+Q.where we check our server in running state or not if not then how we start this server ?
+> eclipse ->your project (spring_boot_rest_api -> src/main/java --> com.example.demo ----> SpringBootRestAPIApplication/java-->right click ---> run as --> spring boot app
+---> see in console --> Tomcat started on port 1232 (http) with context path '/'
+
+data transfer (postman -->@RestController -->backend
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+How to make Rest API flow:
+
+1)project create(Spring_boot_RestAPI) Similar flow like spring boot
+2) create a new database in postgres
+3)configure your application.properties file (hibernate (database configuration) copy from previous spring-boot project)
+4) dependencies add following in pom.xml
+   i) spring-boot-starter
+   ii) spring-boot-devtools  (it is used for debug ,restart)
+   iii) spring-boot-starter-test
+   iv) spring-boot-starter-web
+    v) spring-boot-starter-data-jpa (it is used for hibernate connection)
+   vi) mysql-connector-j or postgressql (wramp /MySQL workbench /postgress /xamp) 
+
+Q) which dependency  not add in pom.xml
+>In noramal spring boot project (for @controller) that need two dependencies for Jsp pages ,now no need to add jsp related dependencies because now weare made just  separate server and client
+
+5)application properties (In application properties in prefix and suppix part remove becuse we are not created "pages" in eclipse) ,model file ,dao file/service file copy and paste from previous project
+
+6) only chages in controller file
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q how to implement /process Rest API ,give me simple eg of Rest APi like only check Rest API property work or not 
+>firstly check server in running state or not
+
+1) src/main/java---> com.example.demo-->right click-->name:Mycontroller--> finish
+
+@RestController
+@CroseeOrigin("*)
+public class MyController{
+      @GetMapping("/")
+      public ResPonseEntity <?> test()
+      {
+          return RestponseEntity.status(Httpsatus.Accepted).body("tested ok");
+
+2) > eclipse ->your project (spring_boot_rest_api -> src/main/java --> com.example.demo ----> SpringBootRestAPIApplication/java-->right click ---> run as --> spring boot app
+
+3)there is two way to test RestController propertly work or not 
+   1)Brower
+   2)postman
+   
+   1) go to browser
+       In url paste url eg localhost:1232-->enter --> tested ok
+   2) how to test in postman
+       open postman --> + (clikc on this for new request) -->select method type like post ,get ,delete etc ->paste http link wich you creyed in @RestController(eg. "http://localhost:1232/") -->submit --.check message in down in      body section -->"tested ok"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+explanation of above code:
+ 
+public class MyController{
+}
+
+how to convert this normal java file into RestController ?
+-->  add @restController Annotation above class so convert normal java file unto RestController
+
+@RestController
+public class MyController{
+    @GetMapping("/")
+    public class MyController{
+         @GetMapping("/")
+         public void test()
+         {
+          }
+ In previous lecture we learn "/" means write logic of home page ,but now there only we have to check this @RestController  properly work or not 
+
+>return mai response bejuga to client ko response jata hai
+
+return ResposeEntity.
+                    |
+               what you want to sent repose or message to postman
+(isake under response throw kya kya bhejna hai ,yeh likhu(kya kya message bhrjna hai yeh likh sakte ho) 
+
+❌ rerurn ResposeEntity.build("tested ok")
+                            |
+                //error another method use
+
+❌ return ResponseEntity.body(); //incomplete syntax
+
+✔ return ResponseEntity.status(HttpStatus.Aceepted).body("tested ok");
+
+void remove and use ResponseEntity<?>
+>In @Controller we use return type void, string
+>now In  @RestController (Rest API aane ke bad we use ResponseEntity<?>
+
+kya aapn ne status code suna hai like in brower when network is gone and i am trying to open website that time we get 404 not found ,error,sucess
+that type of status code we have to sent respose to client
+
+>there is differnt type of status code ,each status code used in particular situation
+
+Q how to check how many status code ?
+> httpstatus.
+         dot krke access ke sakte ho
+
+If in postman /browser in url call to "/" then we have to reposes any custom message so we can understand suceesfully connected client and server by using @RestController then we sent custom message in "body" so we write "tested ok " in body 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+you know that postman is different software and server is different software 
+so there request sent and response from third party software that time we have allow that that particular third part allow for sent the request and response the request
+
+eg when you go one state to another state or one country to another country that time there is mandatory to verification so you can "allow" to go to another country or come from another country
+
+In RestAPI:
+so that allow of request and response that will be handle by "cross origin"  
+
+crossOrigin allowed krta hai yhape taki koi bhi isko request bheje and yhase response le
+
+@CrossOrigin("*")---> * means  sabhi root ko allow krna hai ,taki kisenebhi request kiya ,to sabhi root allow kiye jayege
+
+now everyone can sent the request and response because of @CrossOrigin("*") ,* menans all root allow
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+for eg banking sector
+
+                        @RestControler(In crossorigic) link to RBI bank to RBI app
+RBI bank(server/backend)-----------------------------------------------------------> clientside(frontend eg postman/react) phonepay App
+
+>phle digital duniya nhi hoti tab mensa  banking app nhi hote te tab ham offline jake money deposite ,withdrwaw ,ststus check krne jate the
+>now we can do all activity which we want to using Banking App
+
+>if server cut the link /connection then that banking app ka koi use nhi(useless) because main motive of app is interaction with your bank 
+ because if bank is not allow to sent the request and response to bank like from pone pay we can see balance or sent the money to other purpose,if this type of not give permission from bank then banking app becomes unless
+
+>server only give you particular url ,not all but commom url give you so " with the help of that url build banking app "
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------here we test our @RestController properly work or not
+>there is two way to verify this controller proper work or not
+ 1)Brower
+ 2) postman
+
+  1) go to browser
+       In url paste url eg localhost:1232-->enter --> tested ok
+   2) how to test in postman
+       open postman --> + (clikc on this for new request) -->select method type like post ,get ,delete etc ->paste http link wich you creyed in @RestController(eg. "http://localhost:1232/") -->submit --.check message in down in      body section -->"tested ok"
+
+select type of request -> Get 
+because we write in controller GetMapping("/")
+
+In response section ->after click on submit button see below message "sending request"
+> Body                        202 Accepted (56 ms time to respond)
+  1.tested ok
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+how to stop this server ?
+> click on red button in eclipse -server stop
+         then where we check our server is stop ?
+           > go to postman tool-->localhost:1232--->error

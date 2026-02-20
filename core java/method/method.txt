@@ -1,0 +1,171 @@
+method -main method is entry point of compiler
+main method return type is void
+
+Q.why we use method in java ?
+if what happen when we write all logic in main method
+>if there is error get then we cant not easily find out
+>difficult in organize data, complexity increase ,not readable
+
+method -block of code which will execute execute a particular task
+>It is used for organize code
+
+eg
+you have 1bhk plate and you store all metrial in bedroom so diffult to find out particular thing
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+method types
+1. static method
+2.non static method
+3.parametrized method
+4.return type
+
+there is two type of function declare in c:
+predefined-printf ,sannf
+user-defined -default ,parameterize ,return type
+
+1.static method
+>static method always start with static keyword
+>static keyword used for memory allocation
+syntax 
+ 
+memory management   user-defined
+ |                   |
+static Returntype methodname()
+ {
+     //block of code
+ }
+
+there is multiple return type like int ,float ,short,char
+        even void also return type but it will not return anything
+
+>void is special datatype which will not return anything
+
+rule of method is ----> we can not declare method in another method because code was not maintain ,it will give you error
+
+how to call static method ?
+>we can directly can using method becuse static method belong to class
+>beacuase it will already give memory location there is no need to use obj becuse static keyword provide memory location
+
+overall:
+call-
+ methodname(parameter value)
+
+                                 static method
+                                  _____|______     
+                                  |           |
+                                  |           | 
+                             method name()   classname.methodname();
+when we use directly "method_name()"
+>when we access from same class and method that time we can use this technique
+
+bht when static method in different class i wwe want to access that method that time use "className.methodame();
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2)non-static method
+
+>we canot directly call to method becuse not provide already memory allocation we need to obj
+so we have to create obj that have same brhaviour ,propert ,data 
+>obj is real world entity like pen ,bottle etc
+>there is no memory allocation for non static method
+
+Syntax:
+   
+void methodname()
+{
+   //block of code
+}
+
+//call
+
+there is two why to create obj ?
+1) className objectName =new ClassName();
+                |
+              ref var
+
+>with the help of obj we can call method
+
+overall:
+call-
+  1.create obj
+  2.call
+   objectname.methodname(para value);
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3) parametrize method
+
+that method can be static or non static
+
+eg;
+static void methodName(datatype variable name)
+                                 |
+                               parameter
+
+how many parameter we can pass ?
+>no limit
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+return type method :
+return type method can be static or non static method
+
+static int show()
+{
+  return 0;
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+there is two way to declare obj
+1. by using class name
+2. by using new keyword
+
+1)
+
+classname Refernce variablename= new classname();
+                                 |_____________| 
+>where is obj present ?------>        obj
+
+why we store obj in ref var ?
+>with the help of ref var we can access method of that class
+2)
+ after this syntax write automatically ready obj of class    
+
+
+new - create new object
+new keyword used for create new obj of scanner class ,class, string buffer ,string ,string builder
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+method: 
+1) It is block of code
+2)It is used to organize the task
+3)It is used to maintain the code
+4)It is used for readability purpose
+
+method type:
+1)static
+2)non static
+3)parametrize
+4)return type  
+
+void replace:
+1)int
+2)Boolean
+3)float
+4)char
+5)string
+
+return type method:
+        |                             
+        |__return keyword
+                  |__is mandatory
+
+because each and every datatype return value
+
+>int,long store number
+>Boolean -true/false
+>string-collection of character
+>float-decimal
+     so each and every one returing something so compulsory return keyword in method
+
+eg
+   obj1.__suggest_____
+          |
+        number():int-return type method

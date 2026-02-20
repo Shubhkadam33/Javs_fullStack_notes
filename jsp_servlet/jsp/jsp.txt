@@ -1,0 +1,45 @@
+ >we need two jsp pages or one html and one jsp
+>Jsp-with the help of jsp page we can handle frontend ,backend
+>if index.jsp and res.jsp then run from index.jsp firsly clent see index.jsp page
+
+how to create jsp project same as servlet project steps but minor changes ?
+new->dynamic project->project name->next->checkbox for xml (no need to tick ✅ because jsp page connected to directly to jsp page)->finish
+
+I want to write java code in jsp then firsly import
+Syntax:
+<%@ page language="java" contentType="text/html; charset=UTF-8" bpageEncoding="UTF-8"%>
+
+I want to write query(jdbc) then import library
+Syntax:
+<%@ page import="java.sql.*" %>
+
+then we can write java code in <%> tag
+
+This single import covers:
+
+Connection
+
+DriverManager
+
+PreparedStatement
+
+Statement
+
+ResultSet
+
+SQLException
+
+
+when we add jar file that time remember
+project->build path->deployment assembly->apply->add->Java build path entries->Jar see in this->select->finish
+
+Reason why we also add deployment assembly in jar file->because driver not detect jar files that we exeute extra step
+    
+html(name="fullname") -> action data->request.getparameter("fullname")
+
+after using that data if i want to sent back to reposes with the form of message,error ,redirect
+
+redirect used for sent data file to anther file
+
+response.sentRedirect("welcome.jsp");
+

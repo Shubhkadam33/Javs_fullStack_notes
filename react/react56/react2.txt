@@ -1,0 +1,107 @@
+previously video tach -how to pass string number in props/argument
+    now we will tach passing Arrays to pros:
+
+features={["fast" ,"reliable"]}       //array
+features={{a:"fast" ,b:"reliable"}}   //obj
+
+i want to add features in product in the form of array
+
+
+function App(){ 
+    let options=["hi-tech", "durable" ,"fast"]                                      function product({title,price=1,features}){
+   return (                                                                              console.log(features)
+                                                                                     return(
+    <>                                                                                  <div classname="product">
+     <product title="photo" price={30,000}, features={options}/>                             <h3>{title}</h3>  
+     <product title="laptop" price="40,000"/>                                                <p>{features}</p>
+     <product title="pen"/>  // if i not pass price                                          <h5>price:{price}</h5>
+   </>                                                                                           |
+  )                                                                                              
+                                                                                             inspect
+                               |                                                                Array(3)
+                               |                                                                0:"Hi-tech"
+                                                                                                1:"durable"
+                             phone                                                              2:"fast"
+                         price:30,000                                                        length:3
+                         Hi-techdurablefast
+
+                            laptop
+                         price:30,000
+                           
+                            pen
+                         price:1    //bydefault value set
+
+
+>why Hi-techdurablefast ,i expected hi-tech,durable.fast (comma separated value)
+
+notice:generally html page ke upar ya js se kuch bhi krke print krvate hai tab vh "Hi-techdurablefast" isa Tarah se print nhi hota ,generally chije print hoti hai cooma separated array print hota hai
+      but yha par koi comma nhi hai In jsx ke under kohi bhi component render kiya jata hai props ke under array or obj aata hai ,tab kya hota hai
+                   -> individual array ko abtract krke fir print kiya jata hai
+eg:hotech para mai add kr diya,uske bad second item ko pick kiya bhir use paragraph ke under add kiya......
+     jsx ke  under apne props ko use krte hai hab directly print krate hai kisi array ko tab yek yek individual array peak hota hai so aapko comma separed value nhi milegi
+
+-------------------------------------------------------------------------------------------
+same rule for obj
+ 
+
+
+function App(){ 
+    let options2=[a:"hi-tech", b:"durable" ,c:"fast"]                                      function product({title,price=1,features2}){
+   return (                                                                              console.log(features)
+                                                                                     return(
+    <>                                                                                  <div classname="product">
+     <product title="photo" price={30,000}, features2={options2}/>                             <h3>{title}</h3>  
+     <product title="laptop" price="40,000"/>                                                <p>{features2.a}</p>
+     <product title="pen"/>  // if i not pass price                                          <h5>price:{price}</h5>
+   </>                                                                                           
+  )                                                                                              
+                                                                                             
+                               |                                                                
+                               |                                                                
+                                                                                                
+                             phone                                                              
+                         price:30,000                                                       
+                          hi-tech
+
+                           
+                           
+                          
+                         
+<p>{features2.}</p>: hab hamare obj ko directly objname se render nhi kr payege but individual key ko render kr sakte hai ,In obj we can access value throw key
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2nd-way-fequenly use
+ pass array,obj directly 
+
+features={["hi-tech", "durable", "fast"]}
+           |
+      yeha par hi internally array likege
+
+jaise directly array ko pass krna possible hai ,vaise hi obj ko pass krna possible hai
+
+features2={{a:"hi-tech"}}
+              |
+          notice: use internaaly {} for obj and for array []
+
+
+
+function App(){ 
+    let options2=[a:"hi-tech", b:"durable" ,c:"fast"]                                                    function product({title,price=1,feature,features2}){
+   return (                                                                                                  console.log(features)
+                                                                                                             return(
+    <>                                                                                                           <div classname="product">
+     <product title="photo" price={30,000},features1={["hi-tech", "durable", "fast"}} features2={{a:"hi-tech"}/>                <h3>{title}</h3>  
+     <product title="laptop" price="40,000"/>                                                                                   <p>{features2.a}</p>
+     <product title="pen"/>  // if i not pass price                                                                             <p>{feature}</P>
+   </>                                                                                           
+  )                                                                                              
+                                                                                             
+                               |                                                                
+                               |                                                                
+                                                                                                
+                             phone                                                              
+                         price:30,000                                                       
+                          hi-tech
+                          hi-techdurablrfast
+
+

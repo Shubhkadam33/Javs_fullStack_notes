@@ -1,0 +1,60 @@
+Labels in React
+
+genally when we write plane html
+
+we write in label cases:
+
+label---> for
+input---->id
+
+In label element we use for attribute and input element ew use id attribute
+          for and id deno match krta tha
+
+In react:
+
+label--->htmlFor
+input---->id
+
+>we can't you for attribute becuse for is a reserve keyword in js
+>for is a used for looping that why we cant not use "for" as attribute
+
+so we use alternative word that is "htmlfor"
+
+>if we try to write for then we will get error
+export default function Form(){ 
+  let [fullName,setFullName]=useState("shubham");
+  
+  let handleNameChange=(event)=>{
+   setFullName(event.target.value);
+};
+
+return(
+  <form>
+     <label htmlFor="username">Full Name</label>
+     <input placeholder="enter full name" type="text" value={fullName} onChange={handleNameChange} id="username" />
+     <button>submit</button>
+   </form>
+)
+
+                   |
+                   |
+              FullName |shubham| |submit|
+                |
+              when we click on "fullname" them input box highlight(cursor go to input box)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+yaha pai maine "htmlFor" ko use kiya hai but you can see magic
+>when we analyze dom
+inspect-->click-->element
+
+
+             for
+<form>        |
+     <label for="username">Full Name</label>
+     <input placeholder="enter full name" type="text" value={fullName} onChange={handleNameChange} id="username" />
+     <button>submit</button>
+   </form>
+
+>you can see there is no htmlFor attribute there is for attribute because 
+jsx syntax file tak hi hota hai ,internally convert/transfile hota hai
+   

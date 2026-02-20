@@ -1,0 +1,98 @@
+data fetch
+
+✅ JDBC Program to Create Table, Insert Data, and Retrieve Data using ResultSet
+if you want to retive data from table but you dont know how many data in table that time we use jdbc
+
+🎯 Q: What is ResultSet in JDBC?
+
+Answer:
+ResultSet is an interface in JDBC used to store and access data that is retrieved from a database after executing a SELECT query.
+It acts like a table of results returned by the database, where each row represents one record.
+
+
+💡 Use of ResultSet
+
+ResultSet is used to read data row by row and column by column from the database.
+
+We use methods like:
+
+next() → move to the next row
+getInt("columnName") → get integer data
+getString("columnName") → get string data
+
+package JDBCPROGRAMS;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class jdbcday1 {
+
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        // 1. Load JDBC driver
+        Class.forName("org.postgresql.Driver");
+        System.out.println("1. JDBC driver loaded!");
+
+        // 2. Create connection (URL, username, password)
+        String URL = "jdbc:postgresql://localhost:5432/java8sept";
+        String username = "postgres";
+        String password = "Shubham123";
+
+        Connection con = DriverManager.getConnection(URL, username, password);
+        System.out.println("2. Connection is created!");
+
+        // 3. Create a statement
+        Statement st = con.createStatement();
+        System.out.println("3. Statement created!");
+
+        // 4. Create table (if not exists)
+        String create_table = "CREATE TABLE IF NOT EXISTS student3(id INT, name VARCHAR(50))";
+        st.executeUpdate(create_table);
+        System.out.println("4. Table created!");
+
+        // 5. Insert data into table
+        String insert = "INSERT INTO student3 VALUES (101, 'Pooja'), (102, 'Rahul'), (103, 'Sneha')";
+        st.executeUpdate(insert);
+        System.out.println("5. Data inserted!");
+
+        // 6. Retrieve data using ResultSet
+        String selectQuery = "SELECT * FROM student3";
+        ResultSet rs = st.executeQuery(selectQuery);
+        System.out.println("\n6. Retrieved Data from student3 table:");
+        System.out.println("----------------------------------------");
+
+        // Iterate over the ResultSet
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            System.out.println("ID: " + id + ", Name: " + name);
+        }
+
+        // 7. Close connection
+        con.close();
+        System.out.println("\n7. Connection closed successfully!");
+    }
+}
+
+
+🖥️ Expected Output:
+
+1. JDBC driver loaded!
+2. Connection is created!
+3. Statement created!
+4. Table created!
+5. Data inserted!
+
+6. Retrieved Data from student3 table:
+----------------------------------------
+ID: 101, Name: Pooja
+ID: 102, Name: Rahul
+ID: 103, Name: Sneha
+
+7. Connection closed successfully!
+
+
+
+

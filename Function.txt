@@ -1,0 +1,110 @@
+Function is a block of code which is used for execute/perform a particular task
+we can use a function again and again not need recreate again
+two types of function library function and predefined function
+
+libray function-printf(),scanf(),main()
+library function(predefined fun,inbulid function) is a method also known function
+
+user defined function-add(),sub()
+UDF is function ,not method
+Declared and defined by programmer
+
+every method is a function but evey function is not method
+
+step of function
+function declaration:
+datatype function_name();
+its is used in beginning of program then function definition use
+Also known as function prototype
+so compiler known that you are writing function
+
+function definition:
+datatype function_name(){
+
+}
+
+
+function calling:
+its is used in main function directly and indirectly
+
+int main()
+{
+    function_name();
+
+}
+
+if you want to exeute many time same or one task then used again and again function call
+
+local variable is used in function
+global variable is used in outside of function
+
+return  is not print,its is permission to use
+
+It can be used multiple time reusability
+Increase code
+
+If you want to p print 3 times "Hello World" then use Function
+
+() parentheses who  variable have () those vaiable known function
+
+Eg:
+   void printhello()
+ 
+ void: no give return value ,only exeute task
+main 0:  used in end of main function to indicate that the program has executed successfully
+
+Properties:
+
+Execution always stat from main
+a function gets called directly and indirectly  from main
+There can multiple function in a program
+
+main function is a entry point of compiler
+program execute from main function
+
+eg prove of directly and indirectly call from main function
+
+#include<stdio.h>
+
+int add(); //function declaration or prototype
+int sub();
+
+int main(){
+     add(); //function calling
+}
+
+int add(){ //function definition
+    sub();
+}
+int sub(){
+
+}
+
+header file:
+if we not mention this file then error if we use predefined function
+
+passing argument :
+
+function can take value and give some value
+
+take value means parameter , give some value means return value
+
+
+
+return:
+reurn value  go to calling function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

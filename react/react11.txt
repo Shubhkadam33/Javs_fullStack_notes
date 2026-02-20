@@ -1,0 +1,93 @@
+how to make heretical of component
+
+I tell you practical eg:
+
+Atlassian website observe 
+>hme bdge page ko brack down krneki koshish krni chahiye into small component
+eg big window-app component
+   link component,link component,card component 
+
+card component In icon,title,description component
+
+>kisibhi bhdi website ko sabse phle break down krna pdta hai sochke ki isa website ke under
+konse UI ka element hmare liye component bnta hai
+>hme component ko chotese bdhe component tak build krna hota hai
+
+eg:
+
+            App component
+                 ⇑
+            product List
+                 ⇑
+product(In title, description component )
+
+
+product.jsx                                           App.jsx
+
+function product(){                                function app(){
+                                         import         return (   
+    return(                             ------>              <>
+      <div>                                                    <product/>
+         <h3>product Title</h3>                                <product/>
+         <h5>product Description </h5>                         <project/>
+      </div>                                                 </>
+    )
+}
+export default product;
+
+                                 |
+                                 |
+                            product Title
+                            product Description
+
+                            product Title
+                            product Description
+
+                             product Title
+                            product Description
+
+
+
+output is correct but this is not standard way to merge/combined
+
+ >jab ham mutiple chije ko combine krte hai tab usebhi ham yek naya component bnate hai
+
+
+product.jsx                                           productlist.jsx                        App.jsx
+
+function product(){                                function productlist(){                     function app(){
+                                         import         return (               import                 return (       
+    return(                             ------>              <>                ------>                   <>
+      <div>                                                    <product/>                                   <productlist/>
+         <h3>product Title</h3>                                <product/>                                   <productlist/>
+         <h5>product Description </h5>                         <project/>                                   <productlist/>
+      </div>                                                 </>                                         </>
+    )
+}
+export default product;                              export default productlist;
+
+
+
+    
+                                             
+                                 |
+                                 |
+                            product Title
+                            product Description
+
+                            product Title
+                            product Description
+
+                             product Title
+                            product Description
+
+
+both way ouput is same but way of writing/ structure is different ,this is standard way to combined component 
+
+summary:
+phle individual component bnane hai jinko export krna hai then if we want to combined this component then new component ke under combined krna hai then usa nye component ko app component ke under use/render kr rhe hai
+
+>isa Tarah hierarchical build hoti hai
+
+
+

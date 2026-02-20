@@ -1,0 +1,111 @@
+hierarchy of exception handling
+
+
+                                             obj
+                                              |
+                                              |
+                                          Throwable
+                                              |    \
+                                              |     \
+                                          Exception  \ 
+                                          /        \   error
+                                         /          \
+                                        /            \
+                                       /              \
+                         Runtime exception
+                        1)Arithmetic               1) file not found
+                        2)Array indexOutofBound    2) IO  exception
+                        3)Null pointer             3) SQL exception
+
+
+In java there is inbuild classes comes from which package ---> Java.lang.exception
+
+exception have two main class runtime and compile time exception
+                                |
+                               have subclasses like arithmetic 
+
+
+IO exception ,file not found exception this will comes when we do file handling
+
+Q. what is parent class of exception class ?
+> throwable
+
+
+Q.What are the parent class of throwable
+>main class of throwable is the object
+
+throwable have two childs ?
+1)exception
+2)error
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+finally 
+>finally is the block which is executed wether your exception is handle or not .It will always get executed
+>finally block it is used for exception handling it will always gets executed whether your exception handle or not
+
+ 
+            ----------code-----------  |
+           ----------code-----------   | code run
+           ----------code-----------   |
+          
+      ----------exception (if not handle)--------- 
+            
+           ---------code---------- |
+           ---------code---------- | below code not run
+           ---------code---------- |
+
+
+           ---------code--------- |
+           ---------code--------- |if you use finally keyword below code will be run when we write code with in finally block
+          ----------code--------- |
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+throw -when we have to build custom exception
+
+throw new ArithmeticException("not eligible for voting");
+               |
+             exception explicitly throw
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+customized Exception
+
+1)create class with name InvalidAgeException
+2) Extends with Exception class
+3) create a parameterized constructor
+4) pass the message in parent class as well
+
+
+1) which userdefined exception you want to throw thar write class name eg InvalidAgeException
+
+2) which class is parent of all subclass that is "Exception"
+
+3) constructor nav kona pramane asat --> class pramane
+              parameter ka pass kraych -->karan throw New Exception("");
+                                                                    |
+                                                                  para value pass krto
+4) jo meaage me parameter mdhe det aahe to exception class mdhe yayla pahije
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+throw new InvalidAgeException("not valid")  // call to InvalidAgeException method with value
+               |
+               |
+ 
+       public InvalidAgeException(String msg)
+       {
+            
+       }
+   
+                  |
+                  |
+             super(msg);   //with the help of super keyword sent msg to the extend class /parent class of method
+
+                  |
+                throw exception geneate
+              
+

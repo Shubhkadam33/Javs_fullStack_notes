@@ -1,0 +1,635 @@
+day3
+
+Step 1:
+
+register.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body>
+
+     <%@ include file="header.jsp" %>
+     
+     <div class="col-sm-4">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                 <h1>Registration  form </h1><br>
+
+                 <form action="saveform" method="post">
+                    <input type="text" name="fullname" placeholder="Enter your fullname" class="form-control">
+                    <input type="email" name="email" placeholder="Enter your eamil" class="form-control">
+                    <input type="password" name="password" placeholder="Enter your password" class="form-control">
+                    <textarea placeholder="Enter your address" class="form-control mb-2" name="address"></textarea>
+                    <button type="submit" class="btn btn-success">submit</button>
+                    
+                 </form>
+                 </div>
+                 <div class="col-sm-4"></div>
+            </div>
+         
+     </div>
+    
+    
+    
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------------------
+step 2:
+
+
+
+@Entity
+@Table(name="student")
+public class Student {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	@Column
+	private String fullname;
+	
+	@Column(unique=true)
+	private String email;
+	
+	@Column
+	private String password;
+	
+	@Column
+	private String address;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+step 3:
+
+
+@Controller
+
+public class MyController {
+	
+	@Autowired
+	StudentService ss;
+	
+	@GetMapping("/")
+	public String home()
+	{
+		return "home";
+	}
+        
+        @PostMapping("/saveform")
+	public String saveform(@ModelAttribute Student s) {
+	//	System.out.println(s.toString());
+		ss.registration(s);
+		return "redirect:/viewdata";
+		
+	}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+@Repository
+public interface StudentRepo  extends JpaRepository<Student,Long>{
+	
+   
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+@Service
+public class StudentService {
+	
+	@Autowired
+	StudentRepo sr;
+	
+	public  void registration(Student s)
+	{
+		sr.save(s);  //insert into student
+	}
+------------------------------------------------------------------------------------------------------------------------------------------   
+
+
+day3
+
+Step 1:
+
+register.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</head>
+<body>
+
+     <%@ include file="header.jsp" %>
+     
+     <div class="col-sm-4">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                 <h1>Registration  form </h1><br>
+
+                 <form action="saveform" method="post">
+                    <input type="text" name="fullname" placeholder="Enter your fullname" class="form-control">
+                    <input type="email" name="email" placeholder="Enter your eamil" class="form-control">
+                    <input type="password" name="password" placeholder="Enter your password" class="form-control">
+                    <textarea placeholder="Enter your address" class="form-control mb-2" name="address"></textarea>
+                    <button type="submit" class="btn btn-success">submit</button>
+                    
+                 </form>
+                 </div>
+                 <div class="col-sm-4"></div>
+            </div>
+         
+     </div>
+    
+    
+    
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------------------
+step 2:
+
+
+
+@Entity
+@Table(name="student")
+public class Student {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	@Column
+	private String fullname;
+	
+	@Column(unique=true)
+	private String email;
+	
+	@Column
+	private String password;
+	
+	@Column
+	private String address;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getFullname() {
+		return fullname;
+	}
+
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+}
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+step 3:
+
+
+@Controller
+
+public class MyController {
+	
+	@Autowired
+	StudentService ss;
+	
+	@GetMapping("/")
+	public String home()
+	{
+		return "home";
+	}
+        
+        @PostMapping("/saveform")
+	public String saveform(@ModelAttribute Student s) {
+	//	System.out.println(s.toString());
+		ss.registration(s);
+		return "redirect:/viewdata";
+		
+	}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+@Repository
+public interface StudentRepo  extends JpaRepository<Student,Long>{
+	
+   
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+@Service
+public class StudentService {
+	
+	@Autowired
+	StudentRepo sr;
+	
+	public  void registration(Student s)
+	{
+		sr.save(s);  //insert into student
+	}
+------------------------------------------------------------------------------------------------------------------------------------------   
+
+        ┌──────────────────────────┐
+        │ 1. User Opens register.jsp│
+        └───────────────┬──────────┘
+                        │ fills form
+                        ▼
+            ┌────────────────────────┐
+            │ 2. Click Submit (POST) │
+            │   /saveform            │
+            └─────────────┬──────────┘
+                          ▼
+        ┌──────────────────────────────────┐
+        │ 3. Controller receives request   │
+        │    @PostMapping("/saveform")     │
+        │    Spring auto-creates Student   │
+        │    object using @ModelAttribute  │
+        └──────────────────┬───────────────┘
+                           ▼
+        ┌─────────────────────────────────┐
+        │ 4. Controller → Service         │
+        │    ss.registration(student)     │
+        └──────────────────┬──────────────┘
+                           ▼
+        ┌─────────────────────────────────┐
+        │ 5. Service → Repository         │
+        │    sr.save(student)             │
+        └──────────────────┬──────────────┘
+                           ▼
+        ┌─────────────────────────────────────────┐
+        │ 6. JPA Auto SQL Creation                │
+        │ INSERT INTO student (...) VALUES (...)  │
+        │ Data saved in database                  │
+        └──────────────────┬──────────────────────┘
+                           ▼
+        ┌─────────────────────────────────┐
+        │ 7. Controller Redirects         │
+        │    "redirect:/viewdata"         │
+        └──────────────────┬──────────────┘
+                           ▼
+        ┌─────────────────────────────────┐
+        │ 8. viewdata.jsp shows all users │
+        └─────────────────────────────────┘
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FLOW OF EXECUTION (Very Simple & Clear)
+
+<<<<<<<<<<<<<<<<<<Step 1 → User Opens Register Page>>>>>>>>>>>>>>>
+
+User types the URL in browser:
+http://localhost:8080/register
+(or you link it from home.jsp)
+
+
+User fills the form → Fullname, Email, Password, Address
+User clicks Submit
+
+***********************************************Step 2 → Form Submits to Controller********************************************************************
+
+Your form:
+<form action="saveform" method="post">
+
+
+When user clicks Submit, browser sends a POST request:
+POST /saveform
+
+
+Where does it go?
+→ It goes to your controller method:
+
+@PostMapping("/saveform")
+public String saveform(@ModelAttribute Student s)
+
+******************************Step 3 → Spring Automatically Creates Student Object****************************************
+
+Spring reads form fields
+
+Matches them with Student class variables:
+
+Form Field Name	   Student Variable
+fullname	     s.fullname
+email	             s.email
+password	     s.password
+address	             s.address
+
+Spring automatically fills this:
+
+Student s = new Student();
+s.setFullname(...);
+s.setEmail(...);
+s.setPassword(...);
+s.setAddress(...);
+
+
+You did NOT write this code manually because Spring does it automatically using @ModelAttribute.
+
+***************************Step 4 → Controller Sends Student Object to Service Layer********************************
+ss.registration(s);
+
+
+So StudentService.registration() gets the object.
+
+******************************************Step 5 → Service Calls Repository*************************************************
+
+Inside service:
+
+sr.save(s);
+
+
+Now the StudentRepo (JPA) will:
+
+Create SQL query automatically
+
+Insert into database
+
+SQL generated (for understanding):
+
+INSERT INTO student(fullname,email,password,address) 
+VALUES(?,?,?,?);
+
+
+You did not write SQL — JPA created it.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+bootstraps(search) -> Bootstrap (click)->CDN (two link copy css,js) and paste in head section  
+
+
+In pom.xml this two add dependency
+
+<!--Database-->
+        <dependencies>
+            <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-data-jpa</artifactId>
+	    </dependency>
+	    
+	    <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <scope>runtime</scope>
+            </dependency>
+
+	</dependencies>
+
+first dependency used for hibernate
+second dependency used for postgresql
+
+
+
+what is JPA ?
+
+>JPA stands for java persistant Api
+>It will  provide predefined method of hibernate
+
+After adding dependency in pom xml then go to postgres and create database
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+"POM means Project Object Model — it is the heart of a Maven project where all project configuration and dependencies are defined."
+
+It is the main XML file in a Maven project that contains project information, dependencies, plugins, build settings, and version details.”
+
+✔ What is inside pom.xml?
+Project name
+Version
+Dependencies (JAR files)
+Build plugins
+Repositories
+Java version
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+model attribute-logic
+if model file is not ready then not fields(from form) comes in controller ,first we have to create model file
+
+com.example.demo ->class->student.java
+
+public class student {
+ public id;
+ public address;
+
+}
+
+i want to create table on the basic of this then how ?
+case 1:
+>if you want to table name same as class name then only use above class @Entity annotation
+   internally in database "create table student();"
+
+@Entity
+public class Student {
+
+    private long id;
+    private String fullname;
+}
+
+case 2:
+>if you want to different table  name from class name
+>@Entity is mandatory. @Table is optional. Without @Entity, the class will not be saved into the database.”
+
+@Entity
+@Table(name="student")
+public class Student {
+
+    private long id;
+    private String fullname;
+}
+
+Entity actual meaning is table
+ like if we want to ceate second  table crate that time we speak second entity 
+
+After only this two annotation adding ,In class var name not act like column in table ,now this table is empty(menas table not have any attribute)
+so we have tell that properties to you are col of table ->how this is possible
+
+suppose
+private int id;
+i want to make id unique /primary key then do this
+> not allowed int change datatype int to long
+>@id
+private long id;
+
+also i want  make id Auto increment then do this 
+
+@GeneratedValue (Strategy =GeneratedValue.Identify)
+
+After this processing first attribute below  for all attributes only use @column
+  then automatically created column in table
+
+if i want to below email col unique then use
+@column(unique=true)
+private string email;
+
+explain: not allowed dublicate ifwe try enter dublicate value during registration it will throw error
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+compulsory   when we crate student/model file (class) ->same model create repo(interface)
+
+if you want to access ready made hibernate query  then following below steps
+com.example.demo->new->interface->name(studentRepo)->finish
+
+@Repository
+public interface StudentRepo extends JpaRespository <Student, Long>{
+
+}
+
+use @Repository annotation above this interface
+>not any thing write inside this interface
+if i create student file(model/table) then create student repo
+if i create  employe file(model/another table)then create separate employe repo
+
+>jpaRepository is parent class of Repository
+>  < > what write inside this angular bracket 
+ parameter 1: class name
+ parameter 2: first col datatype
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+compare with jdbc to hibernate
+in jdbc we use daofile for write/execute query
+   In hibernate use service file
+
+com.example.demo ->class ->studentservice
+
+In this file mandatory use @service
+
+@Service
+public class StudentService {
+	
+	@Autowired
+	StudentRepo sr;
+	
+	public  void registration(Student s)
+	{
+		sr.save(s);  //insert into student
+	}
+
+i want use prefine method of studentRepo so we create autowiring of studentReo so we can acceses all prefined  method of StudentRepo
+i want to sent model/table so we can apply operation so sent s obj from controller, just  call registration()  and pass obj
+   so have to create autowring of StudentService in controller so we can access registration method and pass parameter(obj)
+
+
+@Controller
+
+public class MyController {
+	
+	@Autowired
+	StudentService ss;
+	
+	@GetMapping("/")
+	public String home()
+	{
+		return "home";
+	}
+        
+        @PostMapping("/saveform")
+	public String saveform(@ModelAttribute Student s) {
+	//	System.out.println(s.toString());
+		ss.registration(s);
+		return "redirect:/viewdata";
+		
+	}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

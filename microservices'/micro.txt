@@ -1,0 +1,205 @@
+How many ways can one service connect to another in Microservices?
+
+👉 Mainly 5 common ways are used in real projects.
+
+RestTemplate (old)
+WebClient (recommended)
+Feign Client (very popular)
+Database Communication (NOT recommended ❌)
+ API Gateway (Indirect Communication) 🚪
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+“Microservices can communicate using REST APIs, Feign clients, message queues like Kafka, API gateways, and in some cases shared databases, though shared DB is not recommended
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1)
+
+Service A  --->  Service B
+        (HTTP REST call)
+
+Pros:
+
+Simple
+Language independent
+Easy to debug
+
+Cons:
+
+Tight coupling
+Network latency
+
+
+
+📌 Most used in interviews
+🔹 RestTemplate (OLD)
+
+How?
+
+Define an interface
+Spring handles HTTP calls automatically
+
+Example:
+User user = restTemplate.getForObject("http://user-service/users/1", User.class);
+
+
+👉 Waits
+👉 Old style ❌
+
+
+🔹 Feign Client (EASIEST 🔥)
+
+@FeignClient("user-service")
+interface UserClient {
+   @GetMapping("/users/{id}")
+   User getUser(@PathVariable int id);
+}
+
+Pros:
+
+Clean code
+Load balancing supported
+Easy integration with Eureka
+
+Cons:
+Still synchronous
+
+-------------------------------------------------------------------------------------------------
+
+
+🔹 WebClient (ASYNC)
+
+Example:
+
+webClient.get()
+  .uri("/users/1")
+  .retrieve()
+  .bodyToMono(User.class);
+
+👉 Does not block
+👉 Best for high traffic 🚀
+
+
+--------------------------------------------------------------------------------------
+
+4️⃣ Database Communication (NOT recommended ❌)
+
+Multiple services access same database
+
+Example:
+Service A
+Service B  ---> Same DB
+
+Pros:
+Easy initially
+
+Cons:
+Breaks microservice principle
+Tight coupling
+
+📌 Say this is BAD in interview
+
+--------------------------------------------------------------------------------------------------
+
+5️⃣ API Gateway (Indirect Communication) 🚪
+
+Client → API Gateway → Services
+
+How?
+Gateway routes request to correct service
+
+Example:
+Client → API Gateway → Service A / B
+
+Pros:
+
+Security
+Centralized routing
+Rate limiting
+
+Cons:
+
+Extra layer
+📌 Common in large systems
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+One-line Interview Answer 🎯
+
+“Microservices can communicate using REST APIs, Feign clients, message queues like Kafka, API gateways, and in some cases shared databases, though shared DB is not recommended
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Message Queue (Async Communication) 📩
+
+Service A → Kafka → Service B
+
+Pros:
+
+Loose coupling
+High scalability
+Fault tolerant
+
+Cons:
+Complex
+Harder to debug
+
+📌 Used in real production systems
+
+
+------------------------------------------------
+
+WebClient (Async HTTP call)
+What it is:
+
+A non-blocking HTTP client
+
+Used for service → service direct communication
+
+Flow:
+Service A ──HTTP──> Service B
+
+Example:
+webClient.get()
+  .uri("/users/1")
+  .retrieve()
+  .bodyToMono(User.class);
+
+Key points:
+
+Async (non-blocking)
+Still request–response
+
+Service A expects response (even if async)
+
+📌 Use WebClient when:
+
+You need fast response
+High traffic
+
+Real-time data
+-------------------------------------------------------------
+🔹 Message Queue (Kafka / RabbitMQ)
+What it is:
+
+Event-based communication
+No direct service call
+
+Flow:
+Service A ──> Queue ──> Service B
+
+Example:
+Order placed → Kafka → Email service
+
+Key points:
+Fully asynchronous
+No immediate response
+Services are loosely coupled
+
+📌 Use Message Queue when:
+Background tasks
+High reliability
+Event-driven systems

@@ -1,0 +1,294 @@
+Variable:
+ memory inside multiple blocks 
+Variable: is a container,box, memory block
+Variable: is a name of storage location or name of memory location which store some data
+int number=25(value)
+datatype variable name=value store in memory
+
+rules of variable:
+ variables are case sensitive
+ A variable can have alphabets, digits, and underscore.
+ A variable name can start with the alphabet, and underscore only.
+ It can't start with a digit.
+ No whitespace,comma is allowed within the variable name.
+ A variable name must not be any reserved word or keyword, e.g. int, 
+float, etc.
+
+int a=20; int A=30; 30,20 stores in different location
+_ underscore only this special character allowed in variable
+variable value can be change  not fixed
+
+eg
+int age=22;
+after two years 
+age=24  (vaiable means in English  koi asi chez jo change  hoti rahti hai)
+
+vaiable name always meaningful so easy to understand what is purpose of that,not write like a,b,c
+
+...........Datatype................
+
+data type              size in bytes
+
+char                    1
+int                     2
+float                   4
+double                  8
+
+
+c-Boolean ,string not data type in c
+
+1 byte=8 bits
+
+.........keywords:...............
+32 keywords in c
+c ki apni dictory hai,kuch kuch word reserve hai uska mtlab vhi rhega ,usko vaiable ke nam ki Tarah use nhi kr sakte
+
+program execution start from main function
+; semicolon like full stop of line
+int main() right
+INT MAIN() wrong
+
+return 0  -no error in program ,program successfully run
+return 1 error in program
+
+........comments.............
+
+lines that are not part of program
+single line //
+multiple line /*  */
+
+\n back clash  n means new line
+eg printf("hello\n")
+
+.......formate specifiers........
+
+%d -interger
+%f-float
+%c-character
+
+printf("age is %d",age);
+
+with the help of printf display on our screen, printf age vaiable mai jo value hai vah magta hai
+%d ki jagah age ki value aajayeki joki replace kr diyi jayeki
+
+why we write and what is actual work of  format specifiers:  fs yah specify krte hai output kis format mai hmare pass aayega
+
+.....input.......
+
+scanf("%d,&age)
+jo bhi value leni hai uska type likna hai(format specifiers), konse vaiable mai value store krna hai uska address
+
+%d-yah indicate krta hai int type ke value ko input lene vale hai
+
+jobi input aayega us address pe jage store ho jayega
+
+
+.......compilation...............
+
+computer program that translates c code into macine code
+
+hello.c --> c compier --> a.exe
+
+compier check first see there is any error,syntax mistake ,rules if fault then error 
+                                                                 if  all program correct that time only  program convert into a.exe file (01 , binary ,machine understandable code)
+
+.....................instruction....................
+
+these are statement in a program
+              type
+
+type declaration      arithemetic       control
+instruction           instruction       instruction
+
+
+Type  declaration instruction ....> declare variable  before using it
+
+
+valid
+
+int a=22;
+int b=a;
+int c=b+1;
+int d=1,e;
+int a,b,c;
+a=b=c=1;
+
+rule- jab bhi kisi vaiable ko use krne se phle declare jarur kre,nhi to compiler achanak variable ko dekhega to achary ho jayega
+
+eg int oldage=22;
+   int newage=oldage +years;
+   int years=2;
+   return 0;
+
+error because year use kiya pahle so vaiable declare krne se phle use kiya hai so error aagya
+
+c ke under compiler line by line jata hai
+
+
+..invalid ..                   ..valid..
+  int x=y=z=4;                 int a,b,c; 
+                               a=b=c=1;     
+
+                                declare vaiable then use
+
+
+
+invalid why: same statement mai y ko value assign bhi ho rhi hai and uski value kisi avir ko bhi de rhe hai
+                yani use and declare yek sath nhi kr sakte phle declare then  use of vaiable
+
+
+int age; //declaration 
+int age=1;  or  age 1;  //initialization 
+ 
+
+........arithemetic instruction......
+
+a+b   a,b is operand 1,2 and + operator
+single variable on the LHS
+LHS   RHS
+var= a+b-c*d;
+this expression store in var variable
+
+
+
+
+valid                invalid
+
+a=b+c                b+c=a
+a=b*c                a=bc
+a=b/c                a=b^c
+
+
+
+
+b+c=a math mai correct but in programming not correct way to formate 
+
+int x= 2.3
+       6
+invalid in c bxc ye sa mtalab nahi hota prog mai
+you can use b*c
+
+b^c not correct in c
+you can use  pow(b,c)
+
+eg int power=pw(b,c);
+   printf("%d", power);
+
+
+
+
+..module operator % ...
+return remainder for int
+
+i)5%3 --> 2,4%2-->0
+ii)-5%3-->-2  if numartor  -ve then remainder negative
+iii) 12%10-->2 ,20%10-->0 when we divide by 10 then integer last digit print
+
+% only work on only integer 
+
+printf("%d",16%10)--->6
+printf("%d",1.6%1.0)---> error
+
+
+......Type conversion........
+
+int operation int --->int
+int operation float --->int
+float operation int --->int
+
+
+int 2 byte ,float 4 byte
+
+
+float ka container bigger than int container
+2*2=4
+2.0*2=4.0
+2.0*2.0=4.0
+eg.
+printf("%d \n",2*2); ---->4
+printf("%d \n",2.0*2); --->error
+
+explanation: output float vvalue hona chahiye tha par hmne bola ki ouput interger value hoga so change %f
+
+printf("%f\n",2.0*2);-->4.00
+printf("%f\n",2.0*2.0)--->4.00
+
+eg.
+printf("%d",2/3); -->0
+ in  actually 2/3=0.6666
+ >if you want to exact ans then use float
+ >if you want to remove decimal then use int
+
+printf("%f",2.0/3);-->0.66667
+
+
+problem 1:
+
+int a=1.99999;
+printf("%d",a); -->error
+
+double to int implicit conversion not possible
+
+                                                                              conversion 
+
+implicit                                                                                                    explicit
+
+small datatype value  store in                                                                         hum as a programmer kudh krte hai, hmara compiler hme nhi krne deta
+ big datatype                                                                                          external conversion
+eg int size is 2 byte  and float size is 4 so int easy store in float                                  compiler forcefully convert  karega, compiler nhi chahta hai ki big data type
+  but float cant store in int                                                                          ko  small type me convert
+                                                                                                        bydefault c mai float value ko doble ki harah dekha jata hai ,because double bdha 
+so complier automatically  convert and store                                                           datatype hai
+                                                                                                       eg.
+                                                                                                       int a=(int)1.9999;
+                                                                                                       printf("%d",a); --->1 decimal remove
+
+
+
+.......operator precedence........
+
+*,/,%
++,-
+=
+
+just like bodmas rule
+c ke under konsa operation  pahle ,badme perform hoga yah c ke compiler me philesehi define hai
+
+eg.
+int a=4+9*10;
+printf("%d",a); -->94
+
+eg. 
+x=4*3/6*2 operation  of same precedence
+associativity (for same precedence)
+left to right
+x=4*3/6*2
+12/6
+2*2
+4
+
+......header file...........
+
+#include<stdio.h>
+
+preprocessor direction /header file
+standard input ouput header file
+
+what can do predefine function this rules,instruction,function definition write or store in header file
+not write main or actual code of function in header file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+Report service
+
+create project then create controller
+
+>now we need only two dependency spring web ,spring boot Devtool
+
+service.port=8082
+no write config database
+
+today task is -->Report controller  
+/report kiya tho user and order milne chahiye
+
+>yek server se dusare server tak jata hai tab crosss origin hota hai
+
+
+--------------------------------------------------------------------------------
+
+when we want to sent request service file to service file
+          that process handle by  --> restAPI have one class that is "RestTemplate"
+
+
+RestTemplate ka yek obj bnavo and 
+  that RestTemplate provide predined method to communicate beterrn server to server like sent data ,retrive data
+
+RestTemplate method- i) 
+           
+               getforobject
+Report service <-------- order and user service
+
+
+              postforobject
+Report service --------> order and user service
+
+--------------------------------------------------------------------------------------------------------------------
+
+import web.client
+          |
+       why this package import
+
+server to server request jati hai  ,client-service architecture inke bich mai aata hai
+
+----------------------------------------------------------------------------------------------------------------------
+
+
+String Users= getForObject (URL ,String.class)
+                                     |
+                                    yeha pe data aayega
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+
+@RestController
+public class ReportController {
+	
+	RestTemplate rt=new RestTemplate();
+	@GetMapping("/report")
+	public String getreport() {
+		String users=rt.getForObject("http://localhost:8080/users", String.class);
+		String orders=rt.getForObject("http://localhost:1233/orders", String.class);
+	    return "Users="+users+"/Orders="+orders;
+	}
+
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+RestTemplate it is usede for communicate between client to server ,server to server
+
+if we not add RestTemplate add nhi kroge tab tak yek server se dusare server se bat bhi nhi hogi
+

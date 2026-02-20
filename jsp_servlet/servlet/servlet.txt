@@ -1,0 +1,224 @@
+******servlet*******
+
+
+at list we require three file
+
+html/Jsp -> xml-> servlet(java)
+..........................................................................Step1...........................................................................................................
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+  <form action="add" method="post"> 
+  
+      <h1>Welcome to advance... java</h1>
+      <input type= text  placeholder="enter number 1" name="num1"><br><br>
+      <input type=text  placeholder="enter number 1" name="num2"><br><br>
+      <button type="submit">Submit</button>
+   </form> 
+</body> 
+</html>
+
+when you click on submit then action perform,see following scenario
+
+ 1) scenario
+"localhost:8080/project_name/add ?"
+ ? means if name attribute  not use, action is perform but value not go ,value is store in name,if you want to pass the data/value than we have to use name attribute
+2)scenario
+<form action ="add" method="">
+if method is empty then by default method is "get"
+
+"localhost:8080/project_name/add ?" if value not pass same result after use name attribute then
+"localhost:8080/project_name/add ? num1=12 and num2=10"
+
+.........................................................................Step2............................................................................................................
+
+
+Q.write configuration line in xml file(boiler code)
+
+<web-app>
+
+  <servlet>
+       <servlet-name></servlet-name>
+       <servlet-class></servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name></servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
+
+                                                          ....actual code.....
+
+WEB-INF-web.xml-> remove dummy code->I sent you in WhatsApp that code paste here
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <servlet>
+       <servlet-name>abc</servlet-name>
+       <servlet-class>demo.Addition</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>abc</servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
+
+
+you are thinking that after submitting form(html form) then go to direct addition.java
+
+->  absoulty wrong not go to directly
+
+after submitting  form request sent to xml file
+
+     > In xml file <url-patterm> tag check action="add" - locallost:8080/add  what in url action that same  should be  in <url-pattern>/add</url-pattern>
+     >remember: make sure In both tag that is <servlet> and <servlet-mapping> in <servelt-name> should be same
+      because <servlet-mapping> findout where is <servlet-name> maching value
+     >After matching servlet-name then check where is my servlet page that are write in <servlet-class> (path of servlet page)
+     > then go to servlet page
+
+
+--------------------------------------------------------------------------Step3------------------------------------------------------------------------------------------------------------
+
+package demo;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/Addition")
+public class Addition extends HttpServlet {
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getParameter("num1");
+		request.getParameter("num2");
+		
+		int n1=Integer.parseInt(request.getParameter("num1"));
+		int n2=Integer.parseInt(request.getParameter("num2"));
+		int result=n1+n2;
+		
+		System.out.println("addition"+result);
+		
+	}
+
+}
+
+
+request.getParameter("num1"); -expain 
+>after submiiting form firsly sent a request not a respose
+>that data/parameter pass throw url that data get by request.getParameter()
+If url data like "num1" and in getparameter("num1") name should be same if mismatch then get error
+
+
+ why we convert in integer ? int n1=Integer.parseInt(request.getParameter("num1"));
+because i want to to addition no concat so value should in integer when we write html code that time 1st and 2nd input box type name is "text" means in string 
+that why  firstly I convert into Int by using  Integer.parseInt
+
+
+if you want see output in console then write 	System.out.println("addition"+result);
+
+if you want see output in brower then write     out.println("addition"+result);
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Different between Get and Post
+
+| **GET Method**                                      | **POST Method**                                      |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| Data is sent through the **URL**                    | Data is sent inside the **request body**             |
+| **Less secure** (data visible in URL)               | **More secure** (data not visible in URL)            |
+| Limited data can be sent (URL length limit)         | Large amount of data can be sent                     |
+| **Faster** than POST                                | **Slightly slower** than GET                         |
+| Used for **fetching** data                          | Used for **sending** or **submitting** data          |
+| Can be **bookmarked**                               | Cannot be bookmarked                                 |
+| Parameters appear in the browser history            | Parameters are not stored in history                 |
+| Used for **idempotent** operations (no data change) | Used for **non-idempotent** operations (data change) |
+| Example: `/login?user=abc`                          | Example: form submission (login, signup)             |
+
+Types of JSP Elements or tags
+
+Directives: <%@ page %> – page settings
+
+Scriptlets: <% ... %> – Java code
+
+Expressions: <%= ... %> – output values
+
+Declarations: <%! ... %> – methods/variables
+
+
+“Expression tag <%= %> is used when we want to display a value on the page.
+Scriptlet tag <% %> is used to write Java code, whether single line or multiple lines.”
+
+Directives (<%@ ... %>) – These are used for page-level settings like importing classes or setting error pages.
+
+Scriptlets (<% ... %>) – Here we write Java code inside JSP, but it's not recommended in modern development.
+
+Expressions (<%= ... %>) – Used to directly print or output values on the webpage.
+
+Declarations (<%! ... %>) – Used to declare methods or variables that become part of the servlet class.”**
+
+
+------------deep explain----------------------------------------
+Types of JSP Elements
+1. Directives – <%@ ... %>
+
+As it is:
+<%@ page %> – page settings
+
+Interview explanation:
+“Directives tell the JSP engine how to process the page. They do not generate output.
+For example, the page directive is used for page-level settings like import packages, error pages, buffer size, etc.”
+
+2. Scriptlets – <% ... %>
+
+As it is:
+Java code
+
+Interview explanation:
+“Scriptlets allow us to write Java code directly inside the JSP file.
+But using scriptlets is not recommended in modern applications because it mixes Java with HTML, making code hard to maintain.”
+
+3. Expressions – <%= ... %>
+
+As it is:
+output values
+
+Interview explanation:
+“Expressions are used to directly output a value on the webpage. Whatever we put inside <%= %> is displayed as text in the browser. No need to write out.println().”
+
+4. Declarations – <%! ... %>
+
+As it is:
+methods/variables
+
+Interview explanation:
+“Declarations are used when we want to define variables or methods that will be part of the servlet class generated from the JSP. These are not executed inside the service method.”
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

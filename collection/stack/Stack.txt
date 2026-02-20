@@ -1,0 +1,43 @@
+Stack 
+
+>default capacity of stack is 10 
+>stack is introduced in Jdk 1.0
+>It is used LIFO(last in first out)
+>postion stating from 1(top to botton),not indexing
+
+before collection framework introduced stack have only two  method for  insering and removing element from stack that is pop() ,it is very time consuming process
+pop()-method removes and returns the top element of the stack
+push()-used to add element/ obj in stack
+
+this is drawbag if i want to delete spefic element and store in specific position that time more operation needed there is no predefined method
+
+after collection  introduced:
+collection solve this problem
+
+stack is alleady legacy class before collection we this use
+In collection framework again modify this stack add some predefined methods like add remove method(by_obj)
+
+              position
+top     true    1
+to      2.8     2
+bottom  34      3
+
+search(34)->3
+
+1)peek()- method returns the top element of the stack without removing it
+search()- method checks if an element is present in the stack.
+2)If it is found, it returns its position from the top.
+If not found, it returns -1."
+
+Stack operations:
+
+push()
+pop()
+peek()
+search()
+empty()
+
+
+what is mean by capacity ?
+>for eg what is capacity/range/size of int -123 to -250
+>same like stack data structure have some capacity

@@ -1,0 +1,42 @@
+Interviewer: What is an attribute?
+
+You say:
+“Attributes are used to provide additional information about an HTML tag.
+They are written inside the opening tag and help change the behavior or appearance of an element.”
+
+
+Interviewer: Explain src attribute.
+
+You say:
+“src stands for source. It is used in the <img> tag to specify the path of the image.
+For example:
+<img src="photo.jpg">”
+
+Interviewer: What is the use of alt?
+
+You say:
+“alt means alternative text. If the image path is incorrect or the image doesn’t load, then the text in alt will be shown.
+It is also helpful for visually impaired users using screen readers.”
+
+Interviewer: What is href used for?
+
+You say:
+“href means Hyperlink Reference. It is used in the <a> tag to create links to another web page or website.
+Example:
+<a href="https://google.com">Google</a>”
+
+Interviewer: What is iframe?
+
+You say:
+“iframe is used to embed a webpage inside another webpage.
+For example, we can show a YouTube video or Google Map inside our webpage using iframe.”
+
+⭐ Now Your Notes Will Look Like This:
+Attribute:
+Attributes provide additional information about HTML tags.
+They change the behavior or appearance of elements.
+
+src  -> Used to specify image or media file path.
+alt  -> Shows alternative text if image fails to load.
+href -> Used to link another webpage.
+iframe -> Used to display a webpage inside another webpage.

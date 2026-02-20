@@ -1,0 +1,248 @@
+function -> argument important concept of function
+>har function apne hisabse alag alag argument leke usa hisab se alag alag output de sakta hai
+
+
+     but abhi keliye jitney bhi component likr hai vah sare ke sare component same output dete hai
+
+
+
+product.jsx:                                    app.jsx
+
+function product(){                         function App(){
+    return (                                     return (
+       <div className="product">                      <>
+           <h3> product Title</h3>                      <product/>
+           <h5> product Description</h5>                <product/>
+    )                                                   <product/>
+                                                 )
+                     
+                               |
+                               |
+                           product Title
+                           product Description
+                           
+                           product Title
+                           product Description
+                           
+                           product Title
+                           product Description
+>  see ouput same ouput when we render/call/use component but i want to different ouput each time then how this possible
+
+
+It is similar to:
+sum(){
+   return 1+2;
+}
+
+>everytime same output  ,yeh function jada kam ka nhi hai kivki hme to har bar new number ka same chahye
+
+        vaisehi agar kisi product keliye component bnana hai to ham chahte hai hmare product ka title ,descrption bhi alag ho
+
+I want to customize information wich is in product
+>abhi to hamara component static chije return kr rha hai ,iske under dynamic part nhi hai
+-------------------------------------------------------------------------------------------
+React Props:
+props are the information that you pass to a JSX tag
+
+
+specific information passs krte hai usko react ke under props khte hai
+
+sum(a,b){                     function App(){
+  return a+b;                     return UI;
+}                             }
+                              
+sum (3,4)                     <product info/>  //information/attribute -props
+      |                                 |
+   parameter                    jab ham product ko render/call kr rhe hai tab product ke                                                  
+                                 sath additional information ko pass kr sakte hai 
+                               ,ye information function mai argument ki tarh kam kregi
+
+ >additional information pass kie jati hai in the form of attribute 
+
+compare
+          
+          attribute value
+          |
+<img src="">
+      |
+  attribute name
+
+In jsx              attribute value/parameter hai jisko hme pass krna hai
+                     |
+   <product title="phone" price="30k"/>
+              |
+            attribute
+             name
+-------------------------------------------------------------------------------------------
+   
+there is two way to use props
+
+1)
+
+function App(){                     function product(props){               
+    return(                              console.log(props);
+    <>                                   return (
+      <product title="photo"/>              <div className="product">
+      <product title="laptop"/>                <h3> product Title </h3>
+      <product title="pen"/>                   <h5> product Description</h5>
+                                           <div/>
+                                          )
+                                     |
+                                     |
+inspect:
+              object(title:"phone")
+              object
+              object
+              object
+              object
+              object
+
+oberve: i print 3 time but 6 times means twice kaise print huva(same chij doble print ho rhi hai)
+
+go to main.jsx:
+
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  //<StrictMode>
+    <App />
+ // </StrictMode>,
+)
+
+coomment off kro strictMode   because ye use krne ka side effect hai
+           |
+inspect; now my obj get printed ones
+                   object
+                   object
+                   object                
+
+jab bhi ham ract.StrictMode> ke under chije  krte hai tab usa case mai hmare console ke under chije twice print hoti hai 
+                agar ham react compoent ke under apne 'props" print krva rhe hoto
+
+>hamara props /argument actually "obj" hai in the form of kry:value pair
+eg: title:pen ,prototype:object
+>props is object
+
+>if i want to print only title/key  value then "console.log(props.title)"
+                                                         |
+                                                      In console
+                                                       phone
+                                                       phone
+                                                       
+                                                       laptop
+                                                       laptop
+                                                             
+                                                       pen
+                                                       pen
+
+><h3>{props.title}</h3>
+ <h5>product description <h5>
+          |
+       phone
+ product Description
+
+       laptop
+  product Description
+
+       pen
+  product Description
+          
+         
+  
+------------------------------------------------------------------
+
+2nd way;infact better tarikha generally react ke documentations mai har jagh dekneko milega
+
+we know props is obj and we know in obj data strore in the form of key and value
+so if we want to key then directly writr {Title}
+
+function App(){                                     function product({title,price}){
+   return (                                              return(
+   <>                                                       <div classname="product">
+     <product title="photo" price="30,000"/>                     <h3>{title}</h3>  
+     <product title="laptop" price="40,000"/>                    <h5>price:{price}</h5>
+     <product title="pen" price="10"/>
+   </>
+  )
+                               
+                               |
+                               |
+                          
+                             phone
+                         price:30,000
+                         
+                            laptop
+                         price:30,000
+                           
+                            pen
+                         price:40,000
+     
+if you want to chage stlyling  > go to main.jsx and comment "import '/index.css'  " so white border and product.css in border:black           
+    
+------------------------------------------------------------------------------------------
+ <product title="photo" price="30,000"/>   
+
+notice:abhi tak hmne string ke form mai data passs kiya hai 
+     but  price is in number form then we have operation if need on number so that is not correct way to write price
+           price="30,000"
+           price=30000 //error
+
+>ham number ko diecly pass nhi kr sakte  ,number ko pass krne keliye wrap krna padta hai into {} tabhi jake product ke under number ki takh use hoti hai
+
+> <product title="photo" price={30}/> 
+       |
+    phone
+      30
+
+how to verify this is number,we canot divide string
+<product title="photo" price={30/2}/> 
+           |
+          photo
+           15
+       
+-------------------------------------------------------------------------------------------
+
+props ke sath yek aur additional feature aata hai "default value ka" 
+ 
+eg
+  sum(a ,b=1){         agar 'a' aayega and 'b' nhi aayega to byfault b ko value 1 assign hojaye
+       return a+b;
+  }
+sum(1);
+  
+we can set default value to price if price is not pass
+
+ 
+
+function App(){                                     function product({title,price=1}){
+   return (                                              return(
+   <>                                                       <div classname="product">
+     <product title="photo" price="30,000"/>                     <h3>{title}</h3>  
+     <product title="laptop" price="40,000"/>                    <h5>price:{price}</h5>
+     <product title="pen"/>  // if i not pass price
+   </>
+  )
+                               
+                               |
+                               |
+                          
+                             phone
+                         price:30,000
+                         
+                            laptop
+                         price:30,000
+                           
+                            pen
+                         price:1    //bydefault value set
+
+
+
+
+
+
+
+
+
+
+
+                                                       

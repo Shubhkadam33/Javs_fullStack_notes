@@ -1,0 +1,189 @@
+...............control instruction/statement..............
+
+control instruction -control instruction used to control flow of the program based on certain condition or repetitions.
+
+Types of control statement
+i) sequence control
+ii)Decision control/conditional statement-if,if-else,nested if,switch
+iii)loop  control statement-for,while ,do while
+iv) jumping statement-break,continue,goto,return
+
+
+....operators....
+
+a.Arithmetic operators- +,-,/,*,%
+b.Relational operators - when we want to compare two operands then use
+c.logical operator
+d.bitwise operator
+e.Ternary operators
+
+ 
+relational operators
+==
+>,>=
+<,<=
+!=
+
+logical operator
+&&  AND
+||  OR
+!   NOT
+
+if we want to check two condition at a time then use logical operator
+
+.....there is a four types of datatype in c...........
+1) basic -int,char,float,double
+2) derived -array ,pointer,struture,union 
+3)enum
+4) void
+
+
+...........conditional statement............
+
+when to use control statement: use them when you need decision making,repetition or jumping in the program logic
+aisi situation  jaha par condition  dekhkar usa hisab se  kam kiya jata hai
+
+          types
+if else            switch
+
+
+if statement:
+if block a condition.if true ,its runs the block
+if(a<b){
+     printf("A is greater");
+}
+
+if else:
+used to choose between  two option
+ syntax:
+
+if(condition){
+//do something if true
+}
+else{
+//do something if false
+
+else- optional hai nhi likha tobhi chlega
+if block false bydeault else condion ke under ka block chlega
+
+{ }-curly bracket
+
+its is not necessary if in your {} not write multiple statement 
+but always use {} for good practice and good programmer
+
+eg.
+
+if(age>16)
+   printf("adult"); terminate
+
+explanation: how run without using {} compiler assume that till ; this one statement it is consider printf is part of if
+
+
+...else if.....
+if we want to check multiple condition then use else if
+
+if(condition 1){
+//do something if true
+
+else if(condition 2){
+//do something if 1st is false and 2nd is true
+}
+
+
+explanation:
+else if jitney marzi likh  sakhte hai
+eg:
+if
+else if
+else if: suppose ye condition true hogya to nicheke condition check nhi hoge
+else if
+else if
+
+
+...........if if if.........
+
+we want all condition check then use if if if
+
+.agar upar vali condition se  niche vali condition ko farak na pde to if bar bar likna hai
+.agar upar vali condition se  niche vali condition ko farak pde to else if likna hai
+ 
+
+.............nested if........
+
+using one if inside another if 
+
+if(a>0){
+   if(a<10){
+      printf("A is between  1 and 9");
+    }
+}
+
+......conditional operators........
+
+ternary
+
+condition ? do something if true : do something if false;
+
+? check
+: otherwisw or nhito
+if else mai simple line hoti hai usko short kr sakte hai
+ that is  less used in practical but asked in placement
+;:  ; iske bad aap : nhi lga skte error aajayega
+
+
+........switch.....
+
+used when we have many choice (like menu)
+
+switch(no){
+
+case c1://do somthing 
+         breaks;
+case c2://do something
+        breaks;
+default://do something
+
+}
+
+
+.....break......
+
+used to stop a loop or switch 
+
+
+.......continue........
+
+skips the current iteration
+
+for(int i=1; i<=5;i++){
+    if(i==3) continue;
+    printf("%d",i);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

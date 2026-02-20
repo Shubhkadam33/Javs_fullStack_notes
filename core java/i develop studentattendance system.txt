@@ -1,0 +1,25 @@
+i develop student attendance system by using react ,spring boot ,spring security ,hibernate ,postgres
+
+
+i build three component that is  admin ,faculty and student and each have different role like 
+admin -admin can add student ,delete student ,add member ,delete member
+faculty- faculty can add student ,delete student ,start lecture and generate QR ,can see all student attendance and download pdf  ,they can end lecture
+student- student can view own attendance and download pdf , scan QR and mark attendance
+
+why did you project because already present in GitHub ?
+> because this is my first project by using spring boot ,spring security and react so firstly i understand fundamental and basic concept of that tech so i understand how actually work that tech internally and when i build that project i many face problem so i understand how to tackle that problem
+               when i will  build second project and that time that type of problem occur then i definitely solve basically i build problem solving skill
+
+
+what is the role in your project ?
+>like i work with fronted and backend techlogy
+> I connect frontend and backend by using axios
+>I apply spring security for entire application
+
+what problem face when you build project
+1) when i login that time pop up message show that is "you are successfully login" and when i click on ok button then redirect in dashboard
+      but i want to no need to click on ok button .
+2) when i apply jwt token that time when i firsly time login that time all data fech propertly ,but after i login 2nd ,3rd time that time not properly fetch data
+              second problem is  admin and faculy both can add student ,delete student but i login admin and admin can add student ,delete student properly but when  facult login that time they not able to add student ,delete student , becuse of spring config , i set only admin can access to add student ,delete student ,firstly i slove that problem i set faculty and  admin both can add student and delete student
+3) ar the beginning of project structure of frontend is not good , firsly i build interactive fronted
+4) In vs code all jsx file in same folder so i get confuse which jsx file for which component firsly i move jsx file in particular component 

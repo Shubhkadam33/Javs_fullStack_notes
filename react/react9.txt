@@ -1,0 +1,78 @@
+React Fragment :
+
+>Fragments let you group a list of children without adding extra nodes to the DOM
+
+fragment means "chotasa tokda ,chotasa hissa"
+
+function App(){
+   return (
+       
+       <div>
+          <Title/>
+          <Title/>
+          <Title/>         
+      </div>
+   );
+}
+
+>ye three Title return krne kely muze extra div bnana pad rha hai
+
+inspect ->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head></head>
+  <body>
+    <div id="root">
+      <div class="mainbox">  ------->isa div ko extra banan pd rha hai
+        <p> hello guys</p>
+        <p> hello guys</p>
+        <p> hello guys</p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.jsx?t=1765717452690"></script>
+  </body>
+</html>.
+
+>Dom ke under extra node create ho gyi hai
+
+>if i want to extra node create naho that case "react fragment" use kre
+
+solution: <> </>  empty opening tag and closing tag
+
+function App(){
+   return (
+       
+       <>
+          <Title/>
+          <Title/>
+          <Title/>         
+      </>
+   );
+}
+
+
+
+<> </> - iska simple yek hi use hai which is yeh mutiple element/component/children ko combine krta hai in a single entity
+
+now inspect:
+
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body>
+  <div id="root">
+    <p> hello guys</p>
+    <p> hello guys</p>
+    <p> hello guys</p>
+  </div>
+
+  <script type="module" src="/src/main.jsx?t=1765718635936"></script>
+</body>
+</html>
+
+>now see three is no extra div
+> jab bhi ham chahte hai hamara extra node create na ho and element /children ko group krne keliye that time use " React fragment "
+
+

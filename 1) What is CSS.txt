@@ -1,0 +1,114 @@
+1) What is CSS?
+
+Answer:
+CSS (Cascading Style Sheets) is used to style and design HTML pages like colors, layout, fonts, spacing, etc.
+
+
+2) What are the types of CSS?
+
+Answer:
+there is three way to use css
+
+Inline CSS → Written inside HTML tag
+
+Internal CSS → Written inside <style> tag in the <head>
+
+External CSS → Written in .css file and linked using <link> tag
+
+Most preferred: External CSS (because it is reusable and clean).
+
+
+selector:
+which is  used to target HTML elements.
+
+there are four main types of selector
+
+“CSS selectors are mainly divided into four types:
+
+1️⃣ Simple selectors – select by tag, id, class
+2️⃣ Combinator selectors – based on element relationships
+3️⃣ Pseudo-class – based on element state
+4️⃣ Pseudo-element – style a part of an element”
+
+
+✅ 1) Simple Selectors
+
+Used to select elements based on name, id, class, or universal.
+
+
+✅ 1️⃣ ID Selector
+
+Used to select a unique element using its id attribute.
+It uses the # (hash) symbol.
+
+IDs must be unique in an HTML document.
+
+
+✅ 2️⃣ Class Selector
+
+Used to select multiple elements having the same class name.
+It uses the dot (.) symbol.
+.info {
+  color: blue;
+}
+
+✅ 3️⃣ Element Selector (Tag Selector)
+
+Used to select elements by their HTML tag name.
+
+“Element selector selects elements based on their tag name like p, h1, or div.”
+
+✅ 4️⃣ Grouping Selector
+
+Used to apply same style to multiple elements together.
+Separate selectors with a comma (,).
+
+h1, h2, p {
+  color: purple;
+  font-family: Arial;
+}
+
+
+✅ 5️⃣ Universal Selector
+
+Used to select all elements on the page.
+It uses the asterisk (*) symbol.
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+✅ 2) Combinator Selectors
+
+Used to select elements based on relationship between them (parent, child, sibling).
+
+| Type                 | Symbol  | Example   | Selects                              |
+| -------------------- | ------- | --------- | ------------------------------------ |
+| **Descendant**       | (space) | `div p`   | All `<p>` inside `<div>`             |
+| **Child**            | `>`     | `div > p` | Only direct child `<p>`              |
+| **Adjacent Sibling** | `+`     | `h1 + p`  | First `<p>` immediately after `<h1>` |
+| **General Sibling**  | `~`     | `h1 ~ p`  | All `<p>` after `<h1>`               |
+
+
+✅ 3) Pseudo-class Selectors
+
+Used to style elements based on their state or position.
+
+Examples:
+
+a:hover { color: red; }     /* when mouse hovers */
+input:focus { border: blue; }  /* when input active */
+li:first-child { color: green; } /* first list item */
+
+✅ 4) Pseudo-element Selectors
+
+Used to style a specific part of an element’s content.
+
+Examples:
+p::first-letter { font-size: 25px; }   /* first letter */
+p::first-line { color: blue; }         /* first line */
+p::before { content: "👉 "; }          /* insert before text */
+p::after { content: " ✅"; }           /* insert after text */
+
