@@ -1,0 +1,414 @@
+config Map in k8
+
+
+when we create image we use for database config mai env var use kiye the , Jha pe host name and port provide kiya tha  ,host name is service name -service-mongodb  (host name) in mongodb.yml
+and also we have default port 
+              aapne project ko vo value  ko provide kaise kre ,uske liye ham "config map " file bnate hai 
+-------------------------------
+mongo-config.yml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: mongo-config
+data:
+   MONGO_HOST:"service-mongodb"
+   MONGO_PORT :"27017"
+----------------------------
+
+
+explanation:
+ name: mongo-config //configuration file ka name kya rhna chahte ho ,kivki isko ref krke iski value nikhalege
+
+then env var and uski value ko provide krna hai ,key-value formate mai env var ki value provide krni hai
+
+you see in de-demo.app ---> index.js ------> env.MONGO_HOST ,env.MONGO_PORT
+
+
+ ye do env var hai ,yhi same env var use krna hai 
+data:
+   MONGO_HOST:"mongodb-service"
+                   |
+                 value provide krni hai ,yeh value kisase match krni hai --> (mongo-db.yml file --> service section--> metadata:name: service-mongodb)
+  MONGO_PORT: 27017
+         (mongo-db.yml file --> service section--> ports: port:27017)"
+
+
+  hme yha par do env var ki jrurut thi so I use two env value ,aap aur bhi jada use kr sakte hai env var ,it is all of to you
+
+yeh file bna gyi -this is configMap type file ,1st task is completed
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+go to node-app.yml
+
+node-app.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: node-app
+spec:
+  # 3 Pods should exist at all times.
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: node-app
+    spec:   //pod ke under multiple containers/images 
+
+      containers:
+      - name: node-app  //1st container
+        # Run this image
+        image: philippaul/node-mongo-db:03
+
+   //changes from here
+----------------------------------------------------
+        env:
+           - name:MONGO_HOST
+             valueFrom:
+                  configMapKeyRef:
+                     name: mongo-config
+                     key:MONGO_HOST
+            - name:MONGO_PORT
+              valueFrom:
+                    configMapKeyRef:
+                       name: mongo-config
+                       key: MONGO_PORT
+---------------------------------------------           
+      - name: mongodb   //2nd container
+         image :latest
+---  
+ //three dash or hypen dege ,three dash means yeh separation hota hai yek task ka and dusre task ka so i can combine deploy and service in single file
+
+apiVersion: v1
+kind: Service
+metadata:
+  # Unique key of the Service instance
+  name: service-my-nodedb-app
+spec:
+  ports:
+    # Accept traffic sent to port 80
+    - name: http
+      port: 8080
+      targetPort: 3000
+  selector:
+    # Loadbalance traffic across Pods matching
+    # this label selector
+    app: nodedb-app
+  # Create an HA proxy in the cloud provider
+  # with an External IP address - *Only supported
+  # by some cloud providers*
+  type: LoadBalancer
+
+---------------------------------------------------------
+ye sari info spec ke under doge
+   env:    //list provide
+    -name: MONGO_HOST
+  
+jab aap container run kro ,usko yeh  env var provide kro to env var ka name kya hai --> MONGO_HOST   // env var ka name hai MONGO_HOST  but uski value kya  --> so uske liye hmare pass parameter hai "valueForm"
+  valueFrom 
+           value kha se nikalni hai "configMapkeyRef"  (mongo-config.yml----->hmne  kind: configmap bnaya hai uski key hmne provide kiti hai  usk ref use krna hai)
+                                       name:mongo-config
+                                             |
+                       konsi configmap ka ref use krna hai  (mongo-config.yml --->metadata:name:mongo-config
+hma kah rhe hai mongo-config vali file hai ya mapping hai usmese value nikalni hai and uske under key provide krte hai "kry:MONGO_HOST"  ,isi yek aur key bnate hai dosara hoga "MONGO_PORT" ke liye
+     if you have aur jada env var hai jaise ki like database name
+ 
+ --------------------------------------------------
+
+mongo-config.yml
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: mongo-config
+data:
+   MONGO_HOST:"service-mongodb"  
+   MONGO_PORT :"27017"         //make sure ye value "" mai honi chahiye
+------------------------
+                                   
+node-app.yml isko run kranese phle mongo-config.yml idko apply krna hai
+
+>kubectl apply -f mongo-config.yml
+
+configmap/mongo-config created
+
+now ye value kubernete ke pass hai so jab aap node app vali deployment krege to vo vhase value retrive krega
+
+now run node-app.yml
+
+>kubectl apply -f node-app.yml
+
+deployment.app/node-app created
+service/service-node-app created
+
+go to dashboard ----> circl is red --> if you want to check what is error --> pods see red vala ---> scroll --> event-->crashbackloop
+
+I identify problem what is exactly problem ---> index.js mai hmne mongoose.connect('mongodb://${mongoHost}:${mongoPort}/yourDatabaseName
+iske under {mongoHost} var ka use kr rhe the so aap  single quote mai nhi de sakte ho  ,so iske liye ` ye vala sign use krna pdhega
+so you can see this {}  var highlight huva hai
+
+
+-------------------
+
+save nad hmne indexjs mai changes kiya so again image build krke push krna pdhega 
+>docker build -t  philippaul/node-mongo-db:04 .
+
+>docker push philippaul/node-mongo-db:04
+             |_________________________|
+                image name
+
+
+go to  node-app.yml chagesv image:philippaul/node-mongo-db:04 from 03  because our current version is 04
+save
+
+>kubectl apply -f node-app.yml
+
+
+deployment.app/node-app created
+service/service-node-app created
+
+
+go to dashboard--> all circle grren ->deploument  node-app and mongo-app dono up and running hai
+
+yeha tak sussful ho gya hai --> dono container diff pod mai running hai and dono connected hai isa liye dono chla pa rhe hai
+
+now webUI ko access krne keliye use minikube
+>minikube service service-node-app
+
+URL localhost:192.168.49.2.345
+
+Email:_________         |submit|
+
+Stored Emails:
+  raju@email.com
+  sham@email.com  
+
+replicase increase 
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Kubernetes Volumne and data
+
+
+Run each container in separate pod
+                                      
+|----------------| service-name:port |---------------| 
+| application    |-------------------|               |
+|                |                   |     mongo     |
+|----------------|                   |---------------|
+    pod1                                   pod2
+
+previous yeh eg  dekha tha isme problem kya hai !
+
+
+suppose mango-deb.yml val deployment hai ,suppose isme koi chages krne ho ya to mongo-db ka version change krna ho ,upgrade krna ho so isa case mai hum kya krege ?
+  previous
+  image:mongo:latest
+now we change
+   image:mongo:6
+
+
+save and apply
+
+>kubectl apply -f mongo-db.yml
+
+check status --> go to dashboard ---half yellow and grren mai hai means container creation state pe hai so yellow 
+
+URL localhost:192.168.49.2.345
+
+Email:_________         |submit|
+
+Stored Emails:
+  raju@email.com
+  sham@email.com  
+
+
+
+go to browser --> refresh  --> see what is imfact and problem there
+
+
+after refresh
+
+URL localhost:192.168.49.2.345
+
+Email:_________         |submit|
+
+Stored Emails:
+   
+
+see -our application up and running everything up and running but "hmara purana data sara delete huva hai "   hmara data tha vo lost ho gya
+
+phle reason samjte hai kyua problem aai then solution
+
+----------------------------------------------------------------------|
+                                                                      |
+                                                                      |
+                                                                      | 
+                                                                      |
+|----------------| service-name:port |---------------|                |
+| application    |-------------------|               |                |
+|                |                   |     mongo     |                |
+|----------------|                   |---------------|                | 
+    pod1                                   pod2                       |
+                                                                      |
+                                                                      |
+----------------------------------------------------------------------|
+Cluster
+
+
+
+
+mongo db run in container  and vhi pe vo data ko manage and store krega but there is one problem , if mongodb application hai isme koi problem aagyi ,hmara application crash ho gya ,to kya hoga, kubernative isko handle krega and container ko phirse up  le aayega automatic
+
+aaplication up hoga new container bnega matalab kya huva --> jo purana container mai hmara jobhi data/image tha vo lost ho jayega
+
+----------------
+
+----------------------------------------------------------------------|
+                                                                      |
+                                                                      |
+                                                                      | 
+                                                                      |
+|----------------| service-name:port |-----------------------|        |
+| application    |-------------------|                       |        |
+|                |                   |  |mongo|-----|Volume| |        |
+|----------------|                   |-----------------------|        | 
+    pod1                                   pod2                       |
+                                                                      |
+                                                                      |
+----------------------------------------------------------------------|
+Cluster
+
+kubernte ka structure de ke to vo pod ke under our application chal rhi hai 
+
+solution:
+aagar ham aisa kuch kre ki - container ke under na krke container ke bahar volumne manage kre to kaisa rhega ,pod ke under volume bnadiya
+
+
+hmne bola mongodb ko  tu jo bhi data store kr rhe ho tab volume ko use kro ,isse hoga kya -->agar aapka container some how restart ho jata hai, crash ho jata hai,ye volume to vhi hai becuse volume container ke bahar hai so hmara data abhibhi prevent rhega means safe rhega
+
+isne yek do benefit hai -->agar aap multiple container use kr rhe ho so use case mai bhi yeh value shareable possibility hai
+
+
+ii)second case -hmne mongo-db ka version change kiya tha ,to usa case mai kya hoga --> usa case mai hmara pod hi new bna gya ,puraka pura pod new bnayega to , pod ke under volume bhi remove hoga  so yeh vala method bhi jada useful nhi hai
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2)
+
+cluster ,ode level pe  volume/data hmara  pod ke bahar  maintain kr rhe hai  tab isa tarh structure rhega so two problem slovwe ho gyi 
+i)  container restart ho rhe hai ya puraka pura pod restart ho rhe hai tab bhi yek volume rhega 
+
+----------------------------------------------------------------------|
+                                                                      |
+                                                                      |
+                                                                      | 
+                                                                      |
+|----------------| service-name:port |---------------|                |
+| application    |-------------------|               |     ________   |
+|                |                   |     mongo-----|-----|volume|   |
+|----------------|                   |---------------|                | 
+    pod1                                   pod2                       |
+                                                                      |
+   Cluster                                                            |
+----------------------------------------------------------------------|
+
+ii)benefit -jab ham replicas use krte hai tab ham multiple instance chla rhe hai ,to bhi yeh useful haibecuse hmare pas multiple pod hai to vha same volume ko target kr sakte hai
+
+
+
+----------------------------------------------------------------------|
+                                                                      |
+                       | volume |                                     |
+                            |                                         |
+           _________________|__________________                       |
+          |                                  |                        | 
+          |                                  |                        |
+|----------------|                   |---------------|                |
+| |mongo|        |                   |               |     ________   |
+|                |                   |    |mongo|----|-----|volume|   |
+|----------------|                   |---------------|                | 
+    pod1                                   pod2                       |
+                                                                      |
+   Cluster                                                            |
+----------------------------------------------------------------------|
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3)iske aalava   yek aur better option hai max case mai use hota hai vo hota hai cloud
+
+kivi hmara cluster hai yeh hmare physical server pr use ho rhi hai sone how "agar aapka server crash huva ,isa case mai data loss hoga hi hoga yeh hamara sabkuch restart ,lost hoga ,isa case mai cloud base volume hai ,vo useful hoti  hai  "jaise ki AWS  ,third party cloud services  use kr sakte hai  data storage ke liye  ,this method much useful 
+
+                                                                            
+                                           ____________                              
+                                          |volume      | cloud base service like AWS for data stoage                             
+                                          |____________|                             
+                                               |                                     
+                                               |                                     
+-----------------------------------------------|----------------------|              
+                                               |                      |              
+                                               |                      |              
+                                               |                      |              
+                                               |                      |              
+|----------------| service-name:port |---------|------|               |              
+| application    |-------------------|         |      |               |              
+|                |                   |       mongo    |               |              
+|----------------|                   |----------------|               |              
+    pod1                                   pod2                       |              
+                                                                      |              
+                                                                      |              
+----------------------------------------------------------------------|              
+Cluster                                                                              
+                                                                                     
+                                                                                     
+                                                                                     
+                                                                                  
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+at this time aapne project ke hisab se -pod ke bahr and cluster ke under kaise volume bnana hai -->iske liye use krege persistant volume
+
+
+persistent volume
+
+persistent means aapka data persistent rhega 
+
+
+                         cluster
+               
+                          |App|
+                            |
+                 |persistent volume claim (PVC) |
+                             |
+                  | persistent Volume (PV) |
+                             |
+                  |  physical storage |
+ 
+
+physical storage means jistna bhi space hmare pass available hai ,ismese aapne according  ,apne requirement according yeh persistant volume bnayege  ,isko kind of reverse kr liya ,abh sa reverse maise claim krege 
+                      to hmare case mai kya hoga --> jo mongodb jo data email store kr rha tha ,data manage kr rha tha usko  kya bolege -->persistant volume hme bnaya hai and hma (PVC) claim kr rhe hai , usmese storage mese vo vala claim or vo storage use krna hai  nki tumare container ke under nahi  pod ke under
+
+if want understand more info ----> search ---> Kubernetes volume ---> detail -->read
+        
+      persistent volume exits beyond the lifetime of pod   means pod and node hai isnki lifecyle se totally independent hai ki aapka node,pod ,container restart ho gya ,tabhi aapka volume safely present rhega persistent krga ,exist krega
+
+
+-----------------
+
+Ephemeral volume -->type  have lifetime of pod means jabtak pod exist hai tab tak bhi rhega (pod ke under volume maintain kr rhe the ye hai eg we see previously)
+
+-------------------------
+
+cases to cases use krte hai ham ---> jaise ki aap data tempory store kr rhe ho , cashe type ke that time this type of volume use kr sakte ho
+
+scroll down you can see diff type volume read this
+
+

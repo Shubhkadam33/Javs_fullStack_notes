@@ -1,0 +1,180 @@
+YAML config  K8s
+
+YAML config for deployment
+
+we see previously -simple application ko deploy krne ke liye kabhi sare command /step dekhe
+steps:
+deployment bnake bad service bnani pdti hai ,port ,accsiblity ke liye
+
+you can see single  container application hai usame bhi kitne sare steps hai so you need lots of command
+
+----------------------------------------------------------------------------------------------------------------------------
+apne application ke bareme sabkuch config file mai mension kre like docker-compose file
+
+create yaml or yml file in vs code
+
+
+aap kisibi location mai yeh file bna sakte ho anfile ka kuch bhi name de sakte  ho ,yisa kuch standard name nhi hai
+
+deployment-node-app.yml /yaml
+
+search --> Kubernetes.io ----> Documentation --> left side see---> references ----> one page API Ref for Kubernetes v1.28
+
+hma kisi ki config file bna rhe hai -deployment ki
+
+left side --> Deployment v1 apps ---> show example  --->copy this prog and chages in this prog because fast and syntax error if you are beginner better is as a ref use this syntax
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Deployment Config to run 3 nginx instances (max rollback set to 10 revisions).
+-----------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: deployment-example
+spec:
+  # 3 Pods should exist at all times.
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        # Run this image
+        image: nginx:1.14
+
+--------------------------------------------------------------------------
+
+Group	Version	Kind
+apps	v1	Deployment
+
+------------------------
+
+Deployment Config to run 3 nginx instances (max rollback set to 10 revisions) means  nginx predefined image hoti hai docker vh use kiyi hai
+
+if you want to need more info about this code then reay info below code (In offial website)
+
+expain code:
+we need to write API version
+
+kind:deployment 
+kind means ham kis type ki chiz yeha par perform kr rhe hai -ham deploy bna rhe hai
+
+metadata:
+means deploy ham jo bna rhe hai uske bare mai "aur info"
+for eg jaise ki ham jab execute krte the command  hma log" deploy ka name dete the " and uske bare mai more info
+     so deployment ke bare mai aur info
+
+name:my-node-app
+
+------
+deployment ki spefication
+
+deployment ke bare mai aur jada info
+
+replicas:3
+In normal method  mai vo deployment bnate the tab vha yek hi instance bnata tha  ,yeeha pr ham directly replicas defined kr sakte hai
+    
+selector at this time igore last mai btata hu
+
+------
+Inspec ke under hi template
+template means  deployment actually krta kya hai --> pod ko manage krta hai ,pod ko bnata hai
+    basicaaly above code all about deployment
+           and deployment ke under jo template de rhe hai vh for pod
+jo pod benega uske bare mai info
+
+string mai deploy ke bare mai info thi now pod ke bare mai
+
+so pod ke bare mai jada info means metadata
+
+---
+app: node-app    //app name
+
+notice: template ke under jo labels hai ,jo ki pods ke labels hai app:node-app same value deployment ke under in spec ke under matchlabels app: node-app
+
+---------
+now pod ke spec ke bare mai bat krte hai
+
+hamne deployment bnaya tha tab image pass krte hai and pod ke under kya chlte hai --> containers 
+so in spec we defined containers
+as you know single pod ke under multiple container chala sakte hai
+
+containers:
+   name :node-app //name of container
+
+image name vhi use krege jo repo ka name hai
+image:philippaul/node-demo-app:
+
+--------------------------------------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: my-node-app
+spec:
+  # 3 Pods should exist at all times.
+  replicas: 2
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: node-app
+    spec:
+      containers:
+      - name: node-app
+        # Run this image
+        image: philippaul/node-demo-app
+
+
+--------------------------------------------------
+use kubetcl command we coomuicate kubernate ke sath
+
+>kubectl apply -f deployment-node-app.yml
+                   |_____________________|
+                 hmare current dir mai file hai so write file name dir ,if your file in diff location that time paura link /path provide krna pdega
+
+ans;
+deployment.apps/my-node-app created
+
+---------------------------------------
+>kubectl get deployments
+
+name       Ready  up-to-date  available   Age 
+my-node-app  2/2     2             2        8s
+
+>kubectl get pods
+
+Name                       Ready Status Restart Age
+my-node-87fgfgg74ffd-it54  1/1   Running  0     52s
+my-node-56dg4fh-sty45ew    1/1   Running  0     22s
+
+
+dono pod up and running hai
+
+
+ye config file ke kya benefit hai --> aapne application mai kuch bhi change krna ho to kitne as anise and  bhut easily kr sakte ho
+
+for eg i change replicase to 2 to 3 in yml file
+
+>kubectl apply -f deployment-node-app.yml
+
+>kubectl get pods
+
+Name                       Ready Status Restart Age
+my-node-87fgfgg74ffd-it54  1/1   Running  0     52s
+my-node-56dg4fh-sty45ew    1/1   Running  0     22s
+my-node-65xvxhtt-mg54      1/1   Running  0     3s

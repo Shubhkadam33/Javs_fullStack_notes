@@ -1,0 +1,354 @@
+persistent volume
+
+
+how to achieve and use this persistent volume
+
+                         cluster
+               
+                          |App|
+                            |
+                 |persistent volume claim (PVC) |
+                             |
+                  | persistent Volume (PV) |
+                             |
+                  |  physical storage |
+
+
+refer this diagram
+
+firstly make persistent volume
+
+iske liye separate config file bnayege and apply krege
+
+
+https://kubernetes.io/  -----> documentation --->reference ---->One-page API Reference for Kubernetes v1.35 ---->cluster  API ---> persistent vol
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+host-pv.yml
+
+
+apiVersion: v1
+kind: peristentVolume
+metadata:
+   name: host-pv
+spec:
+   capacity:
+      storage: 1Gi
+   VolumeMode:Filesystem
+   storageClassName: standard
+    accessModes:
+       - ReadWriteOnce
+    hostPath:
+       path: /data/
+       type: DirectoryOrCreate
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+explaination:
+  metadata: name:host-pv  //yehi name ham use or ref krege
+
+hm log voume bna rhe hai  ,reserve kr rhe hai so iski spec deni pdgegi ,uske bare mai aur detail information
+
+capacity:
+    storage:
+storage kitana  chahiye eg abhi testing setup hai so 1Gi you can see syntax from documentation 
+
+   volumeMode: Filesystem    //sata kha pr store krge isa type dedo
+   storageClassName: standard //why we use standard
+>kubecl get sc //storage  class
+you can see standard  jo ki default allreday present hai ,storage class hai ,yeh jo data manage hai ,dymaic tarikse unko handle krta hai ,so aapko manullay bhut jada thinking krneki jrurut nhi hai ,vo automatically krta hai
+
+accessModes:aap define krte ho aap ko jo storage bna rhe ho persistant ,usko use kaise krvana hai ayatto kis type ka  structure rkna hai
+
+
+you can see in doumnetation --> diiff type of acees mode
+1)ReadWriteOnce : the volume can be mounted as real -write by single node
+2)ReadOnlyMany
+3)ReadWriteMany : Volume can be mounted as read-write by many nodes //agar aap jahte ho cluster level pe aapka volume ho and  multiple node usko access kr sake so aap ReadWriteMany use kr sakte ho ,hmare case mai locally hai single node cluster hai  so hm log ReadWriteOnce use krege
+4)ReadWriteOncePod
+
+abhitak hme kya btaya -hme 1GI jahiye ,isa type ka chahiye ,konsa mode chahiye , konsa node access kr sakta hai ya nhi 
+
+last -yeh jo storage hai rhega kha  ?  ,kis type ka storage reserve krneka try kr rhe ho .like cloud etc ,diff type hote hai
+
+but now we use type- HostPath
+host pe host machine stoage ham reserve  kr rhe hai ,host he to path dena pdhega  ,konse path pe reverse chahiye
+
+   hostPath:
+     path: /data/
+     type: DirectoryOrCreate
+
+host pe storage chahiye ,hmne path diya ,jo data folder ,hmne type:DirectoryOrCreate isa liye diya hai kiviki /data/  hai isko ref krege but ,agar yeh dir present nhi hai to crate kro but iskiko use kro
+
+
+now our persistent volume part is complete (PV) ,ab persistent volume claim (PVC)
+------------------------------------------------------------------------------------------------------------------------
+
+host-pvc.yml 
+
+apiVersion: v1
+kind: persistentVolumeClaim
+metadata:
+  name: host-pvc
+spec:
+   volumeName : host-pv
+   storageClassName:standard
+   accessModes:
+       -ReadWriteOnce
+   resourses:
+        requests:
+            storage: 1Gi
+
+----------------------------------------- 
+
+metadata:
+   name : host-pvc  // claim ka name kya hai
+volumeName :host-pv 
+//hmara storage bn gya hai usko claim krne vale hai
+ 
+resources kha se le rhe hai --> requests  and storage  (hmara storage bna gya usa maise kit --> at this time pura storage claim krna chah rhe hai so 1Gi yeh request bheji
+
+
+hmari two file bna gyi host-pv.yml and host-pvc.yml
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+mongo-db.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Unique key of the Deployment instance
+  name: mongo-app
+spec:
+  # 3 Pods should exist at all times.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-app
+  template:
+    metadata:
+      labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
+        app: mongo-app
+    spec:   //pod ke under multiple containers/images
+      containers:
+      - name: mongo-app  //1st container
+        # Run this image
+        image: philippaul/node-mongo-db:02
+      
+      - name: mongodb   //2nd container
+         image :latest
+
+
+//changes from here
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-vol
+     volumes:
+        -name: mongo-vol
+         persistentVolumeClaim:
+           claimName: host-pvc
+
+      
+---  
+ 
+
+apiVersion: v1
+kind: Service
+metadata:
+  # Unique key of the Service instance
+  name: mongo-app
+spec:
+  ports:
+    # Accept traffic sent to port 80
+    - name: tcp //TCP
+      port: 27017
+      targetPort: 27017
+  selector:
+    # Loadbalance traffic across Pods matching
+    # this label selector
+    app: mongo-app
+  # Create an HA proxy in the cloud provider
+  # with an External IP address - *Only supported
+  # by some cloud providers*
+ // type: LoadBalancer  no need this
+
+
+
+ye hmara claim bna gya hai but abhi hum log yeh isko  kaise btayege --->jab bhi mongodb run ho ya koi data store kre  , ye jo storage hai abhi hmne persistant volume bnaya hai ,isko use krna hai ,uske liye thode bhut changes krna pdhta hai
+
+mongo-db.yml mai deployment vali file hai --> spec ke under hi isko define krege, jaise container define kiya hai ,uske level pe volume define krege ,(ham volume bna rhe hai and konse use krna hai)
+       volume ke under multiple volume  de sakte hai  so ham list formate me de sakte hai
+
+volumes:
+   - name: mongo-vol
+     persistentVolumeClaim:
+        claimName: host-pvc
+
+mongodb ke liye volume 
+kisa type ka hya volume -persistentVolumeClaim and iske under ham kisko target krege -->volume claim bna hai uska name kya hai
+ --> host-pvc
+
+abhi bhi hmne yeh nhi bataya hai ki --> yeh jo container s hai mongo-db ko yeh vala volume use krna hai-->to ham kya krege -->
+container ke under 
+          volumeMounts:
+basically ham yeh bata rhe hai -mongodb hai ye yek particular volume bna he hai externally ,isko  point krna hai to -->munt krna
+hma mountpath dege ,name kya hoga-hmne abho voumne bnaya hai iska name yha use kro
+           jo hmara mongodb hai jo data ko store kr rha tha , manage kr rha tha  ,isa location yhape kind of mount krdo 
+  ye kaise pta chalega kaha par hai --> iski info docker hub mai milegi-documentation
+
+container ke under /data/db isa location ko yeh vala volume jo hmne baher abhi tak storage bnaya ,isko target krna
+
+-------------------------------------------------------------------------------------------------
+
+now our all step complete now one by one apply 
+>kubectl apply -f host-pv.yml
+
+persistentvolume/host-pv created 
+
+how to verify like this volume is created
+
+>kubectl get pv
+
+name     capacity access modes reclaim policy status     claim storageclass reason age
+host-pv    1Gi     RWO           Retain         Aviable          standard          9s
+
+hmne storage bna liya ab claim krege
+
+>kubectl apply -f host-pvc.yml
+persistentvolume/host-pvc created 
+
+how to verify like this volume is created
+
+>kubectl get pvc
+
+name      status   volume   capacity  Access modes  StorageClass    Age 
+host-pvc   bound   host-pv    1Gi        RWO            standard    12s
+
+now apply mongo-db.yml becuse abse new volume use kr sake
+
+dashboard ---> see running
+
+>kubectl apply -f mongo-db.yml
+service/service-mongodb unchanged
+
+hmne persistent vol and claim vol bnaya hai ---> left dashboard
+
+ ----------
+main motive -is hmne sab kuch apply kiya hai vo work kr rha hai na ye check kro
+------------------------
+
+Email:_________         |submit|
+
+Stored Emails:
+  raju@email.com
+  sham@email.com  
+
+refresh 
+>kubectl get deployments
+>kubectl delete deployment mongo-app
+
+
+Email:_________         |submit|
+
+Stored Emails:
+no data fetch there becuse hmara mongo app hi nhi hai ,so again up and run mongo
+
+>kubectl apply mongo-db.yml
+
+refresh
+
+Email:_________         |submit|
+
+Stored Emails:
+  raju@email.com
+  sham@email.com  
+
+hmne again mongo db ko up and running kiya ,isne kya kiya uska data kis path par tha ,hmne storage bnaya tha ,pod ke bahar and cluster ke under ,jaise hi fronted ne backend ko access kiya usne access kiya data
+
+------------------------------------------------------------------------------------------
+
+hmne persistant vol bnaya uske liye "host path" use kiya ,yeh yek tarikha ho gya ,aur diif way hai
+
+ documneation --> diff type of persistant vol 
+1) container storage interface (CSI)
+2) hostpath- hostpath vol ( for single node testing only , will not work in a multi-node cluster ,consider using local volume instead
+3)network file system (NFS) storage
+4) local - local storage device mounted on nodes  multiple node use kr rhe ho then use "local"
+
+see local path basic eg in document ,compare hostpath and local so you easily learn
+
+
+also there cloud base
+1)aws
+2)azure
+3)awsElasticBlockStore - Kubernetes project suggest that you use the AWS EBS third party storage driver instread  ---> clik and see detail how to use and step of intall
+
+-------------------------------------------------------------------------------------------
+
+pv Testing
+
+hmne persistent vol bnaya hai uski testing krte hai
+
+hmne minikube bnaya hai usko puraka pura down leke aayege then firse up leke aayege so we check yeh data servive krta hai ya nhi
+
+
+>minkube status
+
+type: control plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: configured
+
+>minikube stop
+go to  browser ---> site is not accessible ,server down
+
+>minkube status
+
+type: control plane
+host: stopped
+kubelet: stopped
+apiserver: stopped
+kubeconfig: stopped
+
+>minkube start
+
+>minikube dashboard
+
+node-app.yml --> see service section service name
+
+>minikube service service-node-app
+
+url :locaahost:675:43:4  --> go to browser 
+
+
+Email:_________         |submit|
+
+Stored Emails:
+  raju@email.com
+  sham@email.com  
+
+hmne puraka pura cluster restart kiya tha ,iske bad bhi hmara data survive kr rha hai
+
+---------------------------------------------------------------------------------
+
+type of volume 
+1) emptyDir
+this vol similarly to docker hm normal vol bnate the ,docker manage krta tha sa type ka hi hai
+  jab bhi pod bnta hai tab yeh dir bn jati hai ,With the pod isko multiple container isko use kr sakte hai
+     iska lifecyle -agar pod restart huva or new pod bna so tab data permanently remove hoga
+
+2)hostpath -it is smilar to bind mount jo docker mai use krte the also hmne persistant vala host path dekha tha ,yeh simple host path hai jo persistant vol se thoda difff hai
+
+data management node level pe hoga ,jo bhi pod hai usko use kr sakte hai
+
+this type is not secure kafi chize ke liye recommended nhi krte hai
+    kuch cases ke liye useful hai like internal lib use krna ho ,ya temporary file management use krna ho
+
+------------------------------------------------------------------------------------------
+
+

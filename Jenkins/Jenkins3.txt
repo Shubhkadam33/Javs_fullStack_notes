@@ -1,0 +1,364 @@
+Jenkins Job With Ansible
+
+Ansible + Jenkin
+
+today we learn how we Ansible integrate with Jenkins
+
+Inshort -Ansible ki automation vali power hai  ,aap Jenkins ke help se aur jada useful bna sakte hai
+
+if you are beginner -you don't know about Ansible then ---> you can watch Ansible full video (detail video)
+
+Inshort:
+
+                           server A (machine1)    server B     server C  server D 
+                                   |                 |            |         |
+                                   |                 |            |         |
+                                   |                 |            |         |
+                                   |-----------------|------------|---------|                 
+                                                     |
+                                                     |
+                                    -----------------|--------------------                  
+                                    |                                    | 
+                                    |                                    |      speed
+                                    |    Ansible          Module         |      save time
+                                    |                     Inventory      |
+                                    |                                    |
+                                    |------------------------------------|               
+
+
+
+Ansible specially Linux mai bhut jada use hota hai 
+
+aap kisi organization mai ho, aap multiple server ko manage kr rhe ho
+   suppose aapke company mai 4 servers hai , aapko charo server mai software install krna hai  ,manually kroge to kise kroge ---->
+har yek server pe login kro fir vha pe jage install kro separaly
+
+but you have Ansible then aapka kam aasan hogya ---->
+   suppose aapne kisi server/system mai ansible install kiya  , uske configuration mai charo server ki details daldi then uske bad instruction doge ,aap jake charo server pe jage koi software install krdo
+
+charo server pe aap chahe to user create kr sakte ho   ,account management kr sakte ho ,firewall setting ko change kr sakte ho ,files ka backup lena ho ,chahe software  download krna ho all most sare task aap perform kr sakte ho  using Ansible
+     isse  aap imagine kr sakte ho Ansible kitna powerful tool hai specily  aap multiple server ke sath deal kr rhe ho 
+             aur ina chije ko automate krna kafi aasan hai  ,kivi yek bar config file likte hai ,sirf yek bar command execute krni hai
+and vo sare server mai vo task perform hota hai
+
+
+aap direct bhi Ansible use kr sakte hai ,but by using Jenkin kiyaa to ansible ,easy pdega monitoring ke liye like konsa job execute huva ,nhi huva  ,aap Ansible ko control kr sakte hai by using Jenkins
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Aap yeh chiz soch rhe ho ----->hm logo ne ssh plugin dekha tha , kya hm ussse nhi kr sakte kya ?  --? upcose  kafi sare task kr sakte ho but kafi sare limitations hai
+         jaise ki aapke admin related task rna ho  agar aap as a root user sari chize perform kr rhe ho then it a well and good
+   joki normally organization mai hota nhi hai  ,agar aapke pass sudo user hai aap ke pass kafi sare limitation rhege kafi sare task keliye
+    
+
+agar aapke pass basic task hai jaise ki file transfer krna ho , koi command execute krna ho kisi script ko run rna ho and so on
+         to yeh basic task kafi as anise  ssh plugin se kr sakte ho
+
+----------------------------------------------------------------------------------------------------------------------------------------
+again same process --->ansible is tool/technology we want integrate so we need install ansible related plugin
+
+
+Dashboard > Manage Jenkins > Plugin > Available plugin ----> search ----> ✅ ansible---> install --> Download progress ---> Ansible Success
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Quick Overview of Ansible Setup
+
+jis server mai Jenkin install hai vhi server mai mera Ansible bhi install hai
+
+[paul@centos01 playbooks]pwd
+/etc/ansible/playbooks
+ye dir automatic bn gyi
+
+>ls
+_app_install.yml
+_copy_files.yml
+_firewalld.yml
+test.yml
+
+
+playbooks ke under kafi sari playbook bnai hai , yeh  aapko course mil jayegi  ,yeh  sari uploaded bhi hai drive mai ,mai link deta hu
+
+firstly hm dekte hai basic si playbook ki
+>cat first_pb.yml
+------------
+name: First Basic PB
+hosts: localhost
+
+tasks:
+  name : Test Connectivity
+  ping:
+  name: "print output"
+  debug : msg ="ALright"
+
+yeh localhost mai hi chlegi , means  yeh same server pe hi kuch chlne vali hai
+
+
+>ansible -playbook first_pb.yml //manully ansible -playbook ko run krna hai to aisa krte hai
+
+task [Gathering Facts]
+ok: [localhost]
+
+task [test connectivity ]
+ok: [localhost]
+
+task [print output]
+ok:[localhost] ->{
+  "msg": "Alright"
+
+yeh hogya manually trika
+--------------------------------------------------------------------------------------------------------------------
+same chiz ansible job mai kaise kre
+
+>pwd
+/etc/ansible/playbooks
+
+create job ---> ansible-job -----> config
+
+playbook path ?
+| /etc/ansible/play/books/first_pb.yml |
+
+
+build now  -----> console output
+
+task [Gathering Facts]
+ok: [localhost]
+
+task [test connectivity ]
+ok: [localhost]
+
+task [print output]
+ok:[localhost] ->{
+  "msg": "Alright"
+
+you can run that like ansible book
+
+---------------------------------------------------------------------------------------------------------------------------------------
+trouble senorio 
+
+>sudo vi first_pb.yml
+
+----------------------------------------------------
+
+name: First Basic PB
+hosts: localhost
+
+tasks:
+  name : Test Connectivity
+  ping:
+  name: "print output"
+  debug : msg ="ALright"
+
+
+-----------------------------------------
+
+
+localhost ke jagh  remote host ki ip de sakte ho
+
+>paul@centos02 ]ifconfig
+
+inet 10.211.55.11
+
+---------------------------------------
+
+name: First Basic PB
+hosts: 10.211.55.11
+
+tasks:
+  name : Test Connectivity
+  ping:
+  name: "print output"
+  debug : msg ="ALright"
+
+
+test connectivity -remote server ki connectivity check kr rha hu
+
+
+
+----------------------------
+
+
+paul@centos01] cat first_pb.yml
+
+ name: First Basic PB
+hosts: 10.211.55.11
+
+tasks:
+  name : Test Connectivity
+  ping:
+  name: "print output"
+  debug : msg ="ALright"
+
+----------------------------
+Dashboard > ansible-job > #2 >build now --> console output
+
+
+fail build ,why fail ho gya yeh dekte hai
+
+unreachable - hma yek server se dusre server ko access nhi kr sakte but isa case nhi hai
+
+paul@centos01]ping 10.211.55.11
+
+you can see I am accessible server A to server B  but hm ansible  playbook ko use kr rhe hai from Jenkins tab It is not working 
+
+reason -
+maully execute krna hu playbook 
+paul@centos01]>ansible -playbook first first_pb.yml
+
+Task[gatering facts]
+ok: [10.211.55.11]
+
+manully execute krta hu so yha to ok hai    
+
+
+------------------------------------------------------
+
+jab mai jenkin job se ansible execute krta hu to problem kyu aa rha hai 
+
+Dashboard > ansible-job > #2 > console output
+
+error see
+
+Started by user Jenkin admin
+
+//jab ham Jenkins se job execute kr vo  as jenkin user use krega usa playbook ko run krne keliye
+
+-------------------------------------------------------
+
+ but jab ham manully execute krte hai tab yeh as paul user krta hai ,ab samaj mai aaya hoga diff
+
+[paul@centos01 playbook]> sudo cat /etc/passwd
+
+at the end see
+Jenkins: x:978:977 //jenkin name ka user hai yha pr  jo ki Jenkin automation server ka part hai 
+
+so bydefault jab bhi ham Jenkin installation krte hai ,tab automatic yeha Jenkin user create hota hai
+     and usa user throw ansible ke playbook chalte hai
+
+-------------------------------------------------------------------------------------------------------------------------
+
+aba isa chiz se deal krne keliye ham log kya kre ---->
+smare main server 01 pe allreday jenkin user present hai ,hm log chalte hai ,remote server mai bhi Jenkin name ka user bnate hai
+
+------
+
+firstly check already to nhi hai na ---->  Jenkin user
+
+
+
+paul@centos02]>sudo cat /etc/passwd
+
+there is no jenkin user
+
+so we create Jenkin user
+
+[paul@centos02] sudo useradd Jenkins
+[paul@centos02] sudo cat /etc/passwd
+
+Jenkins:x:1001:1001  // now jenkin user is created in server 2
+
+aur authentication ke liye isko password enable bhi krna hai
+
+[paul@centos02] sudo passwd Jenkins
+new password : Jenkins
+retype password:
+
+all authentication tokens updated successfully
+
+
+now hmne remote server pe Jenkin name ka  user and password set kr diya
+
+------------------------------------------------------------------------------
+[paul@centos01 playbooks] sudo su -s/bin/bash Jenkins 
+                                                |
+                                              name of user
+
+jo jenkin user bnata hai ,uska koi byfault shell nhi hota hai
+
+sudo su -s/bin/bash Jenkins // shell bta rha hai ki ,bash name ka terminal khodo Jenkins user ke liye
+
+[paul@centos01 playbooks] sudo su -s/bin/bash Jenkins 
+
+bash-5.1$      //now you can see mai new terminal mai aa gya
+you can verify 
+bash-5.1$ whoami
+Jenkins
+bash-5.15 hostname
+centos01
+
+----------------------------------
+
+abhi jenkin user as login hu hmare main server mai ,yha se remote server pe login krna hai ,without any password
+
+bash-5.1$ ssh-key
+ssh-keygen   ssh-keyscan
+
+bash-5.1$ ssh-keygen
+generating public/private rsa key pair
+
+ssh256: fgfghf567
+
+yeh key ham kiske liye bna rhe hai ---> jenkin user ke liye
+
+bash-5.1$ ssh-copy-id jenkins@10.211.5511   or ssh-copy-id jenkins@remotehost
+
+enter
+>y
+jenkins@10.211.55.11 pass: jenkin  //remote jenkin user pass
+
+now try logging into machine with: "ssh 'jenkins@10.211.55.11
+
+--------
+bash-5.1$ ssh jenkins@10.211.55.11  
+[jenkins@centos02] //now you login bina password ke jenkin user pr login ho gye
+
+[jenkins@centos02]exit
+logout 
+connection to 10.211.55.11 closed
+bash-5.1$
+bash-5.1$ exit
+exit
+paul@centos01 palybooks]
+
+now hmne user vala problem fix kiya hai
+
+-----------------
+Dashboard > ansible-job --> build now 
+
+now see our build successful
+
+so we learn thodi bhut trouble shooting
+
+console output:
+finished success
+
+----------
+
+so  isa stage tak hmne thoda bhut samaj liya ansible throw remote server pe task perform kr sakte hai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+                    

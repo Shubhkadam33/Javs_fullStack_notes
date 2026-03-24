@@ -1,0 +1,721 @@
+docker ps
+container Id  Image          command  created    status     port
+8956ghgf     2fo4543gfhf45f           6 min ago          3002->3000
+ Name
+angry_ptolemy
+>only show running container
+-----------------------------------------------------------------------------------------------------------------------------------------
+docker ps -a
+
+>all container return
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+If you want to remove container
+>we can remove using container name
+
+docker rm container_name
+
+rm-remove
+
+docker rm festive_colden
+
+>also you can remove multiple container in one command
+
+ docker rm container_name container_name  container_name
+
+>if you have docker desktop then you can easily remove container ,In Action you can see option ,play button(start/stop container) ,delete container
+
+docker ps -a //now you can see thre is no container becuse we remove all container
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+docker run -d --rm -p 3001:3000 2f02ddgd4
+
+> extra use --rm
+yeh run to hoga detached mode mai chlelga but jiase hi container ko aap stop kroge,vo container remove bhi automatically ho jayega
+(In short- after stop container auto remove container so no need to write extra step/command of rm)
+
+docker stop container_name //now hmara container stop ho gya 
+
+>you can verify actuall your container remove or not
+
+docker ps -a
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+when we create container that time docker give default name to container ,if you want customize name so we can rember name so easy to manage
+
+extra add : --name "mywebapp" (after rm i use)
+
+>docker run -d --rm --name "mywebapp" -p 3001:3000 2f02ddgd4
+
+>docker ps //running container
+
+you will see updated name of container
+
+>docker stop mywebapp  //now our container stop and remove you can check
+>docker ps 
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Managing Docker Images
+
+How to check images jo hmne bnai thi 
+>docker image ls
+
+if you want to use/refer image there is only one way/tarika that is :Image ID
+      but like kisisko btana hai ye image bnai hai ,kise khoge fg34sdf ye image bnai hai
+
+kaisa ho jab ham image bna rho ho tab ham meaning full name de so we can easily track
+
+>docker build -t mywebapp:01 .
+
+-t: tagging (means ham name de rhe hai isa image ko)
+like
+     version
+      |
+node:20
+ |
+image name
+
+similary
+
+mywebapp:01  (image name:version)
+
+output
+before assign name(docker image build .)
+
+Repository  Tag    Image_ID   Created       Size
+<none>     <none>  2fgy55f34   2 hours ago  1.39GB
+
+
+after assign name to image
+
+Repository  Tag    Image_ID   Created       Size
+mywebapp     01   2fgy55f34   2 hours ago  1.39GB
+
+
+also you observe image)Id still same and created by 2h ago means phle image bnai thi vhi hai but usne simply version and name add krdiya
+
+>docker build -t mywebapp:02 .
+
+now see difference i chage only version
+
+>docker image ls
+
+Repository  Tag    Image_ID   Created       Size
+mywebapp     01   2fgy55f34   2 hours ago  1.39GB
+mywebapp     02   2fgy55f34   2 hours ago  1.39GB
+
+you create one image of two version (dono mai content same hai ,you can see image id same of both becuse same image have to 2 version)
+
+How to remove image
+ans:
+rm- used for remove container
+rmi -used for remove image
+
+>docker rmi mywebapp:02  //now no need to give image id ,with the hep of image name we can remove
+
+>docker image ls //check actually image remove or not
+-----------------------------------------------------------------------------------------------------------------------------------------
+what If We Update Project
+
+abhi tak hme phle project bnaya and uske basic pe image bnai
+      if manlo hmare project mai chages krna ho like bug fixes , new feature add krna ho ,correction krna ho(kuch bhi changes krna ho)
+
+
+firsly we need to chages in code src-->app.js --> <p> This is demoo project for docker <p>
+                                                               now i changes in <P> tag
+                                                   <p>This is demo project for docker Tutorial!!!</p>
+     
+then ctrl +s =save project
+
+jab bhi hamare chages src (source) file mai chages hote hai that time there is no need  to changes in Dockerfile
+
+firsly check existing docker image 
+
+>docker image ls
+
+Repository  Tag    Image_ID   Created       Size
+mywebapp     01   2fgy55f34   2 hours ago  1.39GB
+
+
+we have all ready present image mywebapp  and version 1 vali
+
+>docker build -t mywebapp:02 .
+                             |
+                           . means hmare current location mai docker file hai
+
+
+
+>docker image ls
+
+Repository  Tag    Image_ID   Created         Size
+mywebapp     02   4rtr6bds5   12 seconds ago  1.39GB
+mywebapp     01   2fgy55f34   2 hours ago     1.39GB
+
+
+you can see in difference in image id and now we running that image we can see actually we changes do in src file that changes successfully done or not
+
+>docker run -d --rm --name "mywebapp" -p 3001:3000 2f02ddgd4  //there is minor changes firsly we use use this command using img id
+                                                               now we use command by using img_name and tag(version)
+
+>docker run -d --rm --name "mywebapp" -p 3001:3000 mywebapp:02
+
+>docker ps //it is running
+
+go to browser ->localhost:3001
+
+output:
+This is demo project fot docker Tutorial !!!!  (that we changes did)
+
+abhi amne mywebapp:02 chlaya tha now we run 01 means previous version
+
+
+>docker run -d --rm --name "mywebapp01" -p 3002:3000 mywebapp:01
+
+there is minor diff 3001 port no nhi use kr sakte becuse it is busy/running so we use 3002 port no
+      also changes container name other wise it will give error (container to able to reuse that name)
+
+>docker ps /check container running or not
+
+go to browser --> localhost:3002
+
+output:
+this is demo project for docker
+
+
+benefit: there is one more benefit of using containerization project - aap multiple version yek time pe use kr sakte ho
+        you can compare changes side by side so on 
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+                                                    pre-defined Docker images
+
+predefined image :kha hoti hai ,kha find kr sakte hai and iska kya purpose hota hai
+
+abhi tak mne personal image/customize image bnai
+
+whenwe build Dockerfile that time we use from node:20 (base image)
+
+node image -kha hai ,kya hai
+
+go to dockerhub  -remote repo(jhape hmari sari images hoti hai)
+
+In company -apni customize image bnati hai
+
+prefined image: NGINX ,mongoDB ,node ,redis ,httpd ,MySQL ,ubantu ,python (most common use prefined images)
+
+for eg python --> click --> see multiple version
+
+isko local docker setup pe use krna hai to kaise krege --> docker pull python
+
+**********************remember************
+ jrururi nhi hai aap vs code ka hi terminal use kro ,aap koohi bhi terminal use kr sakte ho
+
+*******************************************************
+
+>docker pull python 
+
+ypu can give :specific_version  but if you not give version that bydefault it is pull latest version 
+
+
+>docker image ls
+
+Repository  Tag    Image_ID   Created         Size
+mywebapp     02   4rtr6bds5   12 seconds ago  1.39GB
+mywebapp     01   2fgy55f34   2 hours ago     1.39GB
+python      latest 6564fcgf4                  1.02GB
+
+
+kya hm python image ko run kr sakte hai
+
+>docker run python:latest
+
+yeh run huva uske bad exit bhi huva
+
+.docker ps //there is no running python
+
+becuse python is apne aap mai software hai but jabtak ham program nhi bnayege program mai ,to python ka kosi use hi nhi hai
+  so ise liye python run kiya to kuch nhi huva 
+
+NGINX (webserver) ,httpd(apache)  -you can verfy that prefined image run kr ke
+
+NGINX:
+>docker pull nginx
+
+pull completed
+
+>docker image ls
+
+nginx is a webserver iska kam kya hota hai -> hmesha background mai chlte rhta hai and waiting for the incoming request from browser
+(browser se website ko access krta hai and nginx us request ko accept krta hai  and  webpage ko represent krta hai
+
+yeh nginx by degault 80 pe listen krta hai
+
+>docker run -p 8080:80 nginx:latest  //now it is in running state
+
+go to browser --> localhost:8080 
+
+output:9you can see default webpage show of niginx
+
+welcome to nginx
+data...
+
+Interminal see:
+isa location se ya isa website se hmare pas webpage keliye request aarhi hai and hmne represent kiya hai yeh vala webpage
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+                                     Docker Container with Interactive Mode:
+
+Java ,python program hai usme user se interaction kr rhe hai 
+
+print('program to sum two number')
+
+num1=int(input('Enter the first no'))
+num2=int(input('Enter the second no '))
+
+result =num1+ num2
+
+print(f'sum of two number are {result}')
+
+
+
+console:
+suppose isa program ko containerized krna ho ,ya to iski image bnana ho ,to kaise krege (now we use pychramp)
+
+FROM python
+
+WORKDIR /myapp
+
+COPY . . // Yeha pe . puri file use nhi krna hai becuse previous we see node_js eg , now you can ssee python lib like lib,bin in folder  so at this time for that program no need
+              so now only copy myapp.py 
+
+
+COPY ./myapp.py .
+                |
+              hmari working dir usme copy krege
+
+isko run krneke liye kya use krna pdhega
+
+In terminal :
+python myapp.py
+
+so 
+CMD["python" ,"myapp.py"]
+
+
+---------------------------
+
+FROM python
+WORKDIR /myapp
+COPY ./myapp.py .
+CMD["python" ,"myapp.py"]
+
+------------------------------
+
+
+>docker build .
+
+image is created
+>docker image ls
+
+Repository  Tag    Image_ID   Created         Size
+<none>     <none>  rgdg5fgh   7 sec ago       1.02GB
+
+>docker run image_id
+
+notice:
+program to sum two number
+
+program ki phli line print ho gyi jaise hi "Enter the number"  aagya program stop ,fail ho gya
+
+python image ko interactive mode me run krne keliye use below command
+
+>docker run -it image_id
+
+it -iteractive terminal (aise yad kro)
+
+output:
+program to sum two numbers
+Enter the first number no 10
+Enter the second number no 20
+
+sum of two number are 30
+
+jaise hi hmare program khatam huva then container automatically band ho gya
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+                                                   Sharing Images DockerHub
+
+how to use docker registry ,jo images hmni bnai thi ham usko share kaise kr sakte hai ,hmare team member ke sath publicly , remote area
+
+developer ->push image -> In docker hub --> uploaded/push in private or public repository -> pull /download image --> tester team ?
+
+go to docker hub --> pricing personal(0$) , pro(5$) ,Team ($9) ,Business $24
+
+personal(0$)
+
+scroll down 
+public repo -unlimited
+private repo -1
+
+start now --> conti by google email
+
+create repo -becuse firsly make repo then we store image here
+
+create repo
+
+Namespace:shubhamkadam       repo Name:repo ka nam project ke basic pe de sakte ho eg webapp-demo
+
+description -short description (aapka project kya krta hai ,iski functionality kya hai 
+
+a demo project for docker learning
+
+visiblility:
+public     private
+
+|create|
+
+repo name :shubhamkadam /webapp-demo 
+                                      tagname not compulsory ,if not give they consider latest version
+                                        |
+>docker push shubhamkadam/webapp-demo:tagname
+             |_______________________|
+       yeh hmare image ka nam bhi hone vala hai
+
+
+go to terminal
+
+fisly login
+
+>docker login
+
+log with your Docker ID or email address to push and pull images from Docker hub
+
+Username:
+password
+
+login Succeeded
+
+now we are connected to docker hub from local terminal
+
+>docker push shubhamkadam/webapp-demo:tagname
+
+image does not exit locaaly with the tag:shubhamkadam/webapp-demo
+
+shubhamkadam/webapp-demo  //isa image ko push kr rhe hai
+
+>docker images //there is no image of shubhamkadam/webapp-demo
+
+so create new image of this name
+
+>docker build -t shubhamkadam/webapp-demo:01 .
+
+jisa nam se repo bnai hai vhi dena hai
+
+>docker images //now you can see this image
+
+>docker push shubhamkadam/webapp-demo:01
+
+ succsfully push
+
+how to check actually push or not go to docker hub and refresh page
+
+you will see  In shubhamkadam/webapp-demo rep our images
+
+shubhamkadam/webapp-demo     |docker pull shubhamkadam/webapp-demo (copy)|
+                                         |
+                                     jaise ki ha dekte the predefined images viase ham ham ab poll kr sakte hai
+
+
+****hme crash se image bnai you can also exiting image rename and push
+
+Repository                  Tag    Image_ID   Created         Size
+shubhamkadam/webapp-demo     02   4rtr6bds5   12 seconds ago  1.39GB
+mywebapp     01   2fgy55f34   2 hours ago     1.39GB
+
+>docker tag mywebapp:02 shubhamkadam/webapp-demo:02  //rename existing image
+            |_________| |_________________________|
+             old name         new name
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Using Our Images Remotely PULL Images
+
+now hma kya krege --> bilkul new server,new machine pein images ko pull krege ,download krege and usa i image ko use krke dhekhege
+        hmari images dusre machine pe properly work kr rhi hai ya hni yeh dheghege
+
+vs machine I set ubantu and docker
+
+>docker images //there is no any images exit
+                                       version
+                                         |
+>docker  pull shubhamkadam/webapp-demo :02
+              |______________________|
+                docker image name
+
+pull complete
+downloading started
+
+>docker images //our pull image present
+
+>docker run -p 3000:3000 shubhamkadam/webapp-demo:02
+
+localhost:3000
+
+go to browser: localhost:3000
+
+yha pe hme node install krneki jrurut nhi pdi ,no need vs code , no need setpup ,only nned docker install (ham kisi bhi application ko bhut kam time  ,less effort se deploy kr sakte hai)
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Understand Docker Volumes
+
+senorio -isa application ki information or data permanenet store krte hai dusre file mai then isa cases ko aap kise handle kroge
+
+myapp.py                                                                        user_info.txt
+Enter your name to store in file or enter to proceed :Raju                             
+Do you want to see all user name ? y/n :y
+Raju                                                                                  Raju
+process finished with exit code 0;                                                    paul
+
+//again I run
+
+Enter your name to store in file or enter to proceed :paul
+Do you want to see all user name ? y/n :y
+Raju
+paul
+
+paul ,raju hmne previously run kiya tha vo bhi value aai hai 
+
+
+---------------------------------
+if I create image of that program
+
+>docker build .
+
+>docker images
+
+Repository  Tag    Image_ID   Created       Size
+<none>     <none>  2fgy55f34   2 hours ago  1.39GB
+
+it-hamara prog interactive hai means user kdun input lena hai
+rm-jaise hi container stop ho jaye automatic container remove ho jaye ,there is no need to extra step of remove command
+name- container name
+---------------------
+>docker run -it --rm --name mypythonapp  2fgy55f34
+
+notice: ab hmara program container ke under chl rha hai and usa container ke under hi file bni huvi hai external(where data is store)
+
+Enter your name to store in file or enter to proceed :Raju                             
+Do you want to see all user name ? y/n :y
+Raju                                                                                  
+process finished with exit code 0;   
+
+yha kya huva:we enter user name then store in txt file ,then we say i want to see all user ,they give me user from txt file 
+                        after that program stop and container stop and I use rm so also container remove
+
+ab na rha container na rhi file
+
+>docker ps  //there is no container running
+>doker ps -a //no container
+------------------------
+now again we run container
+Enter your name to store in file or enter to proceed :paul                             
+Do you want to see all user name ? y/n :y
+paul                                                                                 
+process finished with exit code 0;                                                                                                 
+
+thre is one problem: usne paul to diya but previously we store raju vo nhi diya
+                   because kivki vha external file container ke under hi thi ,container jab tak chl rha hai tab tak thi ,jaise hi container khatam huva hmari file remove hogyi
+         In locally property work
+---------------------------------
+solution: docker volume
+
+v- volume, jo volume bna rhe hai uska name with in docker eg myvolume
+:- vo volume space bn gya usa space ke under kis path/dir mai data store krna hai eg /myapp/ 
+             tumko same vhi path dena hai jisa path ke under with in the container hmari file bn rhi hai
+
+eg  In docker file WORKDIR /myapp  so myapp ke under python ka program chal rha hai and isi same location mai hmari external file bhi generate kr rhe hai
+         so yha path uske according dena hai
+--------------------
+>docker run -it --rm -v myvolume:/myapp/ 2fgy55f34
+
+
+Enter your name to store in file or enter to proceed :Raju                             
+Do you want to see all user name ? y/n :y
+Raju                                                                                  
+process finished with exit code 0;
+
+>>docker run -it --rm -v myvolume:/myapp/ 2fgy55f34    //again I run
+
+Enter your name to store in file or enter to proceed :sham                            
+Do you want to see all user name ? y/n :y
+Raju
+sham                                                                                  
+process finished with exit code 0;
+
+
+//isa bar dono nam dikha rha hai
+
+-----------------------
+
+means iska matlab -ab ham container ke bahar aagye hai ,hmane myvolume space bnaya hai usko docker manage kr rha hai
+           container run ho rha hai tab container is myvoumne ko point/use kr rha hai
+
+matalab hmne kind of common dir bnai hai ,jo share able hai ,docker isko maintain kr rha hai 
+                   yeh container se bahar hai isi liye yeh file kbhi vanish hi nhi ho rhi
+aisa nhi ki program gya and hmari file bhi delete ho gyi
+
+aap samcho yh myvolume mai data hai vh locally present hai
+
+* jo aapka volume bna hai vh kaise check kr sakte ho
+
+>docker volume --help
+
+ans:
+commands:
+create:create a volume
+inspect :Display detailed information on one or more volume
+ls:list voiumes
+prune:remove unused local volume
+rm: remove one or more volumes
+
+>docker volume ls
+
+ans:
+Driver   volume name
+local     myvolume
+
+>docker volume inspect myvolume 
+
+ans:
+{
+   "createdAt":"2023-11-5:51:4" ,
+   "Driver":"local" ,
+    "Mounpoint": "/var/lib/docker/volumes/myvolume/_data" ,   //here actuaaly data store 9path)
+    "Name":"myvolume 
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Docker volume ka yek aur concept ki bat krte hai :what are Bind Mounts
+
+myapp.py //jstne bhi server name hai vh read krke print krta hai
+server.txt //store in server txt file server name ,external file
+
+time ke sath aap new server add krte ja rhe ho 
+
+server.txt 
+server1
+server2
+server3
+
+notice :yeh program external file pr depend hai means external file jab bhi update hogi ,isa python program ko access hona chahiye
+
+container ke under ye vali external file ko update nhi kr sakte then how to slove problem ?
+ ans:
+container mai jo server.txt file hai usko mount bind krde yeh local mai server.txt hai uske sath to !
+    then it possible
+
+-----------
+Dockerfile                                      server.txt
+                                                
+FROM python                                      server1
+                                                 server2
+WORKDIR /myapp                                   
+
+COPY ./myapp.py .
+COPY ./servers.txt .
+
+CMD ["python", "myapp.py"]
+
+------------
+
+>docker build .
+>docker images
+
+Repository  Tag    Image_ID   Created       Size
+<none>     <none>  2fgy55f34   4 sec ago  1.39GB
+
+firsly normally run krke dikata hu ,then mount binds krata hu ,then we see what is difference
+
+>docker run 2fgy55f34
+server1
+server2
+
+ye jo server.txt file hai yeh container ke under hai abhi
+
+>docker run -rm 2fgy55f34
+server1
+server2
+
+now we want changes in server.txt file I add server3 ,server4  then ctrl+s=save
+
+>docker run -rm 2fgy55f34
+server1
+server2
+
+abhbhi server1 ,server2 dikhayega reason yeh  file use kr rhe hai yeh container ke under hai and jo hmne chages kiyye vo file locaaly hai(container kr baher hai)
+
+inko mount bind krna  hai then do below :
+
+v:/ -/ ke bad dena hai container ki under vali location so
+v:/myapp/ -myapp ke under konsi file ko mount krvana hai ,mai yha pe specific kr rha hu  ,ap chaho to aap purak pura folder ya location kr sakte ho
+
+v:/myapp/servers.txt --rm 2fgy55f34 - isko mount/bind kiske sath krna hai
+           local -server.txt -> right click -->copy path -->absolute path -->copy -->paste before :
+
+>docker run -v absoute_path:/myapp/servers.txt --rm 2fgy55f34
+
+meaning of command: hm bol rhe hai container ke under myapp ke under servers.txt ke sath mount krdo jo local machine mai servers.txt file hai uske sath
+
+now you can see diifernce:
+
+output:
+server1
+server2
+server3
+server4
+
+isa tarh aap live update kr sakte ho
+
+In two cases this is imp/useful;
+1) jab aabko code external file pe depend ho to
+2)during development phase mai ho aap kafi sare chages  code mai krte ja rhe ho usa case mai jruri hai
+     eg aapne thodasa chages kiya aap phir se image nhi bnavoge ,bar bar image bnani pdegi
+
+solution: image to bnalo but mount krdo apne local file se
+   so jab bhi aap local sever pe file mai changes kroge vo imges pr reflecate hote jayege ,you can verirfy ,at the end aap final image bna sakte ho
+
+-v then we write local path
+>docker  volume ls //isne koi volume banaya nhi hai
+   kivki last case mai volume bnaya tha vha docker mamange kr rha tha
+        but isa bar hmko volume bnaneki jrurat nhi pdi ,hme hmare local machine pe jo file thi usko mount kr diya
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+                                          What is .dockerignore
+ jaiseki aapne git par kam kiya hoga -you understand
+like hmare pas .gitignore nam ki file hoti hai -isame una file ko mension krte hai ,jis file ko ham push nhi krna chahte hai
+
+like  In dockerfile copy .. means isa project/location/folder mai jitney bhi file hai vo docker image ka part bna jaye
+     you can see yha parkafi sari file useful na ho 
+                     eg dockerfile is important but when we copy that time docker file also copy ,.gitgnore also copy ho rhi hogi
+ 
+aisehi kabhi sari file ho sakti hai ,jo ap nhi chahte ho vo imae mai jaye so iske liye kya kr sakte hai ?
+
+testapp(folder) -> right click ->file -> .Dockerignore
+                                               |
+                                             isa ke under jo file nhi dalni hai image ke under usaka name de sakte ho
+
+---------
+Dockerfile
+.git  //aaise bhi pattern lik sakte ho ,.git se start hone vali file bhi nhi jayegi image mai
+------
+ctr+s=save
+ 
+jab aap docker build krte ho image ko tab yeh file aapki images pr nhi jayegi                                

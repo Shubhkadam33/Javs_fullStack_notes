@@ -1,0 +1,982 @@
+How to display starting two characters of all line ?
+cut -c1-2 file.txt
+
+it is very important when your data fix length ka ho
+like Indian car ke number mh ,mp
+
+so aapko stating ke do letter hi nikalana ho kitne mh ,mp ke hai so on (stating ke two character chahiye pure list mai se)
+
+cut -c1 mini.txt
+
+ans;
+1
+1
+1
+
+cut -c1-2 mini.txt
+
+id
+10
+10
+10
+
+cut -c2-3 mini.txt  (muze 2nd and 3rd character chahiye)
+00
+01
+02
+03
+04
+
+isi tarh jab aapko data slice ,cut krna ho ,isi tarh krna hai
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+How to display specific line from a file ?
+sed -n '5p' file.txt
+
+if there is 20-30 lines in file ,you want to print specific line
+
+sed -n '5p' mini.txt  (you want 5th line)
+
+-------------------------------------------------------------------------------------------------
+
+How to replace a specific word within a file ?
+
+sed -n 's/from/to/g' file.txt
+
+s means subtitude ,from/to -jis word se change krna hai
+g means globally krna hai
+>cat mini.csv
+you will see at last column profession is -business , i want chge to finance
+
+> sed 's/business/Finance/g' mini.csv
+
+now you will se replace sussfully but that is tempory ,if you want permanent then check out video)
+------------------------------------------------------------------------------
+
+How to convert the content to Uppercase or Lowercase within a file ?
+
+tr [:lower:] [:upper:] <file.txt  --> lower to upper
+tr [:punct:] z <file.txt
+tr [:digit:] z <file.txt
+
+kisi file ke pure content ko uppercase krna hai kr sakte ho
+aap iske liye tr(translate) command use krte ho
+
+cat test.txt
+
+UPPER LETTER
+lower letter
+punct -$%@
+Digit -12345
+
+tr [:lower:] [:upper:] <test.txt  --> lower to upper
+
+UPPER LETTER
+LOWER LETTER
+PUNCT -$%@
+DIGIT -1234
+
+isi tarh aap upper se lower bhi kr sakte ho
+
+2) aap ko kisi cheez ko delete krna hai kr sakte ho
+cat test.txt
+Punct -$%@  --> i want delete %
+
+>tr -d % <test.txt
+ans:
+Punct: $@
+
+3) i want replace % to &
+tr "%" "&" <test.txt
+
+ans:
+Punct -$&@
+---------------------------------------------------------------
+How to extend or shrink size of a file ?
+
+truncate -s 100M file.txt
+
+kya file ke size ko change kr sakte ho -->yes
+
+now firstly exiting file ki size dekna hai to
+> ls -lh
+fileA size  52 byte --> kya mai 52 mb ki file bna sakta hu -->yes
+
+truncate -s 100M fileA.txt
+
+fileA 50M
+
+but aisa kya huva ki bn gya(Linux ne radom character bhi isme dalke usa file ki size increase kr diya)
+
+kya jarurut hai ,kha use hai
+suppose aap kisi application ki testing kr rhe ho ya kisi memeory ki testing kr rhe ho and uske liye bdi size ki file chahiye (sirf aapko uski size se matter hai uske content se matter nhi hai buti size ki file chahiye usa case mai yeh chiz kr sakte ho 
+
+
+2) fileA 50M
+
+>gzip fileA
+>ls -lh
+
+ans;
+fileA 50k (50M ki file 50k mai bn gyi)
+
+-------------------------------------------------------------------------------------------------------------
+How to display following line in vertical line ? ABCDE
+
+echo "ABCDE" | fold -w1
+
+ABCDE yah vertical line mai kaise print krege uske liye fold command use kr sakte hai
+
+echo "ABCDE" | fold -w1
+A
+B
+C
+E
+
+---------------------------------------------------------------------------------------------------------------------------
+How to change user or login as different user in Linux ?
+su <user_name>
+
+In corporate  yek Linux server kapi sare user present hote hai  
+
+now i am paul user login hu but muze root user mnun login krna hai
+su
+pass:546  (aapko root user pe login krna hai ,aapko root user ka password pta hona chahiye /mere pass hai kivki meri machine mai mai hi root iska)
+
+ans:
+[root@redha01 myfolder]#
+
+----------------------------------------------------------------------------------------------------------------------------
+
+How to exit as current user or close terminal in Linux ?
+exit
+
+abhi maine paul user se root user pe login kiya --> agar muze wapis jana hai to kya kruga --> exit command use
+exit
+[paul@reha01 myfolder]$
+
+--------------------------------------------------------------------------------------------------------------
+
+if you are not root user ,how to execute admin commands like installing new apps
+
+sudo yum install httpd
+
+sudo ki permission har kisi ke pass nhi hoti  ,admin ke pass rides hote hai ,kin user ko privilege provide kre
+   Incase corporate mai sudo prilege  ki jrurat hai then ap usa server ke admin se bat krni pdhegi
+
+----------------------------------------------------------------------------------------------------------------------------
+
+access ,remote ,server ---->bhut important part hai
+
+reason jab aap corporate jate ho ,aap direct Linux server pe kam nhi krege ,maxium cases mai aap bilkul nhi kroge
+aap development /testing/trainee mai ho directly Linux server access nhi krte ho
+    aap kya krte ho --> kisi  remote area mai ,kisi aur location mai ,khito Linux server hota hai aap window server se hi or kisibhi os se remotely access krte ho
+     access krne keliye kya chahiye --> terminal chahiye like cmd
+
+How to access remote Linux server ?
+ssh user@hostname
+
+agar kisi server ko access krna hai then aapke pass 2,3 information pata honi chhiye
+1) usa server ka hostname ya ip
+2)usme login krne keliye username and password
+
+agar nhi heto admin ke pass javo use kaho hame isa chij ka access chahiye
+
+now i  am use Linux virtual machine ---> isa machine ko kisi aur dusare terminal se access krna ho ,eg dekhte hai
+
+firsly we nned ip or hostname
+>ifconfig
+
+now you see
+inet 10.211.55.5  -->copy ip
+
+mai macos/window terminal(cmd) open kruga
+ 
+hostname
+prashants-macBook-pro.local --> current host name
+
+>ssh paul@10.211.55.5
+     |
+   kis user se login krna hai
+
+password:
+
+>hostname
+
+ans:
+rdhat01  ---->now ap actual server pe pohch gye  /isa server se isa server ko access kiya
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+How to copy a file to a remote Linux server ?
+
+scp file user@hostname:/tmp/
+
+firsly exit  --> logout from acutal server
+
+mac bash 
+
+touch macfile --> Linux(rathat) server pe copy krna hai
+
+scp -secure copy
+scp macfile paul@10.211.55.5:/home/paul
+                                |
+                               konse folder par rkhna hai
+
+go to Linux terminal
+
+>pwd
+/home/paul
+
+>ls
+
+ans:
+macfille
+-----------------------------------------------------------------------------------------------------------------------------------
+
+working with permission
+
+why you need to know permission
+
+~] ls
+
+you can see
+desktop ,newfile, paul.csv, sensitive file ,root file
+
+cat sensitive_file  --> permission denied kyu aaya you nned know more detail about permission
+------------------------------------------------------
+How to check permission of a file ?
+
+ls -ltr
+rwx rw- r--
+user group other
+
+
+if we want to see har file ki permission
+rw- --- ---  sensitive_file
+
+rwx rw- r--
+
+rwx phle vala hai ,usa file ka owner hai usko kya permission hai(means jisne bhi file bnai hai uska kya permiision hai)
+
+group -Linux server mai bhut sare user hai
+
+other means mai or mera group ko chodkr other user what to access
+suppose file/directory hai vh 5 logoke sath share krni hai ,vo 5 log file access ,edit kr sko
+  to aap kya kr sko --. Linux server mai yek group bnao and 5 logo ko sa group ka hisa bnavo and group ownership sa group ko assign kro
+
+r means aap read kr sakte ho kya like cat kiya th tbhi reading kibhi permission nhi thi
+w means aap read krsakte ho but aap read krne gye to permission denied aajye ga
+x means executable  manlo script ko run krna ho ,yato file ko modify krna jahte ho vo nhi kr sakte
+
+------------------------------------------------------------------
+            and iska group owner kon hai ,vo bhi root hai
+                   |
+rw- --- --- root root 9 Aug sensitive_file
+             |
+           ye jo file bnai hai iska owner kon hai yani root user ne bnai
+
+
+rw- --- ---
+    |______|
+   group ,other user ko kai permission nhi hai
+
+paul@redhat
+ |
+as a paul user ,paul user kya hogya--> other user ho gya
+
+you can see permission related problem aaye to
+
+------------------------------------------------------------------------------------------
+
+How to modify permission of a file ?
+chmod a+rwx file.txt
+u-user , g-group , o-other , a-all
+
+chmod -change mode
+
+a+rwx  --> + means permission add ,- means permission remove
+a means all (group+ user + other)
+
+>ls -ltr
+rw- --- --- root root sensitive_file  --> iska owner kon hai ->root ,vhi uski permission change kr sakta hai ,koi bhi chage krega to security bchi kha
+
+[paul@redhat ~]$  >su
+password:
+
+[root@redhat01 paul] # > cat sensitive _file
+
+ans:
+data......
+
+mai chahta hu dusre user hai isko read kr paye means other user
+
+>chmod o+r sensitive_file
+
+ls -ltr
+
+ans:
+rw- --- r--   root root root sensitive_file 
+
+[root@redhat01 paul] # >exit(exit from root user)
+[paul@redhat ~]$  >cat sensitive_file  --> you can see data
+
+>ls -l sensitive_file
+
+rw- --- r--  sensitive_file
+
+--------------------------------------------------------------------------------------
+
+How to change ownership of a file ?
+chown root file.txt
+
+[paul@redhat ~]$  >su (phle root user se login krta hu)
+[root@redhat01 paul] # >ls -l root_file
+
+rw- r-- r-- root root root_file
+             |
+isa file ka owner kon hai-->root
+
+now aap kisi aur ko ownership dena chahte ho
+
+>chown paul root_file
+root_file ka owner chage krke paul krlo
+
+[paul@redhat ~]$  > ls -l root_file
+
+rw- r-- r-- paul root root_file
+             |
+            you can see change owner
+
+--------------------------------------------------------------------------------------
+
+How to change group ownership of file ?
+>chgrp paul file_txt (chgrp means change group)
+>ls -l root_file
+
+-rw -r-- r-- paul paul root_file
+                   |
+                  you can see change group owner
+
+----------------------------------------------------------------------------------------
+
+Memory Info 
+
+jab ham computer lete hai tab ham bat krte hai kiti ram ,SSD hai , harddisk so on
+
+same way ham Linux mai kam kr rhe hai isa Linux mai kapi sari memeory hogi ,iski info or monitoring kri hai ,kitna space bcha hai
+
+How to check free RAM Space ?
+>free
+
+kiti allocated hai and kitni free bchi huvi hai
+
+as paul user bhi dekh sakta hai mtabl koi bhi
+
+total   used    free
+1740064 906126 120900
+
+that not readable memeory
+>free -th
+total used free
+1.7Gi 876Mi 126Mi
+
+------------------------------------------------------------------------------------------
+
+How to check % Memory and cpu utilization ?
+top
+
+yeh to ham kap easily check kr sakte hai task manager mai kiti %cpu hai ,memory
+   Linux mai top command hoti hai
+PID  %CPU  %MEM
+1845 3.3   6.6
+konsa process isko comsume kr rha hai
+
+isko quit krna hai to --> q press
+
+------------------------------------------------------------------------------------
+
+How to check disk utilization
+du
+
+disk utilization means kisi folder location mai jitney bhi files hai vo kitna space consume kr rhi hai and total kitna consume kr rhi hai ,uski info chahiye then du command use
+
+du myfolder/   (isa folder mai jo file hai vo kitna space consume kr rhi hai)
+
+ans:
+12 myfolder/newfolder/newfolder
+52 myfolder/newfolder
+4  myfolder/achive
+216 myfolder/
+
+du -h myfolder/   
+
+ans:
+12k myfolder/newfolder/newfolder
+52k myfolder/newfolder
+4.0k  myfolder/achive
+216k myfolder/
+
+apni disk outof reach jarhi hai kya--> ye check krne keliye (you see konsa folder ,file jada consume kr rhi hai ,kiske vjhse problem aa rhi hai
+
+----------------------------------------------------------------------------------------
+
+How to check filesystem available and disk space allocated ?
+df
+
+like for window -c,d drive you see total kiti total memeory hai
+  that like in Linux 
+root -20G
+sda2 1014M  use% (26%) --> yhi red flag hai jada memeory consume kr rha hai with compare other)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+System INFO
+
+jam ham gaming laptop lene jate hai ,tab ham kapi sari investingation krte hai ki kitna cpu hona chahiye , kitna refresh rate hona chahiye ,core kitna chahiye kapi sari chije
+           so Linux mai isa trah ki kapi sari information chahiye to kaise chahiye
+
+How to check host name of your Linux server
+hostname
+
+ans:redhat01
+
+-------------------------------------------------------------------------------------------
+
+How to check cpu/core/thread info of your Linux server ?
+lscpu
+
+ans:
+Architecture: aarch64
+threa per core:1
+cpu -2
+many other thing(data)
+
+------------------------------------------------------------------------------------------
+
+How to check type of architecture of your linux server ?
+arch
+
+ans:
+aarch64
+
+-----------------------------------------------------------------------------------------
+
+How to see list of storage devices ,disk partition on your linux server ?
+lsblk
+
+disk ki more detail info chahiye then use
+      min rm size ro type 
+sda1
+sda2
+sda3
+
+------------------------------------------------------------------------------------------
+
+How to see OS name of Linux server ?
+uname -a
+
+paul@redhat]
+      |
+    isko igore kro  yeh host name hai ,hostname kuch bhi ho sakta hai ,shubham ,shuhartik .. isa kuch bhi ho sakta hai
+
+but isase pta nhi chlega konsa os chla rhe ho
+
+>uname -a
+
+ans:
+Linux redhat
+
+
+2)second way:
+
+>cat /etc/os-release
+
+ans:
+ more detail info related os
+
+-------------------------------------------------------------------------------------------
+
+How to check if a process(java) is running or not ?
+
+ps -ef | grep java
+
+application or script run krte ho  or task execute krte ho Linux server mai so iske assoiate yek process generate hoti hai
+        process ka kam kya hota hai --> isa cheeze ko track krna
+
+suppose aapne  koe application start kiya ,agar isa application ko stop krna hai to kaise kre ge ?
+
+previous we use 'top' command they give return PID ...%cpu
+PID means process id 645 ,12,335 ye id dikh rhi hai yha ksi yek application or service ,process hai usase associate hai
+
+so aap koi bhi task krte ho
+
+>systemctl start nginx.service
+>systemctl status nginx.service
+
+ans:
+active:(running)
+process:8900
+process:8901
+process:8904
+Main PID:8905 (nginx) --- nam hai process ka nginx
+
+means hmne nginx(service) start kiya to iske nam se yek process id mil gyi and vo use hota hai isa process ko track krne me
+
+-------------------------------------------------------------------------------------------
+
+How to check if a process(java) is running or not ?
+
+ps -ef | grep java
+
+>ps -ef ---> all process list dikegi with detail info 
+
+but i want java(process) so we also grep command
+
+
+>ps -ef | grep nginx 
+
+ans:
+root 8905
+other info
+
+
+ek command dalnse tume PID process id dikh rhi hai ,matalab yeh process chal rhi hai
+          yeh process  kisne chalai --> root user se associate thi ,kivki hmne sudo use kiya tha
+
+
+if your process java related then use below command:
+
+.ps -ef | grep java
+
+ans:
+if you see colour=auto java or (diff process name at this case use use java(process))
+
+that time thre is no start your process
+
+------------------------------------------------------------------------------------------
+
+How to get PID of a process ?
+pgrep chron
+        |
+       process ka nam
+pgrep -->process ka grap
+if you want know only process id that time use
+
+
+>pgrep nginx  (jo process id chl rhi usiki dikhai degi ,jo process stop hai uski nhi dhikege)
+8905
+8906
+8907
+they give three id yo can see
+
+alternative way if you want more detail
+
+>systemctl status ngin
+
+ans:
+Active:active (running)
+process:8900
+process:8901
+process:8904
+Main PID:8905 (nginx)
+-------------------------------------------------------------------------------------------
+
+How to stop a process by PID ?
+
+kill -9 PID
+
+-9(nine) means forecefully hota hai
+
+>kill -9 8905 (8905 process related jo bhi process hai unko kill kro) 
+ans: kill(8905) - opration  not permitted (because iam paul user hu)
+
+>sudo kill -9 8905
+>password:
+
+ho gya kill procees
+
+so we verify actually kill or not
+
+>pgrep nginx
+ans: no any process means kill process
+
+>systemctl status nginx.service
+
+ans:
+Active:failed
+main PID:8905 (code=killed ,signal=KILL)
+
+Q.  systemctl command se ham kr sakte hai so why ham kill command use krte hai
+reason systemctl command only services ke liye use kr sakte ho 
+    aapki normal script hai vo nhi stop kr sakte by using systems ,vo procees hai tab kill command use hoti hai
+
+-----------------------------------------------------------------------------------------
+
+How to stop process by its name ?
+pkill httpd
+
+>systemctl start httpd.service (now service is started)this is apache server
+>pgrep httpd
+
+ans:
+9147
+9148
+9152
+9153
+9154
+
+>pkill httpd
+
+now kill suceeful ,check kro process kill hivi ya nhi
+
+>pgrep httpd
+
+-------------------------------------------------------------------------------------------
+
+How to see all the active jobs ?
+jobs
+
+jobs means : job bhi aap terminal ko task deto ho ,task dena means kya kam dena ,to vo terminal ke liye vo kam kya huva-. job huva
+
+kam muze mila ,vo terminal ka job hai vo task/kam krna
+
+mai bolta tu terminal 5 sec keliye so ja
+> sleep 5s
+
+terminal 5 sec stack hogya
+
+usja job hai muze sunana hai -so ye 5sec keliye hang  hoga
+
+so if you want to see active job 
+  abhi koi active job/command nhi hai
+
+>sleep 10sec
+ then immediately press ctrl +z =maine process ko stop or pause kiya actually
+
+>jobs
+
+ans: slepp 10s
+
+means mtalab terminal ke pass vo active job hai
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to resume a job in background ?
+bg
+
+suppose sleep 10s yah job hai ,yh abhi paused/sleep hai
+       muze resume krna hai vobhi background mai
+
+>bg
+
+ans:
+slepp 10s
+done
+
+>job(no any active job)
+
+vo backgound task chlta rhega after complete task it will give done meaasage
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+How to resume a job in foreground ?
+fg
+
+samne job run hoga
+
+>sleep 10s
+ then immediately press ctrl+ Z
+
+>jobs (immedialy write)
+then you can see screen is stuck
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to run script in background ?
+
+nohup ./script >/dev/null &  (if you want to learn more about script then see video)
+
+if you wanr run script at background
+
+nohup ./script >/dev/null &
+         |
+       script name
+
+chlo sikhata hu script kaise create kre
+
+>vi myscript.sh
+
+open direcly vi editor
+
+i press
+#!/bin/bash
+
+echo "what isyour name?"
+read name
+
+each "welcome $name"
+
+
+then save kro
+:wq
+
+now you come in normal command
+
+>bash myscript.sh
+what is your name ?
+>paul
+welcome paul
+
+
+isi hmari script bni aise ham run kr sakte hai
+
+main motive of this Q ,if you want to run in background script
+then use 'nohup' command
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Networking info
+
+How to check IP of your machine ?
+>ifconfig
+
+ans:
+inet:10.211.55.5
+
+----------------------------------------------------------------------------
+
+How to check if a server or website is acceible or not ?
+
+ping www.google.com
+
+internet se connectivity(check) hai ya nhi ,yah check krna hai
+    aapko check krna hai aapke server internt se connected hai ya nhi
+
+>ping www.google.com
+
+it is also helpful, agar aapko check krna hai ,apke server internt se connected hai kya nhi
+  kivki google accible hai yani internt chalu hai
+
+ctr+c -stop kro
+
+then you see result
+
+ 8 packet transmitted ,8 received, 0% packet loss
+                                      |
+                                    Jha par bhi 0% packet loss dikha yani internt connected hai amare server se
+
+now i am batata hu fail cases 
+
+>ping localhost.com  (ramdom likha website)
+
+100% packet loss
+
+mrans yato connectivity mai problem hya ya aceesible nhi hai
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+How to check if a IP:port is accessible and open or not ?
+telnet IP port
+
+aapko network connectivity keliye ip and port ki dono ki jrukat pdti hai ,kapi sare cases mai
+    like jaise ki port ki agar bat kre to kisi website ko accesskr rhe ho vo port 80 per connected hoti hai ,right 
+   aapko check krna hai 80 port no  open hai ya nhi
+
+--------------------------------------------------------------------------------------------------------------
+How to check if port is open or not on our server ?
+netstat -putan |grep 80
+
+hmare end pe koi port open hai kya nhi so that other party hmse connect kr paye
+
+suppose hmne hamara webserver host kiya , bydeafult 80 pr run krta hai webserver
+     and koi banda hamare website ko access krna chat hai but vh nhi kr pa rha hai
+           then we check our side se 80 port open hai ya nhi to vo kaise check krege use this command
+
+>systemctl start httpd.service (this our webserver)
+now check listing hai ya nhi
+>netstat -putan |grep 80
+  
+ans;
+99662/httpd(process)  ::80                        LISTEN
+
+yeh 80 port pe listen kr rha hai
+
+-------------------------------------------------------------------------------------------------------------------------------------
+How to check all hubs in network path to reach a website ?
+traceroute
+
+>traceroute www.google.com
+
+------------------------------------------------------------------------
+How to restart your Linux server ?
+
+reboot (terminal band ho jayega)
+
+--------------------------------------------------
+How to shoutdown our Linux server ?
+shoutdown
+
+kbhi kabhi jarurut padti hai shoutdown krneki maintenance or kuch aur
+
+------------------------------------------------------------------------------------------------------------------------------------------
+user creation
+
+if you want to create user and user manage
+
+How to create a new user on our Linux server ?
+useradd
+
+so user login kr paye hmare server pe
+
+>useradd alex
+
+now user bn gya gya hai ,user kaise bna hai yah kaise verify kre
+
+use id command
+>id alex
+
+ans:
+uid=1001(alex) gid=1002(alex) group =1002 (alex)
+
+hmne deha tha ham file permission dhekh rhe the vha pe ,user ka nam bhi root tha ,jo group hai vo bhi root tha
+       In this case jab tak ham user ko kisi group mai assign nhi krte ya add nhi krte ,vo kudth hi group ka part hota hai
+
+------------------------------------------------------------------------------
+How to change password for the user ?
+passwd
+
+hmne user to bna liya , uska password to set krna pdhega ,reason -security
+
+>passwd alex
+changing password for user alex
+new password:
+BAD Password: The password is shorter than 8 character
+Retype new  password:
+
+>exit
+
+now we check actually user and password is create or not
+
+now I want as a alex user login krna hai
+
+[paul@redhat ~]$ >su alex
+password:
+
+[alex@redhat paul]$pwd
+
+/home/alex
+
+>cd /home
+>ls -ltr
+
+ans:
+drwx --- --- 17 paul paul 4096 Aug 6 16:40 paul
+drwx --- --- 3  alex alex   98 Aug 6 17:01 alex  
+jab bhi aap nya user bnate ho ,uske home directory mai bydfault ysa user nam ka folder bnta hai
+
+you can see dusra paul user ,alex user ka data access nhi kr sakta ,you see permission ---(other)
+
+---------------------------------------------------------------------------------------
+How to create a new group on our Linux server ?
+groupadd
+
+[alex@redhat home]$su
+password:
+
+[root@redhat paul]$groupadd TESTING 
+
+maine testing nam ka group bnaya ,hmari team hai  testing team usme 5 member hai so maine testing nam ka group bnaya
+  i can add user in this group
+
+how to verify group bna ya nhi ?
+
+>cat /etc/group
+
+ans:
+paul
+niginx
+TESTING:X:1003
+
+you can see testing nam ka group add huva hai
+
+--------------------------------------------------------------------
+
+How to check UserID or GroupID of user ?
+id user
+
+like 
+id root
+id alex
+id paul
+
+--------------------------------------------------------------------------------------
+How to delete user or group ?
+
+userdel  <user>
+groupdel <group>
+
+[root@rarhat] >userdel alex
+
+userdel: user alex is currently used by process 10164----> means alext currenly login hai
+
+[root@rarhat] >exit
+[alex@rarhat] >exit
+[paul@rarhat] >su
+password;
+
+[root@rarhat] >userdel alex
+
+delete hogaya
+now we check actuaaly delete ho gya nhi
+>id alex
+id:'alex':no such user
+
+but iska home dir bhi delete ho gya hai kya ?
+
+>cd/home
+>ls
+
+ans:
+alex paul
+
+nhi huva home dir delete
+   iski bhi alag process hai delete krne ki
+
+---------------------------------------
+
+
+>groupdel TESTING
+
+delete hogaya group
+
+>cat /etc/group
+
+you can three is no Testing nam ka group
+
+
+
+
+---------------------------------------------------------------------------------------------
+
+usermod means user modification
+>useradd nick
+
+ans;
+uid=1001(nick) gid=1002(nick) groups=1002(nick)
+
+muze kya krna hai --> nick user ka group change krna hai
+
+>groupadd TESTING
+>usermod -G Testing nick
+
+>id nick
+uid=1001(nick) gid=1002(nick) groups=1002(nick) ,1003(TESTING)
+                              |____________________________|
+                                   NOW nick user testing group ' ka bhi' part hai
+                              
+------------------------------------------------------------------------------------------------------------------------------------------
+
+How to schedule a script to run on a particular date /time ?
+at
+crontab

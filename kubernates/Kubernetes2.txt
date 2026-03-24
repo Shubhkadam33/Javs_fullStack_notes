@@ -1,0 +1,155 @@
+Deployment of an App k8s Deployment
+
+sbse phla task -yek pod bnana ,kivki In case of kubernet in this case pod ke under container chlega
+
+container -container is a running instance of image
+  so pod and container se phle hmare pass image chahiye -image kiski ?
+        kisi application ki jisko ham run krna chah rhe hai ,ya to chahte hai
+
+firstly we try already predefined application -eg nginx
+
+go to terminal --> kubernate ke under kase application run krna hai ,acees kaise krna hai
+
+how to make pods --> use kubectl command
+
+                          deployment name (you can write name  any thing)
+                           ________   kisa image ko ref krna hai
+                           |      |    |
+>kubectl create deployment my-nginx --image-nginx:latest
+                                            |__________|
+                                                 |
+ye jo image ka name de rhe ho yeh docker repo ka hai jo docker registry mai present hai
+: -after : you can  give version
+
+>kubectl get deployments
+
+Name      Ready  up-to-date  Avilable  Age
+my-nginx   1/1     1             1     23s
+
+you can see my-nginx name ka deployment bna  ,1/1 means -ok state , age-kab start huva
+
+>kubectl get pods
+
+Name                        Ready Status Restart Age
+my-nginx-87fgfgg74ffd-it54  1/1   Running  0     52s
+
+hmne deployment kiya tha using nginx image ,vo create huva hai  and isa deployment object ne pod bhi bnaya isa name ka" my-nginx-87fgfgg74ffd-it54  "
+
+
+previous we se dashboards where we see more information about kubernete
+> minikube dashboard (start dashboard)
+
+left side -workloads
+deployment hmne bnaya tha -running
+isne kud bnaya iske under pod- running
+
+scroll -you can see pod name-my-nginx-87fgfgg74ffd-it54  ->click --> you can see pod related info
+
+isne image konsi  use kr rha hai ,hmne deployment kiya iske under kya kya chije huvi step by step diy ahai
+
+like schedular -sussfult assign (schedular ne assign kiya)
+pulling image -nginx from registry
+started nginx 
+create container
+
+you can see container related logs
+
+In this case dashboard helpful hota hai
+
+-----------------------------------------------------------
+
+abhi tak hmne samja ki - jo hmara niginx tha up and running somewhere
+         but ham isa nignx ko acces krne ka try kre -to kya hoga -kivi hme pada kise chlega nginx successfully running hai ya nhi
+
+niginx ko access krne keliye as you know default 80 port pe listen krta hai ,aap local host ya to simply "localhost "or "ip 80 "port se access kr sakte hai
+
+go to browser --> localhost:8080 -->not work
+
+because jo hmara container nginx vala ,vo hmare pods ke under run kr rha hai ,and container ke under jo nginx application chl rhi hai cvh listen kr rhi hai 80 pod pe
+
+container -->pod-->cluster -->external world who enter
+ there is so much layer so hma directly us pod ke under ,access nhi kr sakte  hai 
+   isa ke liye hmare pass tarika hai--> service obj 
+
+In docker case -code bind krte the ,isi tarike se yeha krna pdta hai but tarika alag hai-at this use service obj
+
+>kubectl expose deployment my-nginx --port=80 --type=LoadBalancer
+
+jo port iske under listen kr rha hai vo port dena hai-80 port 
+type -yha pe aap alag aalg type de sakte ho but sbse most commonly useful hai ham vo use krege --> "LoadBalancer"
+
+isko ham check bhi kr sakte hai
+>kubectl get services
+
+ Name         type        cluster-Ip     External-IP  port(s)       Age
+kunernetes  ClusterIP     10.96.0.1       <none>     443/TCP       5d18h
+my-nginx    LoadBalancer  10.104.234.173  <pending>  80:31132/TCP   12s
+  
+know we try aceess krke dekte hai
+go to browser --> localhost:8080 --> access nhi kr pa rha hu
+
+hmne service to bnali ->hme ab kya krna  hai--> hmne minikube ko btana hai hmari service
+
+>minikube service my-nginx
+
+Namespace   Name     Target port               Url
+default    my-nginx               http://127.0.0.1:56507
+
+pod ke under ye jo application run kr rha tha,uko access krnega isne URL bnake de diya http://127.0.0.1:56507 (ye vala ip ko use krkeapplication ko access kr sakte hai)
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Quick Overview of Commands Used 
+
+minikube start/delete (by using this command we build cluster)
+hm minikube use kr rhe hai ,vo single node cluster bnata ho ,jo ki  testing purpose ke liye hota hai so single node or same node mai hi worker node and master node dono work krte hai 
+minikube status  (we can check cluster status)
+minikube dashboard (we can monitor ,state of cluster ,node ,pods  ,deployment )
+
+kubectl create deployment my-app --image=link (use prefined image and deploy this application) ,image ke bad  name deto ho ,simple agar aap kisi image ka name deto ho vo by default dockerhub se pull kr ta ha  or "kisi dusri registry ko use krna hai aapko proper full path dena pdhega "
+kubectl get deployments  (we can check state of deployment) ,jab ham deployment bnate hai ,koi isa images mai problem nhi hoti hai ,kubelet automatic pods bhi bnata hai , kivi ki pod ke under hmara image hai as a form of container run hota hai 
+kubectl get pods   ( you can see pods jo bne huve hai)
+kubectl delete deployment my-app 
+
+kubetcl expose deployment my-app --type=LoaddBalancer --port=80  (cluster se bahr se app ko access kr sakte hai) ,basically yha pe service bnai thi
+minikube service my -app  ( jab aap service bna te ho ,deployments ko assign krate ho ,then uske bad this command use ,so to use that service  ,to aap aapke webapp/service ko access kr sako)
+kubectl get services 9if you  want to check your services)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Scale up your app and update your app
+
+means apni kudh ki bnai huvi application use krege , eg react base app 
+
+crate folder -open in vs code -> right click --> open in integrated terminal 
+
+>node -v
+>npx create-react-app testapp
+>cd testapp 
+>npm start
+
+testapp
+  |
+  |---node_modules  (remove this)
+  |----src
+
+
+docker file :
+
+FROM node:20
+WORKDIR /myapp
+COPY ..
+RUN npm install
+EXPOSE 3000
+CMD ["npm" ,"start"]
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+so firsly create image so we deploy image
+
+note -aap local image ko use nhi kr sakte , iska matab kisi registry mai hmari image push kro then vha se kubernete aapki image pull krega
+
+hme image bnana hai ,naming convention restry ke according rkhni pdti hai
+
+

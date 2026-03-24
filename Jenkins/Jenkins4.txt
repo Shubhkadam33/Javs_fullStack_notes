@@ -1,0 +1,67 @@
+User management Jenkins
+
+it is specially na logo ke liye applicable ha ,jo team mai kam kr rhe hai ,aap Jenkin ko as Admin aap use kr rhe ho
+
+hmne aptak jobhi task perform kiya ,job bnaya yeh Jenkin admin throw kiya hai
+
+admin means -jisko sare rides hai  ,matalab aap hi ho iske  controller ho
+    lekin aap single personto kam kroge nhi ,Apke company mai team mai ,lets say aapne company mai kisiko fresher ko hire kiya ,aap chahte ho yeh jobs vgera  bnato die ,iske bad jo nya team member hai vo manage kre so ye chize kaise krege ?
+         aap admin access to doke nhi because vha fresher hai ho sakta hai configuration mai dikat ho jaye so on  ,i am talking about human errors right that is possible
+
+
+so aap kya kroge  -------> aap kuch new user setup kroge and isa user/person ko specific rights doge  usa person ko so that aapka kam distribute hoga
+
+new team member ke liye new user bnate hai sabse phle
+----------------------------------------------------------------------------------------------------
+Jenkins           | search  |        Jenkins Admin        log out
+----------------------------------------------------------------------------------------------------
+Dashboard -----> Manage Jenkins ----> scroll down ---->users( yeh per aap user create ,delete ,modify user kr sakte ho)
+
+Users               
+
+user ID       Name                                     | create User |
+admin      Jenkins admin
+
+
+create user :
+
+Username :nick
+Password :nic123
+confirm password :nic123
+Full name : Nick Jones 
+E-mail address : nick@gmail.com
+
+create user ----> click
+
+aab aapke pass username  ,password hai yek new user ka ,to aap team member ko provide kr sakte ho
+
+----------------------------------------------
+
+plugins  ----> Available plugin -----> ✅  role -based Authorization strategy ---->install -----> ✅ restart (logout automatically)
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+sign in to Jenkins 
+
+Username : nick
+password : nic123
+
+----------------------------------------------------------------------------------------------------
+Jenkins           | search  |        Nick Jones        log out
+----------------------------------------------------------------------------------------------------
+
+
+now i login as nick user : now as nick user jo admin ko dikha rha tha vo sabkuch nick user ko dikha rha hai and nick can build ,set config all things which is not good
+and aur mai yek nhi chahta hu
+
+
+
+
+
+
+
+
+
+
+     

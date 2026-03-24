@@ -1,0 +1,54 @@
+Docker Compose
+
+configuration file to manage one or multiple containers running on same machine
+
+sabse phle dhekhte hai --> normal method mai kya problem hai 
+
+last time hnme prefined MySQL  image ko run kiya tha ,run krneke liya hmari command kitni bdi hai
+
+>docker run -d --env MYSQL_ROOT_PASSWORD="root" --env MYSQL_DATABASE="userinfo" --name mysqldb --network my-net mysql
+
+problem is ham container ko normally run nhi kr rhe hai ,ham container ko run krte vakt kafi sare option de rhe hai like env var  ,database ,network bna rhe hai aur iske sath  volume ,bound blind bhi de sakte  hai
+     you can just  imagine yeha tho 2-3 line ki yek hi command ho gyi
+
+this is kind of a default  , "jab aapko bar bar same line command use krna ho " 
+      ya to aap team mai kam kr rhr ho ,aapne image share krli ,usne download krli usa second person ,ya to team member ko bhi same ,itni bdi command hai ,type ,execute krni pdhegi
+             this repeativly thodasa default hai ,not a effient way
+
+isa problem ko solve krta hai " docker compose "
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+firstly create docker compose file (so no need to write lengthy command)
+
+docker-compose.yml or yaml  (create in same folder where also docker file present)
+
+PyCharm -python package --> Docker Compose (package) download
+
+Docker compose package -It is used for jab ham docker compose file bnane mai like when you type it will give you suggestion ,auto format krne mai hep krta hai
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+docker-compose.yml
+
+--------------------
+services:  //services kind of container ,images (konsi images use krna hai)
+  mysqldb:    //suppose mai MySQL ke liye bna rhahu ,mai name deta hu mysqldb (yeha pe kuch bi apne according name de sakte ho )
+  images: 'Mysql:latest' //let assume aap sql container related  run krna hai 
+
+jab bhi docker compose file run kru that time MySQL latest image use krkr run kre
+  
+d- detached abhi jrurut nhi hai
+  environment: 
+      - MYSQL_ROOT_PASSWORD="root"  //phle vala env var
+      - MYSQL_DATABASE="userinfo"  //2nd vala en var
+   
+   container_name: "mysqldb"   //apne run krte wakt diya tha container name ,nhi diya tho bhi chlega , vo automatic radom default nam use                     kta hai
+   
+
+-------------------------------------------------------
+
+docker images
+
+  >docker run -d --env MYSQL_ROOT_PASSWORD="root" --env MYSQL_DATABASE="userinfo" --name mysqldb --network my-net mysql
+ compare krke docker-compose file bnao

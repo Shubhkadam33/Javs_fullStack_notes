@@ -1,0 +1,492 @@
+Jenkins PIPELINE
+
+abhi tak hmne Jenkin job bnai thi freestyle mai bnai thi
+
+                       stage      stage  stage
+development :start --> build  --> Test -->Deploy --> workflow end : production
+                                   |--unit test---------|
+                                   |--integration test--|--------Test Result
+                                   |---smoke test-------|
+
+
+https://www.jenkins.io/doc/book/pipeline  // see ref diagram of CICD pipine
+
+
+Jenkin implement CICD pipeline
+
+explain diagram:
+
+development se leke production ke deployment tab (public/live ho ne tak) yeha tak CICD ki journey thi
+
+
+testing ke bhi diff stages ya phases ho sakti hai then at last test result(hmne test result dekhe the in term of junit )
+
+
+dashboard --> new item ---> enter name : pipeline-demo
+1)freestyle project
+2)Maven project 
+build a maven project.Jenkin takes advantage of your POM files and drastically reduces the configuration
+
+//hmne maven project use kiya tha iske liye special type diya hai ,benefit is-there is need lot of config
+
+3)pipeline---> clik
+
+
+Dashboard > pipeline-demo > config >pipeline
+
+Definition
+ |-----pipeline script //choose this
+ |-----pipeline script from SCM
+
+
+aapki script aha se leki aani hai ,yape aapko provide krni hai -deno hi tarikese aap kr sakte ho
+ 
+at this time choose 1st option because we wnat kudse script 
+
+script
+------------------------------------------------------------
+                                   | try sample pipeline
+                                   | hello world
+                                   | GitHub + Maven
+                                   | Script pipline
+
+-----------------------------------------------------
+
+they provide this option -as a beginner you choose option
+
+they provide boiler code of pipeline script so select --> hello world
+
+------------------------------------
+pipeline{
+    agent any
+ 
+    stages{
+       stage('Hello'){
+          steps{
+               echo 'Hello world '
+   
+          }
+       }
+   }
+}
+
+--------------------------------------
+
+you can see scripting lang is bhut easy to understand
+
+agent any :yeh agent define kiya hai ,yaha any lika hai but ham yehpar single agent use kr rhe hai jo hmara mai server hai
+
+stages means diff stages hoti hai like build ,test ,deploy
+  aise aap alag alag stages provide kr sakte hai
+
+   
+In this case sample stage provide that is 'hello' stage
+
+suppose this is build stage andisme kitne and kon kon se step krne hai
+
+
+save +build now ---> build successfully
+
+now you can diff pipeline and freestyle project ka
+
+Dashboard > pipeline-demo >
+
+stage ka view isa tarh se dikta hai,hmari jitney bhi stages hai vha yha par dikhti hai
+
+Stage view
+
+|------|
+|Hello |--> hover on this --> you can see success ,log --->click on this
+|------|
+
+yeh har yek stage ki log dikhata hai , suppose there is three stage 1.build 2.test 3.deploy
+   apko testing vale blog dekhana hai aap dekha sakte ho --> this is very good reprention
+
+stage logs(hello)
+print Message --Hello world( self time 5ms)
+Hello world 
+
+-----------------------------------------------------------------------------------------
+
+Dashboard > pipeline-demo > config > pipeline
+
+script:
+
+pipeline{
+    agent any
+ 
+    stages{
+       stage('build'){
+          steps{
+               echo 'Hello world '
+   
+          }
+       }
+      stage('test'){
+          steps{
+               echo 'Hello world '
+   
+         }
+      stage('Deploy'){
+          steps{
+               echo 'Hello world '
+   
+          }
+     }
+   }
+}
+
+-------------------------------------------------------------------------
+
+now i create three stages  =save+ build now
+
+stage view
+
+|-----|-----|--------|
+|Build| Test| Deploy |
+|     |     |        |
+|-----|-----|--------|
+
+if you want to see specific stage log we hover on this and see
+
+
+---------------------------------------------------------------------------------------
+
+Multi-Steps
+Pipeline step
+
+stage('Hello'){
+          steps{
+               echo 'Hello world '
+   
+          }
+
+
+agar aapko shell command execute krna hai ---> sh iske under ech 'hello de sakte ho
+
+steps{
+    sh 'echo Hello'
+}
+
+------
+
+if there is build stage and uske multiple step ho to kya krege --->
+
+sh '''
+
+'''
+
+//iske bich mai multiple steps likha sakte ho
+
+eg
+sh '''
+  echo Hello
+  echo Buddy
+'''
+
+-------------------------------------------
+
+stage('Buils'){
+          steps{
+               sh '''
+                  echo Hello
+                  echo Buddy
+              '''
+          }         
+
+-----------------------------------------
+
+build now
+
+stage view
+
+|-----|
+|build| ----> hover and see logs
+|-----|
+
+
+stage Logs (build)
+
+shell script --echo Hello buddy (self time 273ms)
+
++echo Hello
+hello
+
++echo Buddy
+Buddy
+
+isa trah se aap multiple steps dekha sakte ho
+----------------------------------------------------------
+scenario: wrong pipeline code
+
+stage('Buils'){
+          steps{
+               sh '''
+                  echo Hello
+                  ecccho Buddy
+              '''
+          } 
+
+build now:
+
+you can see in red build diagram
+
+|-----|
+|build| 
+|-----|
+
+loss -command not found
+
+-------------------------------------------------------------------------------------------
+
+Retry Steps Jenkins Pipeline
+
+jis bhi step ko mai chahta hu 2-3 bar aur try kro then use retry () function
+
+how many time rety krna hai ,write in ()
+retry(3)
+
+ye command three type execute krne ka try kre
+
+retry(3){
+     sh 'ech Trying ........'
+}
+
+---
+
+stage('Buils'){
+          steps{
+               sh '''
+                  echo Hello
+                  echo Buddy
+               '''
+               retry(3){
+                 sh 'ech Trying...'
+               }
+          } 
+
+
+--------------------------
+
+build now:
+
+you can see in red build diagram
+
+|-----|
+|build| 
+|-----|
+
+logs-you can see three time try to  execute command 
+
+
+what is use of retry() -ap control kr sate ho vo kam se kam 5 times try kre so vo aapke pass option hai
+
+----------------------------------------
+
+timeout Function
+
+jaise ki aap ka koi task hai ,shayad jrurut se jada time le rha hai
+    suppose aapka task 1 min le rha hai  but aap chahte hai ,vo 10 min tak try kre ,gar nhi huva to terminate kro usa task ko
+
+how to deal this scenario -use timeout function
+
+timeout(){
+   sh 'sleep 30'
+}
+30 sec ke liye sleep mode tak jana chahiye then after 30 se finish his task
+       but meri requirement haai muze yek task keliye itna time nhi dena hai
+I want agar yeh step 5 sec chla  and task nhi khatam huva to vhi terminate kro task ko
+
+timeout(time:5 ,unit:'SECOND'){
+    sh 'sleep 30'
+}
+
+---------
+
+
+stage('Build'){
+          steps{
+               sh '''
+                  echo Hello
+                  echo Buddy
+               '''
+               retry(3){
+                 sh 'ech Trying...'
+               }
+              timeout(time:5 ,unit:'SECOND'){
+                 sh 'sleep 30'
+              }
+          } 
+
+
+save +build
+
+you see in consle output:
+
+hmare last stage tak pucha hi nhi becuse sake phle vala step unsuccessful huva hai
+
+we learn/understand : if there is steps and uske bich mai koi step fail ho gati hai to uske aage ke step mai nhi jayega
+
+-------------------------------------------------------------------------------------------
+
+
+stage('Build'){
+          steps{
+               sh '''
+                  echo Hello
+                  echo Buddy
+               '''
+               retry(3){
+                 sh 'echo Trying...'
+               }
+              timeout(time:15 ,unit:'SECOND'){
+                 sh 'sleep 30'
+              }
+          }
+
+------------------
+console output:
+ cancelling nested steps due to timeout
+sending interrupt signal to process
+
+
+----------------------------------------------------------------------------------------
+
+Environment Var Jenkins
+
+
+now we will see hm Env var kaise Script mai introduce/use kr sakte hai
+
+firstly  environment block provide kiya and iske under aapke env var kry and value form mai provide kr sakte hai
+
+environment {
+  NAME="PAUL"
+  AGE=20
+}
+
+
+
+you can use this env var in steps that like
+
+environment {
+  NAME="PAUL"
+  AGE=20
+}
+stage('Build'){
+          steps{
+               sh '''
+                  echo Hello
+                  echo Buddy
+               '''
+               }
+         }
+}
+
+
+
+----------------------
+
+console output
+
+
+
+|-----|
+|build| 
+|-----|
+
+log -
++echo hello
+Hello
++echo Buddy
+Buddy
++echo paul
+paul
+
+
+------------------------
+
+I want to give pass in the form of key and value ,we can directly give password because of security issue
+
+
+Dashboard ---> Manage Jenkins > credentials
+
+Stores scoped to Jenkins --> system(click)
+
+
+System
+global credentials (click) ---> Add credentials 
+
+
+new credentials
+
+ kind: secret text
+  
+ ID: PASS
+ Secret: **** (1234 -deho secret option click kiya hai so yha apr bhi nhi dikhai de rha hai)
+
+
+create --> click
+
+yo come in auto in this page
+
+
+Dashboard ---> Manage Jenkins > credentials >system > Global credentials(unrestricted)
+
+
+id     Name     kind              
+pass   pass     Secret text     key
+
+------------------------------------------------
+
+Dashboard ---> pipeline-demo ---> config
+
+
+hme pass dena hai but dikna nhi chahiye so 
+PASS =credentials('PASS')
+                    |
+                    id
+
+
+----------------------------------------------------------
+
+
+environment {
+  NAME="PAUL"
+  AGE=20
+  PASS=credentials('pass')
+}
+stage('Build'){
+          steps{
+               sh '''
+                  echo Hello
+                  echo $PASS
+                  echo Buddy
+               '''
+               }
+         }
+}
+
+
+
+--------------------------------------
+
+
+build now --> console output
+
++echo Hello
+Hello
++echo *****
+*****
++echo paul
+paul
+
+-----------------------------------------------------------------------------------------
+
+we see basic function yo can explore more function
+
+search ----->pipeline:basic steps (documentation)
+
+yo can see how to use that function ,rule of function then you can use this function
+
+
+

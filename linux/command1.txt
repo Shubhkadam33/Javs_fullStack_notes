@@ -1,0 +1,923 @@
+How to check your currnt location 
+>pwd
+
+ans -/home/paul/myfolder
+
+-----------------------------------------------------
+
+2)How to display name of current logged -in user ?
+> whoami
+
+ans  paul
+paul@redhat01 myfolder
+ |       |       |
+user     host    present folder name
+name     name
+
+-----------------------------------------------------
+3) How to check system date or time ?
+> date
+
+ans : sunday 06 Augest 12:52:16 pm
+
+> date %D (you can see your customize format date)
+for eg I want to see only date
+ans: 08/06/23
+
+date %T
+> 12:52:48
+
+date +%H:%M
+> 12:53
+------------------------------------------------------------------------
+4) How to display files and directory present in current location ?
+> ls
+In current folder mai all reday files and folder hai
+- means hyfan
+
+>ls -lt
+
+if you want to see more detail info about folder and files
+                     file size
+                       |
+rw-rw-r-- 1 paul paul 56 Aug 15 11:58  test.txt
+                         |__________|         
+                       last modification
+                         time and date
+
+> ls -ltr
+jo bhi latest file modify hui hai vo sbse niche dhikegi
+
+
+you can see file size kya hai samj nhi rhi (if you want to see readable formate size)
+> ls -lh  (h- means human readable)
+ans: 60k
+
+how to identity who is directory :
+rw-rw-r-- 1 paul paul 56 Aug 15 11:58  test.txt
+drw-rw-r-- 1 paul paul 56 Aug 15 11:58  newFolder
+|
+directory
+-----------------------------------------------------------------------------------------------------------------------
+
+How to clear the Linux terminal ?
+> clear  or shortcut ctrl +l
+
+aapko laga hamara terminal bhar gya hai that time use
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+How to creating , deleting ,Editing
+
+How to display content of file on terminal
+> cat <file>
+aapko dekhna hai read krna hai isa file mai kya likha hai
+
+cat file2
+ ans:  my name is shubham iam from satara
+
+--------------------------------------------------------------
+
+How to read a file and search for a word ?
+> In window ctrl+ f =we search particular word in text file etc
+
+>less <file>
+
+less test.csv 
+> you can see now we are not in terminal we now in csv file
+   then write  / hi
+                 |
+               term liko jo aapko search krna hai
+
+/ -froward slash  m
+
+if in file multiple word which you search if you want to see all word one by one that time press "n"  n means next
+if at last there is no word that time " pattern not found (press return)
+
+if you want to see you search word -like thre is multiple word ,you want to direct last word then  "shift +g " (end)
+
+if you want go bottom to top then press p
+
+>/ -froward slash  means top to bottom search krta hai
+
+suppose shft+g direct phle buttom aate hai (abhi muze search krna hai buttom to up direction)
+> now you / replace ?
+
+? term
+
+>if you want yhase bhahr nikla hai
+> q  (q means quit)
+
+-----------------------------------------------------------------------------------------------------------------------
+
+How to view content  of a file page by page /
+> #more <file>  (we see content in command) >less <file>  (see contenet actual file/editor like txt ,csv)
+
+-------------------------------------------------------------
+
+How to create file in Linux ?
+> touch <file_name>
+
+-----------------------------------------------------------
+How to delete a file in Linux
+> rm <file_name>
+-------------------------------------------------------------
+
+How to edit file in Linux ?
+>vi <file_name>
+ or
+> nano <file_name>
+
+there is two way to edit file 
+1) touch f.txt 
+touch krkke file bnavo then uske bad edit kro then use  " vi or nano <file_name> "
+
+2) vi <file_name>
+you can direcly use vi command vo file create bhi krega and edit bhi sath mai krega
+
+file writings this command we are in vi editor 
+>if you want to edit this file then press 'i '  i means insert 
+> after aapki editing complete hui then 'esc ' press so we can not edit this file
+> :wq  (save and exit) then you come in command propt
+
+            or
+
+2) nano
+> what is diff between vi and nano , nano is a modern way ,as a beginner nano is much useful
+
+nano new+tab =automaticaaly suggest krega (auto suggest krta hai)
+
+nano f1.txt
+>open nano editor
+thre is no need to press 'i' ,yuo can direcly start writing
+> you can see in buttom ,they give hint like  x -exit , r -read file ,u -oaste 
+>if you want exit then ctrl +x then they suggest  'save modify buffer' yes /no
+also thry ask ye chages same file mai krna hai ya new file file  -enter press so changes save in exiting file
+--------------------------------------------------------------------------------------------
+
+how to create directory /folder in Linux  ?
+> mkdir <dir_name>
+
+------------------------------------------------------------------
+
+How to delete directory /folder in Linux \
+> rmdir  <dir_name>   ( rmdir -means remove directory)
+>rm-rf  <dir_name>
+
+-------------------------------------------------------------------
+
+How to change path or move to another folder in Linux ?
+> cd /path/folder
+> cd ..  (previous folder yek folder piche jana hai)
+
+1)cd myfolder/
+2) aap yek bar mai multiple folder mai ja sakte ho (jitney under jana hai ja sakte ho)
+cd cd myfolder/newfolder/folder
+
+> cd ..  (previous folder yek folder piche jana hai)
+2) cd ../.. (two location piche ja sakte ho)
+
+
+------------------------------------------------------------------------------
+absolute and relative
+
+main directory ko ham root directory bolte hai
+
+/home/paul/myfolder
+|
+ / :this is location/directory we call root directory  ,root dir is top dir that under sub dir
+~ : means home directory
+
+cd / --> you go to root directory 
+
+------------------------------------------------
+absolute path means exact path (stating point se kisi location ko bta rha hu (absolute path kha se statt hota hai -root dir se)
+
+cd /home/paul/myfolder/newfolder/newfolder   ---->absolute path
+cd newfolder/newfolder   ---> relative path
+
+
+-------------------------------------------------------------------------------------------
+
+how to copy and paste a file from one folder to another in Linux
+cp <file> /dest/path
+
+copy folder kro jo aapko krna hai then give dectination path
+
+>ls then see file and folder under paticulat dir
+cp mini.csv cd newfolder/
+                   |
+                we can give relative or absoute path
+
+>now muze pahle vale directory se file copy krna hi
+
+present location ko . se represent krte hai in linux
+                   |
+cp ../sortdemo.txt .
+          |
+konsi file copy krni hai
+  
+-----------------------------------------------------------------------------
+How to copy content of file to another in Linux ?
+  cp fileA fileB
+
+cp mini.csv mini_copy.csv  (kind of kisi file ka backup bna rhe hai)
+             
+-------------------------------------------------------------------------
+
+How to cut-paste a file from one folder to another in Linux ?
+mv <file> /dest/path
+
+mv newFile newFolder/
+
+----------------------------------------------------------------------------------
+How to rename a file in Linux ?
+mv fileA fileNewName
+
+mv newFile  newfileModify    (thre is specific command of rename,with the help of mv we can modify)
+
+----------------------------------------------------------------------------------------
+
+How to read and display top 5 lines from file in Linux
+
+head -5 file
+
+head -5 test.csv 
+
+----------------------------------------------------------------------------
+How to read or display bottom 5 lines from file in Linux ?
+
+> tail -5 file 
+
+--------------------------------------------------------------------------
+
+How to sort the contenet from a file in Linux ?
+sort file
+sort -r file
+
+> if we want sort column a-z
+
+cat sortdemo.txt
+ans:
+A
+D
+C
+B
+E
+Z
+X
+
+sort sortdemo.txt
+
+>we can also sort reverse Z-A
+sort -r sortdemo.txt
+
+-r means hypen reverse
+------------------------------------------------------
+
+How to display unique content from file  in Linux ?
+
+A
+C
+D
+E
+C
+X
+
+firsly file sort then we apply unique 9menas then unique dublicate contenet remove krega)
+
+sort sortdemo | uniq
+> | means pipe sign two command ko combine krne keliye use hota hai
+> | means fist command hai  iska ouput hai uspar ham output perform kr rhe hai
+>| it is used for combine multiple command
+
+-----------------------------------------------------------------------------------------------------------
+
+A file has 9 lines.
+How to split this file in 3 different files in Linux
+
+split -l 3 files
+
+l means kitne line mai divide krna hai (at this case 3)
+
+sortdemo.txt
+A
+C
+B
+A
+X
+Z
+R
+S
+W
+B
+J
+K
+L
+
+split -l 4 sortdemo.txt
+ls
+sortdemo.txt   xab   xaa  xac
+>you can see file created
+
+cat xaa
+>
+A
+D
+A
+C
+
+--------------------------------------------------------------------------------
+How to search a word and display matching contenet from file in Linux /
+> grep "word" file
+
+aagar hme kisi word ya matching content ko search krna ho and uske related sare data ko yek bar mai print krna ho that time we use this command
+
+> like i want particular entity(person) related information
+grep "kore" test.csv
+
+>you can see searching capacity and visibility much better with compare  "less command"
+
+thre is many why to seach by using "grap command" yo can see another my youtube video
+
+----------------------------------------------------------------------------------------------
+How to search multiple word and display matching content from a file in Linux ?
+egrep "word1|word2" file
+egrep "kore|ana|lha" test.csv
+
+-----------------------------------------------------------------------------------------------------------
+
+how to use wildcards in liunx ?
+*{}[]
+> ls file*
+> touch file{1..5}
+>if you ls krke sare file and folder konse hai dek sakte hai but thrre is many files so how you see particular file ,it is tikme consuming
+that time use wildcard
+
+if there is 1k file and you want 'x' started file only show
+
+ls x*
+>now i see though file which is pattern x
+
+> now you want ending mai kya hai sase search krna hai like "csv" that time (if you want particular extension file)
+ls *.csv
+
+2) if you want to make 10 file at a time then use (you can provide range)
+> touch file{1..10}
+ ans:
+file 1 file2 file3 file4 ...........file10
+
+---------------------------------------------------------------------------------------------------------------------
+How to shuffle contenet of file in Linux /
+>shuf file
+-------------------------------------------------------------------------------------------------------------------------
+How to count no.of lines in a file in Linux ?
+>wc -l file
+
+wc -l test.csv
+and
+1001 test.csv
+usecase: we store employee data we want how many employ data thre that time this command use
+---------------------------------------------------------------------------------------------------------------
+How to check if two files are identical or not in Linux ?
+cmp fileA fileB
+
+>apke pass two file hai wo same hai kya nhi compare kro (contenet same hai kya)
+
+comp fileA fileB
+ans:
+fileA fileB differ: line 2
+--------------------------------------------------------------------------------------------------------------------------------------
+
+How to compare and display diff between two files in Linux ?
+diff -u fileA fileB
+file ko compare to kro and display kro if thre is diff
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+How to find file in Linux ?
+find /path/  -name<file>
+
+>if you are created many file but you dont know (or forget where is file)where is exacly file
+
+i)first go to home dir ~  
+if you want to go home location thre is three way to go
+1)back cd ..
+2) cd ~
+3) suppose myfolder/newfolder current dir (aap khapar bhi ho aap direct home dir mai ja sakte hi use "cd"
+cd ---> ~ (home location sign)
+
+home location kya hota hai
+pwd
+/home/paul
+       |
+      aapka nam ,user ka nam  (har user keliye yek folder bna hota hai jusko ham us user ka home location or home folder khte hai)
+ 
+ii)
+find ./ -name test.csv
+
+. means yeh present and  / means iske under
+
+             or
+use wildcard
+
+find ./ -name *.csv
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+How to find file in Linux ?
+
+updatedb
+locate <file>
+
+find kaise kam krta hai -->vo hr jagh jayega and find krega location
+locate command -iske pas catche mai yek database hota hai  ,usme uske pas sari file ki information hoti hai ,vo isa data base mai se search krke aapko dta hai
+     but thre is one problem before using 'locate' command you have to use 'updatedb' because jobhi latest file hai iska jo database hai vo update ho jaye
+
+eg
+touch paul.csv (latest file bnai)
+
+ls --> paul.csv
+locate paul.csv--> not found
+
+beacause file new created ,locate database mai check kr rha hai
+so use
+updated
+>you cant update db you have to access root or sudo
+
+sudo updated
+passwoed-
+
+locate paul.csv --> /home/paul/paul.csv
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+utility command
+ how to display previously used commands in past ?
+
+why we use- active coomad mai se dhehna hai previous command then scroll but if yesterday,10 day go command friend ne btai thi but aap bhul gye ho now you need this revious command
+that time use 'history'
+
+sort ke related jitney bhi command thi muze uska  result mil gya
+
+history | grep sort
+
+--------------------------------------------------------------------------------------------------------------
+
+How to check syntax and options available for command
+> help
+
+eg
+ls -ltr
+ls -lh
+
+but ls related sare command when we use that all description 
+
+
+if you want ls related more information
+ls --help
+but you need bhut scroll then use
+ls --help | more (stating se dikhaye ga page by page)
+
+--------------------------------------------
+
+how to read or get mor info about a command
+
+man
+man ls
+
+>yek file open hogyi ls related sari information mili
+
+--------------------------------------------------------------------
+
+How to check which executable is using for command
+
+which
+>hpw to use command ,how to execte command
+
+which ls
+> /user/bin/ls
+
+---------------------------------------------------------------------------------------------------
+how to use calculater in Linux
+bc  9binary calculater)
+
+bc  then enter press
+8*9
+>72
+
+ctr+c -is se bahar ajavoge
+
+-------------------------------------------------------------------------------------
+
+How to check calendar of last year in Linux
+cal 
+cal (pesent month ka calendrone dhikhata hai)
+
+if you want see last year calendren
+cal 2020
+cal jan 2022
+---------------------------------------------------------------------------
+
+How to check how long server has been running in Linux ?
+uptime
+
+aapka Linux server kitne time se vo user use kr rha hai and more info like kitne user  login hai isa current server pe
+     because corperate mai usully server mai multiple user use krte hai yek time be and share krte hai ,simply  use this command
+
+uptime  
+           
+        kitne time se user login hai
+             |
+13:51:19 up 1:54 ,1 user , load avg:0.14, 0.16 ,0.09
+  |                 |
+current time       abhi yek user login hai
+
+
+-------------------------------------------------------------------------
+
+How to recored your activity on terminal in a file ?
+script
+
+scenario -1) abhi aap nye nye company mai and  ap kisi Linux expert ke pas bete huve hai , aapko kuch krke sikha rha hai 
+            suppose usne 1 by 1 20 coomd btai and tu bhul kye  , intni sari aap yek sath yad nhi rgh sakte simply i use
+          @) aap important task perform kr rhe ho that time activity recored this by using script
+script
+> scripted  stated ,output log file is 'typesscript'
+
+abh iske bad jo bhi command excute kr rhe ho vh recored ho jyegi yek file ke under
+>you write 30 command
+
+now aapka kam huva ho( traing khtam hui0
+then
+ctrl +d =press
+
+then you see exit script done
+
+>ls (you will see 'typescript nam ki file yek bni hai)  or ls ltr (sabse latest file dihayega0
+> cat typescript
+
+>you will se all command 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+How to create shortcut cut of long command in Linux ?
+ alias  l="ls -ltr"
+
+> aap aalsi hai then use
+
+l
+> command not found
+
+alias ls="ls -ltr"
+l
+ans: you see list
+
+if your command is big ,multiple command ka combination use kte ho then that case create shortcut
+
+>if you check exiting alias then
+alias -p
+
+(if you want full video of alias then check out)
+
+> alias is tempory after logout then automaticaaly remove
+    this best temport but you want permaant --> bash file mai chages krne bdte hai ,source krna pdta hai ,aalag aalag method se operation
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Zip and unzip of files and folder (compress and decompress)
+
+
+gzip  -k file
+
+k -keep the original ( jo original file hai vo rhne do and usko dura compress file bnavo)
+
+ls
+gzip -k test.csv
+ls-> yo will see  "test.csv.gz"
+
+>compreesion kha jruru pdti hai jabh bhi aap bhut bde size file ke sath deal kte ho 9aapko kisiko transfer /sent krna hai
+------------------------------------------------------------------------------------
+
+How to decompress file in Linux
+
+gzip -d file
+gunzip file
+
+first i remove test.csv
+rm test.csv
+ls (now you can see only i have 'test.csv.gz' zip file
+gunzip test.csv.gz --> you will se test.csv.gz remove ho gyi hai and 'test.csv' file aagyi hai
+
+-------------------------------------------------------------------------------------------
+
+How to compress folder in Linux ?
+
+tar -czf myfiles.tar.gz myfiles/
+
+>if you try to zip by using gzip ,you canot convert into zip of folder/directory
+
+tat -czf copress.tar.gz newfolder/
+
+c-means compress
+> you see compress.tar.gz  , newfolder
+
+ls -ltr (see type and permission
+
+drwxrwxr-x   newfolder  (you will se type of folder d0
+-rw-rw-r-- cpmpress.tar.gz   (after compress folder type convert into file)
+---------------------------------------------------------------------------------
+
+How to decompress a folder in Linux ?
+tar -xzf myfiles.tar.gz
+
+x -means extract krna
+
+tar -xzf myfiles.tar.gz
+
+------------------------------------------------------------------------------------------
+
+How to compress multiple files in one zipped file in Linux ?
+zip myfiles.zip file1 file2
+
+ls
+zip myfiles.zip fileA fileB
+
+> myfiles.zip
+
+
+-------------
+how to unzip(uncompress)
+
+unzip myfiles.zip
+ls --> see file A fileB bmyfiles.zip
+
+----------------------------------------------------------------------------
+
+How to list files in zipped file ?
+
+unzip -l myfiles.zip
+
+> length bate time name of file
+ 
+--------------------------------------
+
+how to downloading file from internet
+1
+wget URL_of_file
+wget -0 opt_file.txt URL_of_file
+
+go to broswer i want to download in Linux environment
+|download python 3.11.4| --> right click --> copy link address
+
+go to coomad
+wget paste url(egfgfh45.pkg)
+
+started downloading
+
+see--. python-3.11.4-macos11.pkg (default name se save huva hai)
+
+2) way 9if if want customize name of pkg)
+wget -0 opt_file.txt URL_of_file
+
+
+-----------------------------------------------------------
+
+How to call api on Linux ?
+curl http://numbersapi.com/random
+
+you can call upi api
+api means you can retrive info from kisi website se
+
+go to browser
+curl http://numbersapi.com/random
+                             |
+                             har bar randomly info dikhata hai 9har bar nya response/diff info
+
+--------------------------------------------------------------------------------------------------------------------
+
+How to install an application on Linux ?
+apt or yum/dnf
+
+
+apt command depend upon distribution
+
+aap ubantu use krte ho then aapko 'apt' commmad use krege
+rathat ,centos ,fedora to aap 'yum' commad use kr sakte ho 
+
+
+ yum install nginx -->error super user privilege 
+
+ye problem kyu aati hai --> suppose aap normal user ho ,aapko kis chij ki freedom mil gyi ,kis chij ke ride mil gye  to aap server pe kuch bhi download kr sakte hai and may create issue ,performance issue that way not access to regular user
+
+sudo yum install nginx
+
+>sudo ka power dena hai ya nhi admin ke hath mai hota hai ,agar admin chahega tohi mai sudo  use kr sakta hu ya nhi
+           aagar aap use nhi kr parhe ho sudo iska mtalb hai aapke admin ne root user ne permission nhi diyi hai ,admin /root se bat kro and sort kro
+
+sudo yum install nginx
+password:65754
+y/n -->y
+
+you can install python java ,MySQL -aap bhut aasanise Linux mai kr sakte hai
+
+--------------------------------------------------------------------------------------------------------------------------
+
+How to check if an application is installed or not on Linux ?
+
+> rpm -qa  | grep app
+>dnf list installed
+
+suppose aapko kisi application ki jrurut hai suppose MySQL  but aapko phle to check krna pdegha na Linux mai install hai ya nhi
+
+rpm means redhat package manager
+
+rpm -qa | grep sql
+rpm -qa | grep nginx
+rpm -qa | grep httpd  ---apache
+rpm -qa | grep python
+rpm -qa | grep java
+
+1)dnf list installed -----> list of install package
+2)dnf list installed | grep java
+
+---------------------------------------------------------------------------------------------------------
+
+How to list available package to install on Linux 
+
+apt search <package_name>
+yum/dnf list available
+
+aapko ye aaplication download krne hai ,,aapko janna hai kon kon se version available hai ya vh application download krne keliye hai ya nhi 
+
+1)dnf list available ---> jitney bhi chije download krne liye available hai list
+                               but itni sari list yeksath kam ki nhi hai
+
+dnf list available | grep MySQL  --> musql ke kon konse version available hai
+
+------------------------------------------------------------------------------------------------------
+
+How to start/stop a service on Linux ?
+systemctl  start/stop service_name
+
+>kapi sari application hai ,jo as a service bhi run krti hai
+     jaise sql as service use hoti hai ,apache bhi as service run krte hai ,firewall is also service
+
+aapko status check krna ho ,start/sstop krna ho then this use
+
+now i want check our firewall enable or active hai kya nhi ?
+
+systemctl status firewalld.service ---> active (running)
+systemctl status nginx.service  ----> inactive   (because install to hmne kiya hai but hmne start to kiya nhi hai
+
+systemctl start nginx.service ----> password mag rha hai because there is also  need root/admin prilege aceess
+
+now check again
+systemctl status nginx.service  ----> active(running)
+
+systemctl stop nginx.service------> inactive
+
+-------------------------------------------------------------------------------------------------
+
+How to list all service on Linux ?
+systemctl list-units --type=service --all
+
+jise firewall ,nginx service ,aapko kaise pta chlega aapke pas kitne services available hai
+
+In GUI service manager -window you ca see all service
+
+---------------------------------------------------------------------------------------------------------------
+
+How to list all existing Environment variable on Linux ?
+printenv  (print envirment vaiable)
+
+os level pe vaiable define krte hai ,ham exexcted related info /path provide krte hai so that os ko pta chle konse location vo chij present hai and kha refer krna hai
+
+eg java
+when you install java that time java home nam ka envirment variable set krna pdta hai so that os pta ho java related application muze kha dudna hai and isko execute krna hai
+       usi prakar Linux mai bhi environment related concept hota hai
+
+-------------------------------------------------------------------------------------------------------------------
+
+How to add a new environment vaiable on Linux ?
+
+export JAVA_HOME="/usr/lib/jvm/java_v"
+export path=$JAVA_HOME/bin:$PATH
+
+dnf list installed | grep java  ----->mere Linux envirment mai 2 java ke version install hai java11 and java17
+ so aap java run krte ho tab vo konse java version ko use krega
+   manlo aapko control chahiye jab chahu mai 'java 11' use kru and jab chahu 'java 17' use kru
+
+java -version ---> now you can see bydefault os java11 ko use kr rha hai
+
+now muze java 11 nhi java 17 chahiye then what i do ?
+>then we can set envirment variable 
+
+export JAVA_HOME="/usr/lib/jvm/java_v"
+                  |_________________|
+            Jha bhi java install hai uska path dena hai
+
+cd /usr/lib/jvm
+ls
+
+ans:
+java-11-open jdk-11.0.20.0.8-3.e19.aarch64
+java -17-openjdk-17.0.8.0.7-2.e19.aarch64--> i want this copy this
+
+export JAVA_HOME="/usr/lib/jvm/java -17-openjdk-17.0.8.0.7-2.e19.aarch64"
+
+2)export path=$JAVA_HOME/bin:$PATH
+
+>hmne jitney bhi chges kiye vh tempory hai ,jaise hi logout krte hai sare chages chle jayege
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+How to add a new envirment variable permanently on Linux ?
+
+hame jitney bhi abhi tak changes kiye the vh tempory the after logout all chages remove
+
+Add env variable in ./bashrc file
+source ~/.bash_profile
+
+hme abhi kiya direct export kiya vo tempory hai ,jabtak terminal open hai tab tak use kr sakte ho ,after logut aapke chages hat jayege
+
+if you want permeant --->baserc file hoti hai is file mai mension kr sakte ho
+
+ls -la 
+
+ans:
+total 42192
+.file  (. se start honi vali file dhikegi usko hidden file bhi bolte hai) 
+.cache
+.config
+desktop
+document
+.bashrc  (isa file mai vaiable mension kr sakte hai)
+
+edit krne keliye vi use kr sakte hai
+
+vi .bashrc
+
+so open vi
+i press
+file ke last mai vaiable  define krte hai 
+
+TestVAR="ABCD"
+:wq (save)
+
+abhi vi .bashrc edit krne se hmara vaiable bn gya ?
+
+printenv | grep TESTVAR ---> nhi hai
+
+hota kya hai jab hum bash rc mai changes krte hai uske bad use "variable name" se export krna pdta hai 
+
+export TESTVAR
+printenv | grep TESTVAR --> nhi aaya abhi abhi
+
+source .bashrc
+printenv | grep TESTVAR --> TESTVAR=ABCD
+
+now our vaiable permanently aagya hai bhi aap logut kro fir aavo yah variable aapko milega
+
+also ye user lavel /user specific hai ,dusra user login krega to yh var nhi dhikhega
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+How to print  specific column from csv file ?
+awk -F ,'{print $2}' file.csv
+
+F-means filed separater
+,  csv mai coma separted hota hai sara data ,jab bhi ham bhut sare data ke sath deal krte hai mostly csv hi milta hai
+
+2 means col number /fields
+
+>cd myfolder
+>ls  --> test.csv
+> less  test.csv --. read
+
+you see
+id,firstname ,lastname ,email,email2 ,profession
+data,data.............................,data
+
+you can see comma separted data 
+
+now i want only firstname col ki puri list chahiye
+
+awk -F ,'{print $2}' test.csv
+
+ans:
+firstname
+data
+data
+
+if you want last col--> NF use
+
+awk -F ,'{print $NF}' test.csv
+
+if you want multiple column
+
+awk -F ,'{print $1,$2},' test.csv
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+

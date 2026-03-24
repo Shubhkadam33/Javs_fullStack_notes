@@ -1,0 +1,251 @@
+Working with Git hub
+
+
+developer develop Java application (In this case write simple python code )----> push into the GitHub  ------> Jenkin job ki mdat se dveoper ne store kiya code Jenkin server pe leke aayege and Jenkin server mai run krege (In Linux server Jenkin downloaded) 
+
+you write code push into the GitHub or I give my GitHub link where python code is present
+
+GitHub link -https://github.com/paulphilip/pythoncode
+
+pythoncode---> test.py  open ---> print("hello everyone");
+            
+right side ---> |code| ----> HTTPS ----> https://github.com/paul/pythoncode.git ---> copy
+----------------------------
+
+go to Jenkin dashboard ----> with the help of Jenkin GitHub code ko leke aayege and run krege
+
+normaaly GitHub file lene keliye --> GitHub poll krte hai  
+      but Jenkin GitHub se kiase code leke aayega ?
+
+how to interact Jenkins and GitHub plugin used for connect alag alag tool ko connect krne keliye
+
+Dashboard >
+
+Manage Jenkins ---> plugin ---> available or installed plugin --> search --->  GitHub plugin(this plugin integrates Git with Jenkins)
+
+
+-----------------------------------------------
+create job / add item ---> Enter item name - git-demo -----> freestyle project ----> Description - This will pull code from GitHub and run on the server (what is purpose of create project)
+
+
+we install GitHub related plugins 
+source code Management ---> ☑ Git --. after click they say fill this fields
+
+Repositories ?
+  Repo URL -| https://github.com/paul/pythoncode.git |
+Credentials-|          |  // if your repo is private and company mostly create private repo so that need to fill username and password of GitHub also fill extra imp information
+Branch to build 
+   Branch specifiers (blank for any)
+       |          |    //hmare cases mai branches nhi hai we have only default  main branch so no fill/blank rkho
+
+
+
+save and build ---> see observe hota kya hai 
+
+✅ #1 ---> console output --->
+
+
+clone rep means aapka pura folder from GitHub leke aagya on Jenkin server
+
+Finished success
+
+
+now i have doubt --> project leke aagye pur code hai kha
+
+git-demo ---> workspace---> you see --> git-demo/
+                                         .git
+                                         test.py
+
+
+test.py vali file GitHub ki hme workspace mai dikha rhi hai means yeh file hmare server pe leke aai hai
+
+console output ---> building in workspace /var/lib/Jenkins/workspace/git-demo
+
+we also check in another way
+Linux cmd --->
+
+Jenkins related file kha present hoti hai on the server ?-->cd /var/lib/Jenkins /
+output:
+Jenkins related kafi sare chije milegi  like jobs ,logs ,config.xml ,workspace etc
+
+
+jab ham Jenkins mai job create krete hai vha "workspace" mai store rhte hai
+
+paul@centos01 jenkins]$  cd workspace/
+paul@centos01 workspace] ls -ltr
+
+drwxr-xr-x. 2 Jenkins Jenkins 6 Apr 7 17:50 first-job
+drwxr-xr-x. 2 Jenkins Jenkins 6 Apr 7 17:50 cron-job
+drwxr-xr-x. 2 Jenkins Jenkins 6 Apr 7 17:50 git-demo
+
+
+you see in Jenkin dashboard --> we have three jobs and ina job ke liye yek yek alag folder bna gye
+
+
+>pwd
+/var/lib/Jenkins/workspace
+
+hme konse folder mai jana hai --> git.demo
+
+>cd git -demo/
+
+paul@centos01 git-demo] ls -ltr
+total 4
+-rw-r--r-- 1 Jenkins Jenkins 27 Apr 8 09:11 test.py 
+test.py yeh file GitHub mai thi abh yeha aagyi 
+
+>ls -la 
+total 4 
+
+drwxr-xr-x. 2 Jenkins Jenkins 6 Apr 7 17:50 .
+drwxr-xr-x. 2 Jenkins Jenkins 6 Apr 7 17:50 ..
+drwxr-xr-x. 2 Jenkins Jenkins 6 Apr 7 17:50 test.py
+
+
+-------------------------------------------------------------
+abha file to aagyi hai jenkin server pe ,abh isa file ke sath krna kya hai ?
+
+agar isa python file  ko run krna apne server pr to kaise krege ?
+
+>python application ko run krne keliye python aapke server pe hona chahiye 
+
+go to Linux cmd
+>python
+python 3.9.18 (we have already python install)
+
+>python
+python python3   python 3.9 (if not work python then you can use aother version python 3)
+
+---------------------------------------------------
+Jenkin dashboard ----> git-demo --> config --> build Environment --> build steps
+
+Execute shell
+
+-------------------------
+python3 test.py
+
+--------------------------
+ test.py ----->ye file vo khapar search krega --->ye kudhke job workspace mai search krega
+
+
+save and build now ---> console output
+
+at last see
++python3 test.py
+hi everyone v6
+
+finished success
+
+-------------------------------------------------------------------------------------------
+
+Github Auto Build
+
+
+yeh vala simple flow vala eg dekha liya jo ki bhut jada straight forward tha  but isme kafi sare cases ho sakte hai
+
+1)yek bar application ban gyi tho same to nhi rhegi hmesha  ,isa code mai kuch na kuch changes hoge like developer hmesha code mai kuch na kuch changes krte rhege ,new functionality add krege and new changes commit krte rhege
+
+
+hmara code change krte hai and check krte hai hmare changes reflect krte hai ya nhi check krte hai
+
+
+at this time we directly do changes GitHub 
+
+pythoncode ---> test.py ---> edit (pensile symbol)
+print("hello everyone v6")
+   we change
+print("hello everyone v7")
+
+
+commit changes ---> click
+
+dashboard > git-demo > build now --> #4 ---> console output ----> see at last 
+
++python3 test.py
+hi everyone v6
+
+finished success
+
+
+2)aba isme aur level up krte hai kivki ham automate krna chahte hai chije
+
+when developer code changes push and commit on GitHub ---> then server pe automatic changes dikhane chahiye / ana chahiye
+
+
+so hmako bar bar build krne ki jarut nhi hai ,when code changes commit auto build/run project  in jenkin server
+
+how this possible ?
+
+dashboard ---> git-demo ----> config---> build triggers 
+
+yeh build ko automatically kab run krna hai they suggest 
+
+last eg mai hmne " build periodically " use kiya tha (job schedule)
+   now isa cases mai GitHub use kr rhe hai so we select ---> poll SCM
+
+Schedule --->
+     |   *****          |       // crone job mai timing dete the ,vaisa hi 
+
+//every minute but it is not good practice
+
+yeh har minute GitHub ko check krega ,best thing yha par kya pda hai !----> agar kuch changes hoge tabhi vo isko run krege otherwise ignore krega (means build/run nhi krega)
+
+you can also select ----> GitHub hook trigger for GITScm polling ---> but there is one problem ---> but there is one condition " aapka jenkin server publicly available chahiye"
+
+bu at this time ham locally testing kr rhe hai
+
+   but in company in production we use "GitHub hook"
+
+save 
+
+no need to manually build now
+
+pythoncode ---> test.py ---> edit (pensile symbol)
+print("hello everyone v7")
+   we change
+print("hello everyone v8")
+
+commit --> click
+
+go to jenkin dashboard---> git-demo -->wait for one minute --> you see automatic build ---> #6---> console output
+
++python3 test.py
+hi everyone v8
+
+finished success
+
+
+auto build tbhi krega jab changes huve hai application 
+
+
+Dashboard ---> git-demo ---> #5 ---> changes 
+ 
+summary:
+   test.py (difff)
+            |
+        ye direct aapke GitHub repo me jake ,dikhayega exactly kisa line changes huve hai ,phlel kya tha code abh kya hai yeh dikhayega
+----------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

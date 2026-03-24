@@ -1,0 +1,46 @@
+user management
+
+cat- used for display
+
+cat/etc/passwd -for user
+>yo can see in this path/location how many user you created
+
+cat/etc/shadow -for password 
+>In this location user password store,you can see password
+
+
+cat/etc/groups= for groups
+what type of group you created and how many group created you can see
+
+you can see group id
+1-1000 this is system related
+above 100 that te aapan user created kele astat
+
+
+-------------------------------------------------------------------------------------------
+
+how to create user in Linux
+
+two way to create user
+1) <user-name>
+2)Useradd -g<groupname> -s /bin/bas  (In detail)
+
+-g means kontya group mdhe user la takycha aahe
+-s menas konti shell tyla use kraychi aahe bin/bas
+
+-c 'description' -m =d/home/<user-home>
+c-aapan description deu shkto ki ha user QA team sathi bnalela aahe
+ m- aaplyla tyla kuthlya directory mdhe takaycha ahhe then directory ch nav deu shkto
+
+---------------------------------------------------------------------------------------------
+
+How o delete user
+
+Userdel <User_name>
+
+userdel -r
+>when we create user that time automatically thya user sathi /home directory create hoti 
+>if you wan to delete home dir then use this command
+
+userdel -f 
+>forefully delete user even user login currently 

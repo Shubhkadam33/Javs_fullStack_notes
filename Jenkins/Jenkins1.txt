@@ -1,0 +1,217 @@
+Jenkins
+
+what is Jenkins and CI/CD ?
+Lab Setup and installation
+Jenkins Dashboard Overview
+Some Basic Jenkins Job
+Scheduling The job
+Working With GIT Repo
+Email Notification (status report bhejna hai to kaise bhejna hai )
+Job for action on  Remote server
+Jenkin + Ansible Playbook
+Project -Website Update on Remote Server
+User Management (Role Bases)
+Environment Variables
+Jenkin + MAVEN
+CI/CD Project (Jenkin PIPELINE)
+Bonus Tips
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+what is jenkins ,where we use jenkins and why we use Jenkins
+
+
+>Jenkin is an open-source automation server
+>It is tool / software
+
+iski madat se ham task ko automate kr sakte hai 
+   but kis  type ke task ko automate kr sakte hai ----> mostly building  ,Testing ,Deploy
+
+
+code --->  commit --> building(packing hogi) --->Testing (sbhkuch properly work kr rha hai kya yeh check krege ) --> if fail test then go to developer and tell fix that issue
+----> iif not bug then ----> deploy
+
+
+feature of Jenkins
+1) Continuous Integration and Continuous Delivery
+2) Easy installation -diff OS in supported but java(jdk ) needed during installation of Jenkin ,you can use Docker you can pull Jenkins predefined image
+3) Easy configuration -Means web (user) interface milta hai ,you can do all thing in fronted ,no compulsory of command
+4)plugin -In Jenkin most imp is plugin because ,Jenkin is plugin based ,if your python base project so you nned to install python related plugin ,In python mai diff module use krte hai ,jenkin mai diff plugin use hote hai
+5) Extensible -abhi kuch aur nhi technology aagyi ,kuch nhi uska plugin bnalo and attached kro ,it is high level concept
+6) Distributed-
+
+CICD- continuous intergration -continous delivery
+
+Build -----> Test ----------> Merge------> Automatically Release to Repository ------> Automatically Deploy to production
+|                               |           |                              |           |                              |
+|_______________________________|           |______________________________|           |______________________________|
+  Continous Integration                            Continous Delivery                       continous Deployment
+
+
+main branch mai koi chedkani ,changes nhi krte hai , jo developer hai ,aalag aalg team  branches hai and usme kam krte hai ,
+suppose another branch mai kam chal rha hai ,code krne ke bad ,ham log jar file ,packing krte hai then ---> test the code ,check all scenario if perfect work then -----> merge (hmara code merge krege main branch se)
+      then after that aata hai conti   Continous Delivery  , continous Deployment
+
+
+ Continous Delivery - Automatically Release to Repository means ---> metab merge hogya then conti deleivery stage pe jo code tha vo reeady hai ,hbha hum customer ko application abhibhi provide kr sakte hai                     
+
+continous Deployment - iske bad ,abh depend krta hai ,aapki requirement pe , aapko turant deploy krna hai ,ye to vhape rokake rhana hai
+   so conto delivery and deployment yek hi diff hai  ,ham application ko live krte hai meand customer tak pohch gya
+conti delivery means ---> production ready hai  ,matab delivery krne ke reeady hai
+
+------------------------------------------------------------------------------------------------------------------------------------------
+Lab setup for Jenkins
+
+local set up chahiye so we can install there and pratice
+
+mai setup pe -virtual machine set krke linux os per jenkins install kruga
+
+I install virtual machine -centos , ubantu ios image install 
+
+assume your VM reday ---at this time we use single server ,after some time we use two machine(os) means kuch aise task automate krege yek server se  dusre server pe task rna hai so In this case create to machine in vm
+
+google ---> Search -->Jenkin installation ----> yo can install on Linux , window , macos ,Docker
+
+you can use jenkin container in docker it very light weight image
+
+prerequisites-before installing Jenkins 
+
+You must have jdk(Java)
+
+
+Linux --> redhat ---> copy one by one command and paste in Linux cmd
+------------------------------------------------------------------------------------------------------------------------------------------
+ Debian-based distributions like Ubuntu, you can install Jenkins through apt.
+                                 RedHat  , you can install Jenkin through yum
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+sudo apt update
+sudo apt install fontconfig openjdk-21-jre
+java -version
+
+
+If the installation was successful, you should see an output similar to the following:
+
+openjdk 21.0.8 2025-07-15
+OpenJDK Runtime Environment (build 21.0.8+9-Debian-1)
+OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+
+On Debian/Ubuntu, it is strongly recommended to install Java before Jenkins. If Jenkins is installed first and Java is added later, the Jenkins service may fail to start with:
+
+jenkins: failed to find a valid Java installation
+
+1)sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+2)echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+3)sudo apt update
+4)sudo apt install jenkins
+
+
+5) sudo  systemctl start/stop jenkins //if you are not root user that time use sudo keyword  ,after install jenkin ,how to start this server/processor 
+to start the Jenkins from brower:IP:8080
+
+Jenkin bydefault 8080 pe listen krta hai so aapki jenkin dashboard ko kaise access krege --->ysa server ki ip chahiye
+
+>ifconfig (how to check config) 
+
+inet 10.211.55.7 ----copy
+
+notice -vm ke under browser milta hai to mai usko use krta hu means vo internal network mai hi hai
+
+vm---> ubantu os--In this os --> open browser -->10.211.55.7:8080
+
+you see one form:
+ Unlock Jenkins: //when we first time  access Jenkin dashboard that time we need to unlock
+
+they give instruction -from this location copy your pass and paste here 
+/var/lib/Jenkins/secrets/initialAdminPassword
+
+Administration password
+____________________
+|                  |
+|__________________|
+
+
+go to ubantu terminal -->
+>cat /var/lib/Jenkins/secrets/initialAdminPassword
+//why cat because hme pass reday krna hai actually
+
+permission denined
+
+>sudo cat /var/lib/Jenkins/secrets/initialAdminPassword
+
+1345xfh667azf  //you will get initial  password
+
+
+paste this password into that box --->  continue
+
+
+after unlock  Jenkin dashboard --> you will see two option ----> 1)install suggested plugins  2) select plugins to install 
+ 
+1)install suggested plugins- bydefault automatically Jo most commomly or they promoted plugin install kr sakte hai
+
+select 1st option ---> An error occurred --> An error occurred during installation .no such plugin cloudbees-folder
+
+if this error occur then retry kro isko ---> means cloudbees issue ko solve krne keliye pure Linux server ko rebot kiya hai "rebot  command use " --> then restart again Jenkin --> unlock pass paste --> select 1st option plugin 
+
+isa par properly work --> you can see Getting started installation
+------------------------------------------------------------------------------------------------------------------------------------------
+after install automatically we get this page
+
+staring mai usne kudhse admin ka password or key bnake diyi thi ,abhi yeh bol rha rha hai ,ise use krna hai to ,aapko kudhka usename ,password create kro  and aap iske owner bna jao kivi security keliye yek admin user hona chahiye
+
+
+Create First Admin User
+
+username -shubhamAdmin
+password --******
+confirm password-*****
+Full name-shubham kadam 
+Email address -shu@gmail.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

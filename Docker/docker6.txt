@@ -1,0 +1,157 @@
+docker-compose with network
+
+
+>docker-compose run mypythonapp
+
+output:
+container mysqldb created
+container mysqldb started
+
+notice:jabtak MySQL start na ho jaye ,reday for connection tab tak mypythonapp run nhi hoga
+         aap mypythonapp service ko run kroge to ,dono service run ho ge
+
+
+----------------
+we run both service indirectly but we not created network but ye dono connect kaise hai yek dusre ke sath ,that the confusion 
+
+            Network :my-net //network name we give
+  _______________________________________________________
+ |                                                      | 
+ |                                                      | 
+ |         container             container              |
+ |      _________________       _______________         |
+ |      |               |      |              |         |
+ |      | myapp.py      |------|   MySQL      |         |
+ |      |_______________|      |______________|         |
+ |                                                      |
+ |______________________________________________________|   
+
+              --network my-net
+
+
+
+last time yeh my-net network bnaya tha ,dono container ko ye network ka part bnaya tha ,so easily dono container connect ho bases on name of container
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+when you use docker-compose and docker-compose file in mension different services then to jistbhi services hai with in single docker-compose file vo sab yek "network ka hisa hote hai"
+
+     docker-compose.yml
+  different services present  ------------> bydefault all services run on single network
+
+
+docker-compose  apne aap network bnata hai ,and sari services ko uska part bhi bnata hai ,isa wajhse hme alag se network bnananeki jarurut nhi pdti hai isa case mai
+
+you can see live eg-dono container aapas me kapi aasanise connect ho pa rhe hai
+
+proof
+
+>docker network ls
+network ID           Name            Driver Scope
+ccc45sdfw2 pythondemoproject_default bridge local
+
+isa ne aapne aap network bnaya and default name bhi diya
+
+>docker-compose run mypythonapp
+
+network pythondemoproject_default  created  //hmne run kiya ,usne sabse phle  ,usne network bnaya kudhka ,dono services/container ko network ka part bnayega
+
+container mysqldb created
+container mysqldb started
+
+there is no limitation -you can make kuthke network bhi bna sakte ho
+
+documentation --> network --> ready
+
+services:
+  some-service:
+     network:
+         -some-network
+         -other-network
+
+networks:
+   -some-network
+    -other-network
+
+kuth ke network kaise bnaye ?
+
+we want dono services ko  same network ka part bnana hai
+
+
+-----------------------------------------------------------------------------
+
+
+docker-compose.yml
+
+services:  
+  mysqldb:    
+    images: 'Mysql:latest' 
+
+    environment: 
+      - MYSQL_ROOT_PASSWORD=root  
+      - MYSQL_DATABASE=userinfo
+    
+    container_name: "mysqldb" 
+
+     network:
+        -my-network  //network
+
+    healthcheck:
+        test:['CMD' ,'mysqladmin' ,'ping' ,'h' ,'localhost']
+        timeout:20s
+        retries:10
+
+   mypythonapp:
+      build: ./ 
+      container_name:myapp
+
+       network:    //isa serives ko bhi network ka part bnate hai
+          -mynetwork
+
+      depends_on:
+         mysqldb:
+           condition: service_healthy
+         stdin_open:true
+         tty:true
+
+
+//sabse last mai services upar likha uske level ke sath likna hai ,yo can see in documentation 
+
+networks:
+  my-network:
+
+---------------------
+
+muze sirf dikana hai connection huva hai ya nhi then write below command
+
+>docker-compose up
+
+Network pythondemoproject_my-network created    //apne my-network network create kiya tha ,isne aapne aap  prefix add kara
+container mysqldb                    created
+container mypythonapp                created
+
+ attaching to mypythonapp .mysqldb 
+
+
+>docker network ls
+
+network ID           Name               Driver Scope
+ccc45sdfw2 pythondemoproject_default    bridge local   //created by docker-compose
+fgfh53sfg  pythondemoproject_my-network bridge local   //created by user
+
+-------------------------------------------
+
+>docker-compose down
+
+ysa command se only container down hoge ,aapke bydefault volume ,network vo viase hi rhege
+
+you want container/services bant ho ,uske sath sath network ,volume bhi delete ho jaye then use gelow command
+
+>docker-compose down -v
+
+stopping mypythonapp...done
+stopping mysqldb ...done
+
+removing mypythonapp...done
+removing mysqldb...done
+removing network pythondemoproject_my-etwork  //also remove network

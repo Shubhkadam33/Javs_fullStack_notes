@@ -1,0 +1,485 @@
+communication from /to container
+
+there is three type of communication
+1)
+
+container depend on other website/internet se data fetch krneka
+
+eg:you use API service in your python programing 
+python -->request sent to browser --> fetch data
+
+      container
+_____________________
+|                   | 
+|      myapp.py     |______________________ www(internet)
+|                   |
+|___________________|
+
+
+2)
+
+container mai aapka application chl rha hai ,vo connect hai yek out application/system  se jo local machine pe chal rha hai
+                                                      
+                                                       container
+                                                 _____________________
+                                                 |                   | 
+     MySQL(software) _________________________   |                   |
+run on local machine                             |      myapp.py     |
+                                                 |                   |
+                                                 |___________________|
+
+
+your application(run in container) connected to MySQL(local machine)
+
+
+
+3) our application connected to database but both software run in container
+
+
+     container                                  container
+_____________________                      ____________________ 
+|                   |                      |                  | 
+|      myapp.py     |______________________|      MySQL       |     
+|MySQL(configuration)|                     |                  |
+|___________________|                      |__________________|
+
+
+we use docker network
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) working with api
+
+program:
+
+simple python program and use API
+   cat ke bare me hr bar random fact internt se fetch krke print krta hai
+
+api_demo.py
+
+import request
+der fetch():
+    url="internet link/website link/application link"
+    response=requests.get(url);
+    fact=response.text
+    return fact
+
+
+output:
+Random cat fact:
+The first cat show in 1871 at crystal palace in London
+
+eg2: weather app(API)
+
+
+so ham isa program ko container mai run kaise krege ?
+
+Dockerfile.py
+
+FROM python
+WORKDIR /myapp
+COPY ./api_demo.py .
+CMD ["python" ,"api_demo.py"]
+
+
+>docker build .
+
+>docker images
+
+Repository  Tag    Image_ID   Created         Size
+<none>     <none>  rgdg5fgh   7 sec ago       1.02GB
+
+> docker run rgdg5fgh
+
+error
+import requests 
+moduleNoFoundError :No module named 'requests'
+
+container ke pas import request lib nhi hai 
+  
+import request means we use external package jo ki bydefault python ka part nhi hai  but hmko use krna hai but container ke pas yeh package nhi hai that way this problem occur
+
+************go to docker file --> add one command --> RUN pip install requests (container ke under request package install kr rhe hai)***********************
+
+now repeat step because we changes in docker file:
+
+>docker build .
+>docker images
+>docker run rgdg5fgh  //container run (means program run in container)
+
+output:
+Random cat fact:
+The first cat show in 1871 at crystal palace in London
+
+jitney bar mai container run kr rha hu utni bar random fact print kr rha hai
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+2) communication container and local DB
+
+our program run in container and connected to databases(local machine)
+
+sql_demo.py
+----------------------------------------
+import pymysql //external package
+
+//create connection to the MySQL database /database configuration((In java JDBC/hibernate)
+
+host="localhost",    //your MYSQL server host  (local host because hmara database same server pe hai that way we write local host)
+user="root"          //your MYSQL username     
+password="rootroot"  //your MYSQL password
+database="userinfo"  //your MYSQL database name
+
+//create table to store name
+
+write create name table query
+write insert query 
+fetch name from database
+-----------------------------------------
+
+go to MySQL(software)--> open --> show databases;--> userinfo
+
+
+run:
+1.Add a name
+2. show all names
+3. Quit
+
+Enter choice:1
+Enter a name:shubham
+
+Enter a choice:2
+names in database:
+raju
+sham
+shubham
+
+you can verify 
+go to MySQL(software)--> open --> show databases;--> userinfo---> use userinfo; --> show tables --> names --> select * from names; --> raju ,sham ,shubham
+
+phare python prog se hamara database update hote ja rha hai
+
+
+-----------------------
+
+Dockerfile:
+
+
+FROM python
+WORKDIR /myapp
+COPY ./sql_demo.py .
+
+RUN pip install pymysql
+
+CMD ["python" ,"sql_demo.py"]
+
+-------------------------------
+
+>docker build .
+>docker images
+>docker run -it --rm rgdg5fgh  //interactive mode hai hmara prog
+
+error:
+
+can't  connect to MYSQL server on 'localhost' ,canot assign request address
+
+program mai koi problem nhi hai , sql se communication se problem hai
+
+why this problem occur 
+host="localhost"
+
+container to isolated environment hai  ,usko os se bhi lena dena nhi hai ,to localhost (use kaise smjega ki database se connect krna hai)
+
+we need to changes --> go to --> sql_demo.py
+----------------------------------------------
+host="host.docker.internal",    // only this lines changes ,replace "localhost" ki jagh ,host.docker.internal means hamdocker sirf yeh bta rhe hai , jias host machine par install hai (mathab jo host machine hai usko target krna hai)
+user="root"              
+password="rootroot"  
+database="userinfo" 
+--------------------------------------------
+ctrl+s =save
+
+>docker build .
+>docker images
+>docker run -it --rm  rgdg5fgh
+
+output:
+
+run:
+1.Add a name
+2. show all names
+3. Quit
+
+Enter choice:1
+Enter a name:shubham
+
+Enter a choice:2
+names in database:  
+raju
+sham
+shubham
+
+// raju ,sham etc aapko sare nam mil jayege ,why -becuse yeh same data base se connected hai , hmara purana value  ,data still abhi bhi hai
+
+
+you can verify 
+go to MySQL(software)--> open --> show databases;--> userinfo---> use userinfo; --> show tables --> names --> select * from names; --> raju ,sham ,shubham
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+ 3)Communication Between Containers
+
+working with multiple container
+
+container(myapp.py) ----------------> container(MySQL)
+
+In first container run python application and 2 nd container run MySQL 
+
+how to get MySQL container ?
+go to dockerhub -->MySQL ->open --> docker pull MySQL (latest version)
+
+>docker pull MySQL
+
+output:
+Using  default tag:latest
+latest :pulling from library /MySQL 
+
+Downloading completing
+
+MySQL download ho gyi now verify
+>docker images
+
+isa images mai ham changes nhi krege ,nahi jrurat hai
+
+d- detached model ,background mai chalata rhega , aur aise koi jrurut nhi hai interactive ki
+name -also give name to container
+
+>docker run -d --name mysqldb MySQL
+
+now we check our container running or not 
+>docker ps -a
+
+container_id  image    commands created       status            names
+1afr4sav      MySQL             15 sec ago  Exited 14 sec ago  mysqldb
+
+as you can see our MySQL is stop
+
+kiv huva yeh dhekte hai -->
+>docker logs mysqldb
+
+ans:
+you need to specify one of the following as an environment variable:
+-MYSQL_ROOT_PASSWORD
+-MYSQL_ALLOW_EMPTY_PASSWORD
+-MYSQL_RANDOM_ROOT_PASSWORD
+
+jab ham container run krte hai tab inmese yek env var dege
+
+env-ham usko env var bta rhe hai ,also provide password ,root to user ho gya (bydefault) ,pass bhi root hi rkhte hai(aap kuch bhi ragha sakte hai)
+    hmne password diya also  notice in python program we also provide database  ,so vo userinfo name ka dabase hona chahiye hmare pass  so 
+how we make ? --> container ko run krte time yeh chij define kr sakte hai
+
+
+**********also you can go dockerhub ->MySQL -> read documentation --> so you understand how to use MySQL in diff senorio ****************
+
+>docker run -d --env MYSQL_ROOT_PASSWORD="root" --env MYSQL_DATABASE="userinfo" --name mysqldb MySQL
+successfully working
+
+>docker ps 
+
+container_id  image    commands created       status             port         names
+1afr4sav      mysql             15 sec ago  Exited 14 sec ago  3306/tcp ,33060/tcp mysqldb
+
+now our half work is done means one container(MySQL) running mode
+
+ii) now abh container(python) ki bari
+
+host="host.docker.internal",  //  phle hamne "host.docker.internal" use kiya tha ,yeh physical host machine ke liye tha but this time hmara MySQL alag container mai chal rha hai as you know container is isolated env ,iska  khudka kuch "address " jruru hoga  ,kuch "network" ,"IP" hogi so vha chez ham check kr sakte hai kapi aasanise
+
+>docker inspect mysqldb //container name "mysqldb"
+
+output:
+"Networks":{
+   "IPaAddress": "172.17.0.2" , //container ka IP address hai ,copy this IP address
+}
+and mai python programko bol ta hu , isa "IP "pe target kro
+user="root"              
+password="root"    //password="rootroot"  hmne root pass set kiya hai (container MySQL run krte wakt)
+database="userinfo" 
+
+-----------------
+
+host="172.17.0.2", 
+user="root"              
+password="root"  
+database="userinfo"
+------------------------
+
+>docker build .
+>docker images
+>docker run -it --rm  rgdg5fgh //yeh python vala container hai  
+
+error:
+Runtime error: It is expecting something ,cryptography package except kr rha hai ,it is something related to a "authentication" inter connection with the database
+
+we need to install "cryptography" package
+
+RUN pip install cryptography //runtime mai yeh package expect kr rha tha
+
+-----------------------
+
+Dockerfile:
+
+
+FROM python
+WORKDIR /myapp
+COPY ./sql_demo.py .
+
+RUN pip install pymysql
+RUN pip install cryptography
+
+CMD ["python" ,"sql_demo.py"]
+
+-------------------------------
+
+mai isko fir se build krta hu
+
+>docker build .
+>docker images
+>>docker run -it --rm  rgdg5fgh
+
+output:
+
+run:
+1.Add a name
+2. show all names
+3. Quit
+
+Enter choice:1 //firsly chek already database mai hai ye nhi data
+
+no user found in database
+
+Enter choice:1
+Enter name :shubham
+
+successfully insert and user show bhi ho rhe hai
+
+
+how to restart MySQL 
+> docker stop mysqldb
+> docker start mysqldb
+
+after exit choice our python container stop so al so start
+>docker run -it --rm  rgdg5fgh
+
+stop krke start kiya dono container ko tab bhi data previous data previous hai  ,until and unless yeh MySQL(container) remove nhi krte tab tak prezerve rhega
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Creating Docker Network
+
+today we learn what is docker network ?
+
+we lean what is benefit of docker network
+
+firsly phle section mai problem kya aai usme bat krte hai
+
+container(myapp.py) -----> container(MySQL)
+we also successfully connected but usa process mai thoda problem hai
+
+notice -hamne kya kiya -phle MySQL container ko run kiya and iske ip hmne check kiye ,and usne ip ko use kiya with in the container of python 
+   so notice- agar muze python ka image bnana hai then first we need to build and run MySQL container always then i python ka image bna sakta hu
+
+but that is not good way -like we want  hmari images bnke ready hai bus hme command ke upar kam krna hai ,ham usko directly run kr sake
+   problem solution: "docker network "
+
+             Network :my-net //network name we give
+  _______________________________________________________
+ |                                                      | 
+ |                                                      | 
+ |         container             container              |
+ |      _________________       _______________         |
+ |      |               |      |              |         |
+ |      | myapp.py      |------|   MySQL      |         |
+ |      |_______________|      |______________|         |
+ |                                                      |
+ |______________________________________________________|   
+
+              --network my-net
+
+isa me ham log kya krte hai -as you can see ,container kam to kr rhe hai aapas mai ,lekin dono container same network ke part hai
+
+firsly I make network and give name my-net and usa network ke under dono container ko run kiya
+       dono container same network mai run kr rhr hai ,so vo yek dusareko kapi aasanise access kr sakte hai
+
+how this possible ?
+>docker network  --help //agar aapko network ko command dekhni hai then this use command
+
+firstly create network
+>docker network create my-net  //now netwok bna gya
+>docker network ls
+
+network ID   name   driver   scope
+dfg4awas35   my-net bridge   local    //brige type ka network create hogya
+
+>docker run -d --env MYSQL_ROOT_PASSWORD="root" --env MYSQL_DATABASE="userinfo" --name mysqldb --network my-net mysql
+                                                                                               |______________|
+                                                                                                      |
+                                              MySQL container start krte hai and yeh my-net name ka network container ko assign krte hai
+
+>docker ps 
+
+container_id  image    commands created       status             port            names
+1afr4sav      mysql             15 sec ago  up 14 sec ago  3306/tcp ,33060/tcp   mysqldb
+
+now our MySQL container running
+
+ii)
+
+isa bar python ke code mai ,kya change hoga and vo isa MySQL container vale ko kaise access krega
+
+host="172.17.0.2",  //previous mai container ki ip use kie thi now isa bar aapka kam bhut aasan hogya ki  aapko yaha "sirf container ka nam use krna hai" 
+
+you can check what is container name
+>docker ps
+names -mysqldb
+
+so jo container ka name  hai vhi dena hai ,there is need to alag se Ip check krne ki jarurut nhi hai
+      docker apne ap kam krke deta hai , jab aap "same network ka part bnavoge " so vo container ke nam ke basic pe , host or target IP ko apne aap mai resolve kr deta hai
+-----------------------
+host="mysqldb", 
+user="root"              
+password="root"  
+database="userinfo"
+
+-----------------------
+
+Dockerfile:
+
+
+FROM python
+WORKDIR /myapp
+COPY ./sql_demo.py .
+
+RUN pip install pymysql
+RUN pip install cryptography
+
+CMD ["python" ,"sql_demo.py"]
+--------------------------------
+
+>docker build .
+>docker images 
+>docker run -it --rm --network my-net bfdg53s
+                     |
+                   very imp becuse hme same network ke sath run krna hai
+
+output:
+
+run:
+1.Add a name
+2. show all names
+3. Quit
+------------------------------------------------------------------------------------------------------------------------------------------
+jab bhi hamara project hota hai -jhape ham multiple container ke sath deal krte hai  so aap isa tarh se network bna sakte ho ,aur  jitney bhi container hai vo yek network ko assign kr sakte hai
+  if same network share kr rhe hai that time accessibility bhut asan hoti hai
+                                        

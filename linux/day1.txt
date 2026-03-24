@@ -1,0 +1,52 @@
+
+virtualization /image then you easily understand concept:
+
+unix os is enterprise 
+
+Linux is open source os
+>open source means any one any see and change  Linux code also they can contribute in Linux
+
+Linux is created in 1991 by 👉 Linux was developed by Linus Torvalds
+
+2️⃣ What did he create?
+He created the Linux Kernel (the core of Linux OS)
+
+4️⃣ Why did he create it?
+He wanted a free and open-source operating system
+
+linux distribution - means  use Linux code and build different customize os like ubantu ,ferdora , kali linux 
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+diffence between window and Linux
+
+Linux -free and open sourse and multiuser base os means (at a time multiple user can operate os) ,more sure besuse multiple community contribute to grow Linux that why mnc company use Linux os
+window -singleuser base os menas only one person can use window ,less seure with compare Linux
+
+Gul means you can see graphical interface in window like(we can copy folder icon and paste anywhere)
+cli -if you want to copy folder paste in aonther location that time we write command
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+User
+ ↓
+Application / Shell
+ ↓
+Kernel
+ ↓
+Hardware
+
+hardware -disk ,cpu ,memory
+kernel -is mediator (it is between shell and hardware ) ,is used for task execution
+   like we write command mkdir shubh then kernel make folder (execute /perform task)
+
+shell- syntax check
+when we write command then it will check command is correct or not if correct then if write then pass command to kernel
+
+application -chrome
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+window -we say folders
+linux- we say directory 
+

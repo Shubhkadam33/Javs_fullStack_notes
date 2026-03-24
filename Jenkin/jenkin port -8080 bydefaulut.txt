@@ -1,0 +1,7 @@
+jenkin port -8080 bydefaulut
+
+1fb575bae679443eb6a8c0963f4ffa4b
+
+jenkin login
+user - ShubhKadam33
+password- Shubham@123

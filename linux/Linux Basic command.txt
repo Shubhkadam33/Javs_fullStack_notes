@@ -1,0 +1,15 @@
+Linux Basic command
+
+1) cd =change directory (if you want to go one folder to another folder that time use)
+2) cd .. = back to previous folder
+3) mkdir = make directory/ create folder
+4) touch - empty file create
+5) cat - if you want to see file content
+6)ls - for see file and folder
+7)vi,vim ,nano- file editor (if we want to write anything in file)
+8) ls -l = detil information about file nad folders
+9) chmod -file permission(if you want to change  file permission)
+10)chown -chown - chage ownership 
+11) tree -tree like  struture
+
+killercoda-macine provide Linux terminal

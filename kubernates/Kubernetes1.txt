@@ -1,0 +1,593 @@
+Kubernetes Basic Modules 
+1)create Kubernetes cluster
+2)deploy an app
+3)Explore your app
+4)Expose your app publicly
+5)Scale up your app
+6) Update your app
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+multi container Application
+
+WEBUI(node) ------>mongo DB
+
+
+how to save data
+
+you need to know docker basic knowledge ,you have to know how work container ,container mai application kaise run krta hai
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+we learn all about  what is Kubernetes , how work kubernates ,hmari konsi problem slove krta hai ,isa architecture,diff component functionality learn
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+What is Kubernetes ?
+
+>also known as k8s ,
+>It is an open-source system for -It is used for  Automating Deployment ,Management of containerized apps ,scaling
+
+kubernates support different infrastructure
+1) virtual machine
+2)cloud infrastructure
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+What is Container Orchestration
+
+aapne "orchestra" suna hoga ,isa tarh ka "band" hota hai
+  there is multiple  "musicians" 🎶 , alag aalg instrumentation play kr rhe hote hai and inka koi "master" hota hi
+
+itne sare "musicians"  instrumentation leke baite hoge so koi to hona chahiye guide krne keliye so that "acha madur music nikalakr aahe"
+
+  
+
+                                                 Orchestra
+
+                               players(musicinas)                       master(read music instruction and teach to player(musicians)) 
+                        then player use instrument and vajvnar
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+master means "kubernates' and jitney bhi player the jo instuctment bja rhe the unk "container" se replace krege
+
+|container|--------|
+                   |
+|container|--------|-------------------kubernates
+                   |
+|container|--------|
+
+
+hmare pas server ya infrastructure  hai  ,bhot sare containerized base application run ho rhe hai ,unko manage krna hai to hme isa tarh master chahiye ,jo ki hmare pass kubernate hai
+       rhi bat hmari "orchestration" ki jo ki hmare pass "book" hai 
+                        vha hamari configuration hoti hai , "ham usme likte  hai  hme kisa Tarah ke rules chahiye " like ki container kaise kam kr rhe ho  ,inki kya sate ho ,,bhot sari state ham log mension krte hai
+
+aise kubernates work krta hai
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+UseCase of Using k8s
+
+application mai kubernate kaise help/use kam krta hai ,yeh dekte hai
+
+                 | ----------- |
+application ---> |  container  |
+                 | ----------  |
+                 | ---------   |
+                 | container   |
+                 | ---------   |
+                 |_____________| 
+
+                    server          
+
+suppose developer make webapp ,containerized kiya, image bnai , docker isne use kiya and yek server pe isne install kr liya ,abhi server  pe bdiya running hai ,sabhakuch aacha hai  ,user use kr pa rhe hai and access kr pa rhe hai
+
+but there is problem aa sakte hai
+
+ 1) problem 1:  manlo aapki website bhut popular ho gyi , but Zada traffic aagya , so heavy load on your app so kya hoga:
+         bhut chances hai ki aapki website usa load ko handle na kr paye and crash ho jaye  or application bahut slow ho jaye
+ 
+2)probem2: what if this server fails ?
+      kgar manlo jis server pe aapne aaplication rha huva hai ,vo server hi  hi fail ho jaye ,to aap kya kroge--> aapki app bnad ho jayegi ,aapko bhut time legega figure out krne mai resolve krne mai
+
+
+what should I do ?
+       I have backup nodes
+
+isane dimak lagaya-problem yhi hai na mai single server ko use  kr rha hu mai ,isne kya kiya -multiple server pe apne app ko install kr liya ,isase hogye do benefit 1)yek server down gya ,to dusra server to hai (means there is no downtime)
+                              2)they have multiple server ,instance (app ke sath) so load balancing use hoga(jada load hooga to divide hoga)
+
+
+abhi ham bat kr rhe hai -three server or bhot limited amount of container/app
+     agar google jaise company ke pas n number of server hai ,kitni application chal rhi hai ,
+        gar usa level pe bat kre to (How to control and manage these nodes ?)
+
+lmited no of nodes ,multiple container present -how to control and manage ,manually it is very very hard
+
+isa problem ko slove krne keliye "kubernetes" hai
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Architecture Of K8s (kubernetes)
+
+hmne dekha liya kubernates usa chiz ko slove kr sakta hai but kaise slove krega ,ham uske bare mai discuss krte hai ?
+
+when you deploy kubernetes ,you get a cluster
+
+two important parts are:
+   Master(control plane) and
+   Worker nodes
+
+expaination:
+when you setup kubernate in your system(apne env ,infrastruture pe) so you get a cluster
+     ham jab kubernetes install krte hai ,iske do important part hote hai 1)master(control plane) we underatand  in orchestra eg hamare pas master hota hai ,vo sabkuch manage krta hai 2) Worker nodes(musian differnt type of contaainer ,app)
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+we see worker nodes ,nodes kya hote hai ?
+
+node(Minions) means aapka yek server(Mininons) ho gya ,physical ,virtual,clod koi bhi "space" ho sakta hai ,vha pe aapne containerize base application install/run kri ,yek ho gya single node/server
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+We need a way to manage these nodes ....
+
+___________________________________________
+______________________                     |
+|                     |                    |
+| |container|         |                    |
+|                     |                    |
+| |container|         |                    |
+|                     |                    |
+|Node (sign k8s)      |                    |
+|_____________________|                    | 
+                                           |
+______________________                     |
+|                     |                    |
+| |container|         |                    |
+|                     |                    |
+| |container|         |                    |
+|                     |                    |
+|Node (sign k8s)      |                    |
+|_____________________|                    |
+                                           | 
+                                           |
+______________________                     |
+|                     |                    |
+| |container|         |                    |
+|                     |                    |
+| |container|         |                    |
+|                     |                    |
+|Node (sign k8s)      |                    |
+|_____________________|                    |
+                                           |
+___________________________________________|
+
+     Cluster
+
+
+group of nodes/cluster (multiple nodes iski groping krte hai unko milake yek cluster bnta hai)
+
+but problem is multiple node usne use kiye the but we need to manage this nodes ,uske liye hmare pass hota hai master 
+
+
+_________________________________________________
+______________________                          |
+|                     |                         |
+| |container|         |                         |
+|                     |                         |
+| |container|         |---------|-              |
+|                     |         |               |
+|Node (sign k8s)      |         |               |
+|_____________________|         |               | 
+    Worker Node                 |               |
+                                |               |
+______________________          |               |
+|                     |         |               |
+| |container|         |         |      _______  |
+|                     |         |     |      |  |
+| |container|         |---------|-----|Master|  |
+|                     |         |     |______|  |
+|Node (sign k8s)      |         |               |
+|_____________________|         |               |
+    Worker Node                 |               |
+                                |               |
+______________________          |               |
+|                     |         |               |
+| |container|         |         |               |  
+|                     |         |               |
+|                     |         |               |
+| |container|         |_________|               |
+|                     |         |               |
+|Node (sign k8s)      |                         |
+|_____________________|                         |
+    Worker Node                                 |
+________________________________________________|
+
+     Cluster
+
+
+master yek tino nodes ko connect kr rha he ,isa trh se manage krta hai ,mster ke pas pura kubernate setup hai , kubernative ke passhota hai yek API server ,API throw worker node se connect hota hai , and har yek worker node mai kuberntes ka agent hai , ysa ham "kubelet" bolte hai
+     jo hmare pass Master node hai,vhi worker node hai 
+there is no single component there is multiple component  ,inke alag aalg purpose hai
+
+you can see  master ke liye separate node hai but yeh jruri nhi hai ki hmare pass separate server ho ,master ko setup krne keliye 
+    master ko kisi worker node mai kr sakte ho but ideally aap master ko separate rho yeh better hai
+
+
+ ______________________
+|                     |
+| |API server|        |
+|                     | 
+| |Schedular|         |
+|                     | 
+|   |ETCD|            |Master component 
+|                     |   
+| |Control Manager|   |
+|                     |
+|    MASTER           |
+|_____________________|                     
+        |
+        |
+        |
+________|___________________                     
+|                          |
+|    |Kubelet|             |
+|                          |                    
+|   |container|            |                    
+|                          |                    
+|   |container|            |                    
+|                          |   multiple nodes present 
+|   |Kube-proxy|           |     Worker node Component 
+|                          |
+| |Container-runtime|      |
+|                          |
+| Worker Node (sign k8s)   |                    
+|__________________________|                    
+                         
+ 
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Components
+diff type component of kubernate
+
+1) API Server
+It is used for connect kubelet or worker nodes
+
+2) Container Runtime
+3) Scheduler
+4) kube controller
+5) kubelet
+6) ETCD
+7) kube proxy
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+What is POD k8s
+
+what is pod ?
+
+A single instance of a running process in a cluster.
+It can run one or more containers and share the same resources
+
+cluster-group of nodes(server)
+In server run Containerization base application but vo containerized base application pod ke under run hoti hai
+
+pod-means yek isolated environment and iski kudhki resources hoti hai kudh ki and uke under container run hota hai
+
+smallest unit of kubernate is "pod "
+
+kafi bar hota hai ki hmari yek application ko chlane keliye multiple container ki jrurat hoti hai ,isa case mai bhi "pod " helpful hota hai
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Component of k8s Master node 
+ 
+
+
+ ______________________
+|                     |
+| |API server|        |
+|                     | 
+| |Schedular|         |
+|                     | 
+|   |ETCD|            |Master node component 
+|                     |   
+| |Control Manager|   |
+|                     |
+|    MASTER           |
+|_____________________| 
+
+
+API server :
+
+It will provide interface ,kivki kubernet install ,setup kr diya but uko use krne keliye koi tho trika hona chahiye ,suppose hmare pass command line interface hona chahiye 
+                   usa tarh ki command line interface provide krta hai ,jisko ham  kubectl (kube control)bhi bolte hai
+
+
+2) Schedular -assign node to newly created pods
+
+pods is smallest unit-iske under container run hota hai 
+
+hmare pas multiple nodes the so hme new container run krna hai ,so "konsa node assign krna hai " yeh schedular ka kam hota hai
+
+3) key-value store ,having all cluster data
+
+we have cluster -cluster ke under diff nodes hai ,uke under pods ,pods ke under containerzed application run hoti hai
+   itni sari chize hai ,zo hmare add on hai ,iski information khi to honi chahiye
+
+kubernate ke pass ETCD hai ,uske pass yeh sari information hoti hai
+
+
+4)control Manager- responsible for managing the state of the cluster
+
+fir se chalte hai "orchestra" eg
+
+properly music chala rha hai ya nhi  , manlo koi instrument bja rha hai , isa instrument krab ho gya hai ,vo music  kharb kr dega right 
+ isa "instrument" ko change krna pdega 
+      so vo kam krta hai "control manager"
+
+control manager ka kam -koi problem to nhi hai ,agar hai to usme kya  changes  krne hai
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+____________________________                     
+|                          |
+|    |Kubelet|             |
+|                          |                    
+|   |container|            |                    
+|                          |                    
+|   |container|            |                    
+|                          |   
+|   |Kube-proxy|           |     Worker node Component 
+|                          |
+| |Container-runtime|      |
+|                          |
+| Worker Node (sign k8s)   |                    
+|__________________________|                    
+       
+
+1) kubelet -It is Agent , kam-make sure container running in pods   
+
+    check rta hai hmare container properly kam kr rhe ya nhi with in the pods
+
+ 2)   POD  -container run in a pod 
+
+    ________________________
+    |                      | 
+    | |  container  |      |-----------------pod
+    |                      |
+    |______________________|
+
+you can vistulize -container base app hai vo with in isolated environment ke under chal rha hai ,jisko ham pod khte hai
+
+In docker-ham docker jaise tool use krte  hai ,tab normally directly container use krte hai
+
+but pod ke under krte ho run container -that time kya hota hai pata hai kya ? 
+        kublet ke pass control hota hai ,kivi yeh kubelet ke pod ke under chal rha hai ,sokublet uko control kr sakta hai ,usmo diff action perform kr sakta hai  and so on
+
+3) kube-proxy -maintain network rules for communication with pods 
+  
+yhape yek whole cluster hai ,outside ka network hai , inside ka network hai ,yek node ke under different pods running hai ,yek pod hai vo yek website hai hmari so website outer resources se access hona chahiye 
+     yeh jo network hai ,yeh network accessible honi chahiye outside network se ,jo bhi rule hai vh kube-proxy maintain krta hai
+
+4) container-runtime -A tool responsible for running containers
+isa eg docker -docker ka use krke container run krte hai
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Features of Kubernetes
+
+now we see by using Kubernetes ham kya kya chize archive kr sakte hai 
+
+container Orchestration
+Scalability
+Load Balancing
+High Availability
+Rollouts and Rollback
+
+High Availability
+
+means no downtime ,zero downtime , (24 hr ,7 week ,365 day ) Availability
+
+means aapke pass backup hai 
+  eg aapka yek instance kisi reason se band hota hai , dusra instance aapke liye available ho
+
+user can access your website ,access your website/aaplication all the time /any time with out any issue
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+Scalability -
+aapne abhi app bnaya suppose 1 lakh user ke liye ,1 lakh user tak barabr app chlegi
+     with the time aapko usme functionality add krni ho  
+        ye to aapka user base bdte bdte ja rha hai , aapko usko aur scale krna hai so that aap jada se jada load handle kr sko  so usa case mai bhi kubernate very helpful
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Load Balancing -
+  bhut jada yek dum se traffic aa rha hai ,so load balance kr sako so that vha pe zero latency ya to kam se kam latency ho 
+bhut jada accessesing time na ho
+
+user --> load balance -->containers
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+apiVersion:V1
+kind:pod
+metadata:
+   name: my-pod
+spec:
+   containers:
+   - name: my-container
+     images:nginx
+     - containerPort:80
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Installation of k8s on window
+
+search ----->Kubernetes install -->you can see official website and below see "install tools" ->left side you can see diff os system ---.window ->follow instruction which they give
+
+firstly install "kubectl "
+
+two why to install
+1)install kubectl binary with curl on windows
+2)install on windows using chocolatey ,scoop or winget(Microsoft tool)
+
+use 2) way
+choco |scoop|winget
+
+there is three option ,winget kapi sare window mai allreday bydeafult rhta hai you can try ,at this time we try "choco"
+
+
+click "chocolatey " package --> Try it now --> Installing Chocolately-->step 2 --> choose your installation method -->|individual|--->click--->scroll down -->copy command--> powershell
+---->right click ---> Administration ------> paste ---> you can see "chocolatey is reday"
+
+cmd -->adminstration -->choco install kubernetes-cli-->install of kubernetes-cli was successful
+
+how to verify --> kubectl version --client--> client version v1.28.2
+
+if you are using cmd.exe then use -->cd %USERPROFILE% --> mkdir .kube (.kube  name ka folder bnaneke bad  manually yek location mai chlate hai "config"  name ki yek file bnate hai
+
+manuaaly go to location where we create .kube folder  --. right click -->new --> text document--> config
+
+now our one part is complete jo ki "kubectl " installation
+---------------------------------------------------------------------------
+
+same installtion page --> scroll down
+what next --> install minikube (minikube is local kubernetes ,focusing making it easy to learn and develop for kubernetes ) jaiseki ham kubernative sikha rhe hai and practice ke liye  hme mini cube ki jrurut hai because jistni bhi praatice hai yek local envirnment mai krege
+
+minikube install krne keliye in chjo ko jrurut hai
+1) you have to docker ,external virtual machine you can use
+2) 2 cpu 0r more , 2 GB of free memory , 20 GB of free disk space ,Internet connection
+
+os -window
+Architecture -x86-64
+Release type -stable
+Installer type :chocolatey (choose this option becuse chocolatey setup)
+
+choco install minicube --->The install of minicube successfully 
+
+step2 : start your cluster
+   ham kubernate ka cluster bnane vale hai ---->  minikube start --> now we can see successfully cluster bna gya hai
+ 
+you can see isne konsa virtual tool use kiya to make cluster --> automatically selected Docker driver
+
+cmd --> Docker ps --> you can see with in the docker minicube cluster hmne bnaya tha it is running inside docker  
+
+now minikube ,kubectl dono install and setup ho gye hai
+
+>minicube dashboard ---> isa trah se aapko dashboard milta hai ,kivki aapke local host pe open hota hai ,you can see kubernet related option --. left side --> minikube se cluster bnaya tha uske bare mai information milegi
+
+>minikube status (hnme cluster bnaya tha)
+minikube
+type: control plane
+host: Running
+kubelet : Running
+apiserver :Running
+kubeconfig :configured
+
+aaplog completely delete kr sakte hai cluster ko
+
+>minikube delete
+
+abhi isne starting mai docker ko use krke cluster bnaya tha ,agar ham kudh ka driver use krna chahe specify krna chahe ,vo bhi ham kr sakte hai
+>start --driver= 
+                |
+               driver ke bad yehabar jo bhi driver use krna chahte hai ,vo use kr sakte hai
+
+documentation ----> start your cluster --> drivers page (click)
+windows:
+Hyper-V-VM(preferred)
+Docker -VM(preferred)
+virtual box-VM
+VMware Workstation-VM
+QEMU-VM(experimental)
+SSH-remote ssh
+
+suppose you want virtual box -->click
+
+start cluster using the virtualbox driver:
+>minikube start --driver=virtualbox
+
+already I have installed virtual box
+
+thet tell go to bios --> VT setup
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Installation of k8s on linux
+
+kubernete --> install tool--->Linux
+
+install kubectl --> install using native package management --> red hat bases distribution -->reo command copy and paste --> after upgrade repo --> sudo yum install -y kubectl
+
+>kubectl version --client --> clent version 1:2
+
+2) minikube install(It is used for practice ,It is local kubernate)
+Linux ,ARM64,stable ,RBM package --> after seleting this option -->copy command --> ls--> you can see install package- minikube-latest.aarch64.rpm install
+
+>minikube status
+minikube not found ,to start cluster
+
+start the cluster
+> minikube start
+error :docker driver should not be used with root privilege
+
+jab bhi ham minikube start isa tarh se use krte hai --> yeh bydefault docker ko pick krta hai -->but you see in step other option also available
+
+solution-aap yek new user bnao or allreay aapke pas user bna hova hai ,to usme switch krlo
+
+>su -paul (now as paul user login ho gya)
+
+>minikube start
+
+error but haft correct
+docker suggestion --> add your user to the docker group
+
+jab ham docker install krte hai ,docker allreday group bnata hai ,assign krta hai so ham ysa user ko docker group me assign krte hai to hme root bnneki ke bhi jrurut nhi hai
+  so ham as normal user docker ko install use kr sakte hai
+
+>sudo usermod -aG docker $USER && newgrp docker
+
+>id
+now yoy can see as paul user docker group ka part bngya hu
+
+>minikube start
+
+insuffient memory problem
+
+hmne memory vala issue khatam kr diya  ,assign memory bda di
+
+>free -h
+>systemctl start docker (phle make sure krte hai hmara docker running state pe hai)
+
+>minikube start
+
+now successfully sare step run ho gye hai
+Done ! kubectl is now configured to use minikube cluster
+
+isko ham check bhi kr sakte hai
+
+>minikube status
+
+minikube
+type: control plane
+host: Running
+kubelet : Running
+apiserver :Running
+kubeconfig :configured
+
+hmare installation yek part tha ,vo bhi krte hai
+verify kubectl configuration
+
+>kubetcl cluster-info
+
+Kubernetes control plane is running at https://192.168.49.2:8443
+
+means -maine cluster bna liya and it is up and running and ham kubestl use krke access kr pa rhe hai
+
+

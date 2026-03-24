@@ -1,0 +1,24 @@
+file system in Linux 
+
+root -sudo (if you want to privilege of root on tempory base)
+
+root -/
+file hierarchal start from / (/ chya mage kahi nahi)
+
+if cd / -> then ls command use 
+then you can see fowling directory
+
+/boot(booling related file) when we shoutdown ,restart krta  system la ksa kalanar boot ksa kraych
+/var (vaiable data or database files logs)
+/root (top level directory)
+/bin (binary file)
+/Sbin (system binary)
+/etc (configuration file)
+/home (user home directory)
+/temp (temp file store)
+
+In window - In c drive all configuration files
+now we can see yek yek folder ch kam kay kay aahe -liux
+liux say tu yekch directory sagl kam nko kru  ,yu saglya folder la yek yek kam vatun de
+
+each folder have diifernt role

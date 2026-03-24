@@ -1,0 +1,37 @@
+permission in Linux
+
+we can decided who can access this folder or not accesss
+
+chmod - we can change permission for this perticulat folder ,file
+
+chown -owner change
+
+r(read) =4
+w(write)=2
+x(execute)=1
+- =0
+
+ll ,ls -a , lrt -In detail file and folder information like who is owner of that file ,date od create folder,timing ,which type of persion
+
+
+rwx   rwx                        rw-
+ |     |                          |
+user   group(developer team)     other(non resistor)
+
+chmod 776 file.txt
+
+777 means 
+
+7 -user
+4+2+1=7(rwx)
+
+7- group 
+4+2+1=7 (rwx)
+
+6- other
+4+2=6 (rw-)
+
+chmod 600 file2.txt
+
+--------------------------
+20 file make and give permission

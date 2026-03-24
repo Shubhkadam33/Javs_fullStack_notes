@@ -1,0 +1,334 @@
+Updating our App k8s Rollout
+
+Agar aapko application kuch changes krna ho ,changes ko roll out krneke keliye ,live environment keliye ,kya process hoga
+     we see kitne acchese kubernete handle krta hai
+
+
+testapp
+  |-------src
+  |-------App.js
+
+
+App.js
+
+
+<p>
+  This is demo project for kubernate version 5
+</p>
+
+
+we have already docker file
+
+
+hmare pass application mai change hai ,to hme new image bnani pdhegi
+
+>docker build -t image_name:05  .
+                                |
+                              present location mai docker file hai
+
+>docker push image_name:05
+
+you can verify: philippaul /webapp-demo
+
+
+now in live env mai hmara application running mai hai
+
+
+our requirement -hma chahte hai ,application ko update krke ,but hmara downtime bilkul nhi hona chahiye ,live env mai aapki application down nhi honi chahiye ,even for single second
+        kuberntive bhut achese handle krta hai
+
+when we build application first time ,hme deployment use krke image ko provide kiya tha
+
+
+>kubectl get deployments
+
+name       Ready  up-to-date  available   Age 
+my-webapp  1/1     1             1         15s
+  |
+  |
+hmari deployment ko new image se point out krna hai
+
+>kubectl set image deployment my-webapp
+                                  |
+            kis deployment ke liye changes krna hai,then deployment name ke bad container name dena pdta hai
+
+where we find container name --> go to dasgboard  --> pod -> click--> scroll down ---> you can see container name eg webapp-demo after that hma new image ka name dege
+         you can see minikube dashboard ham bhi currently containers --> webapp/dem0:02 use kr rhe hai
+
+now I excute this command
+
+>kubectl set image deployment my-webapp webapp-demo=philippaul /webapp-demo:05
+
+ans:
+ deployment.apps/my-webapp image updated
+
+iskke bad jaldise command type kro and notice kro
+>kubetctl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-7c7fg-rdn4  0/1     containerCreating          0          8s
+my-webapp-84f64-ds6d  0/1      Running                   0          26m
+
+
+you can see hmara purana vala pod tha running and uske sath sath  dusara pod bnta ja rha hai
+
+kubernative ki yek acchi functionality hai ,jab tak yeh new version up nhi hijada ,purna version ko chalate rhega so live env mai impact nhi hoga
+
+now again same command write and notice
+>kubectl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-7c7fg-rdn4  1/1        Running                 0          8s
+my-webapp-84f64-ds6d  1/1        Terminating             0          26m
+
+now new pod bna gya hai and up and ruing hai and old pod remove hote ja rha hai
+
+again write same command
+
+>kubectl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-7c7fg-rdn4  1/1        Running                 0          8s
+
+now you can see old pod completely remove
+
+go to dashboard --> pod --> container --> philippaul/webapp-demo:05  //new image running
+
+jab tak nya pod up and running hota tab tak purane pod ko live rha so isse downtime 0 /bilkul nhi tha
+
+
+-------------------------------------------------------------------------------------------
+
+we larn how to project learn now we learn ,ham kisi bhi version mai switch kr sakte hai kafi easily 
+
+now you can see we are in version 05 and I want go to version 01
+
+>kubectl set image deployment my-webapp webapp-demo=philippaul /webapp-demo:01
+
+ans:
+ deployment.apps/my-webapp image updated
+
+again same process
+
+>kubetctl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-7c7fg-rdn4  1/1        Running                 0          8s
+my-webapp-84f64-ds6d  1/1        Terminating             0          26m
+
+
+go to browser --you can see still -- this is Kubernetes project v5 ---. refesh --->This is demo project for Docker Tutorial
+
+we learn live env mai changes kaise smoth krte hai
+
+-------------------------------------------------------------------------------------------
+Rollbak of project k85
+
+chaliye bat krte hai "negative test cases ki " ,gar hmne new image ko set kr diya ,agar hme use reverse krna ho to kiase kr sakte hai
+
+we try to set image version which is not present that version 
+
+>kubectl set image deployment my-webapp webapp-demo=philippaul /webapp-demo:06
+                                                                             |
+                                                                   not 06 version present in repo
+
+means version 6 ,incorrect registry path hai or incorrect image hai ,isa case mai kuberntes kaise handle krta hai  and ham isko kaise handle kr sakte hai
+
+
+after that comment --> ans : image updated
+
+abhi tak kubernate ko yeh nhi pta hai ki ,yeh image glat hai ,usne to set kr diya ,now vo try krega pull krneka and acees krne ka
+
+
+>kubetctl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-7c7fg-rdn4  1/1        ImagePullBackOff        0          8s
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+
+you can see ImagePullBackOff means image pull ho gyi hi nhi ,means yeh process yha par (updating process stuck ho gya hai stuck ho gya hai
+
+In this case : hm rollback kr sakte hai ,abhi ham rollback or rollout kr rhe the ,ise check krneka thrikha hai
+
+>kubectl rollout status deployment my-webapp
+it means yeh wait kr rha hai ,wait krta rhega yeh hamara rollout finish ho jaye ,old vale pod ko terminate kre ,but yeh chiz kbhi hogyibhi nhi becuse hmari image glat thi
+                                                                     |
+                                                      ------------------------------------------
+waiting for deployment "my-webapp" rollout to finish: 1 old replicas are pending termination.....
+  |________________________________________________|
+vo aatak gya hai ,bich mai because image ka version/path galat diya tha
+you can see current status kya chal rha hai rollout ka
+
+
+now we see "rollback" -yeh jo atka huva hai ,ise revert kaise kre
+
+
+>kubectl rollout undo deployment my-webapp // myjo bhi roll out kr rhe the use revert kro
+
+>kubectl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+
+now you can see old pod running jo ki correct version hai
+
+-------------------------------------------------------------------------------------------
+self healing in k8s
+
+kisi glish or code fatne ke karan ,aapki website shoutdown ho jati hai  
+  so vistualize kro aapki website kha chal rhi thi ,kuberntive cluster ke under pod ke under ,container ke under aapki website chal rhi hai 
+                         to kisi error /glish  ke karn website band ho jati hai tab kubernete kaise handle kr sakta hai
+
+new project -express-demo -I will share link link of GitHub copy from this
+
+>node index.js
+server is running on port 3000  -->Your React App is running (UI)
+
+In url type localhost:3000/exit  //so I can forefully stop our website
+
+now i try in bowser localhost:3000 hari website down ho gyi hai
+
+yeh scenario haam kubertive mai krke dekhege ,ham website ko stop krege and dehege kubernte handle kaise krta hai
+
+if you want fast way to check this senorio then  iwill sent you githu link --> poll image --> philippaul/node-demo-app
+
+
+>kubetcl create deployment node-app --image=philippaul/node-demo-app:01
+
+deployment.app/node-app created
+
+>kubectl get deployments
+
+name                 ready       up-to-date            Avilable      Age
+node-app              1/1           1                 0          26m
+
+>kubectl get pods
+
+name                 ready       up-to-date          Avsilable      Age
+node-app-84f64-ds6d  1/1             1                0          26m
+
+ye app 3000 pe listen kr rha tha to iske liye service bnani pdegi
+
+>kubectl expose deployment node-app --type=LoadBalancer --port=3000
+
+service bnani ke bad minkubee use krna hota hai
+
+>minikube service node-app
+
+it will give URL 
+http://192.168.49.2.30776
+
+copy url paste in browser ----> your React app is running
+
+you can see in dasnboard --. everything is up and running (green three circle) Deployment ,pods ,Replica sets
+
+localhost:8080/exit --> you can see your server is stop
+
+go to dashboard ,immediately all circle is red ,after 2-5 sec automatically green circle
+
+means hmare app stop tha isne automatically app restart kr diya
+
+go to browser --. localhost:8080 ---> your React app is running 
+
+kubernet jaise hi recognize krega koi issue hai to turant application ko start krega
+
+
+>kubectl get pods
+name                 Ready    Status      Restarts       Age
+node-app-79cfgccc-p  1/1      Running      3(65s ago)   6m57s
+
+you notice :yeh application three bar restart huva hai ,yo can monitor
+
+-------------------------------------------------------------------------------------------
+
+Scaling of App k8s
+
+hmne self healing kr liye but there is one problem --> kubertes ne hmare application ko restart kr diya but you notice "kuch second ke liye hmari website down thi "
+
+kuch second down bhi effort nhi kr sakte
+
+but I want app band ho hi na ---> uski liye ham kya kr sakte hai--> dependency hta sakte hai
+
+you can see yek hi pod ,replicate set instance running hai
+
+if we use multiple instance of application then to kya hoga :
+uske two benefit
+1)single point of failure khatam ho jayega
+suppose mnalo yek app ke multiple instance hai,agar yek band ho gya tho dusara to chalu hai
+dura band hogya to tisra to chalu hai 
+        so hmari webasite hmesha up and running rhegi and no down 2-3 sec
+
+2) agar hare pass traffic jada hai hmare website pe bhut jada traffic aa rha hai ,vha pe load balancing kabhi asani se kr sakte hai
+
+hmara incoming traffic distribute kr sakte hai
+
+uske liye ham kya kr sakte hai --> live env mai application ko scale kr sakte hai
+   scale krna means -multiple instances running krna apne application ke
+
+iske liye simple command hai
+
+>kubectl scale deployment node-app --replicas=4
+aapko jistne number of instance /replicas dene hai vo de sakte hai
+  mri application 4 aalag aalg pod mai chalni chahiye 
+
+now you can see our application turant scale huva hai
+
+go to dashboard --> deployment (Running 1)  , pods (Running 4) , replica sets (Running 1)
+                                                   |
+                                                 4 pod running
+
+
+>kubectl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+my-webapp-84f64-ds6d  1/1        running                 3          26m
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+
+how we verify sacle ho gya hai
+
+go to browser --> localhost:3000/exit --> no down our website 
+
+go to dashboard --> see in pod circle --> 4 mai se 3 pod running the and yek fail ho gya tha 
+
+bhir bhi aap apke wbsite ko access kr pa rhe the
+
+name                 ready       status               Restarts      Age
+my-webapp-84f64-ds6d  1/1        running                 3          26m
+my-webapp-84f64-ds6d  1/1        running                 4          26m
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+my-webapp-84f64-ds6d  1/1        running                 2          26m
+
+see restart col -hmara access tha vo diff website pe load distribute ho rha tha
+   matalab isa nhi tha yek hi pod bar bar restart ho rha tha bar bar 
+       ye alag alag pod restart ho rhe the
+
+scale krna means; same application rhegi and sabkuch same and identical hoga ,multiple instance hogi and parallel chal rhe hoge
+
+if you thinking -->at a point aapko lagta hai itne sare instance ki abh jarurut nhi hai ,hme istna load nhi hai so aap jo scale hai use kam bhi kr sakte ho
+
+
+ >kubectl scale deployment node-app --replicas=2
+
+>kubectl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+my-webapp-84f64-ds6d  1/1        running                 3          26m
+my-webapp-84f64-ds6d  1/1        Terminating             0          26m
+my-webapp-84f64-ds6d  1/1        Terminating             0          26m
+
+you  can see two pod terminating hote ja rhe hai
+
+again type same command 
+
+>kubectl get pods
+
+name                 ready       status               Restarts      Age
+my-webapp-84f64-ds6d  1/1        running                 0          26m
+my-webapp-84f64-ds6d  1/1        running                 3          26m
+
+you can see 2 pod terminate successfully 
+
+
